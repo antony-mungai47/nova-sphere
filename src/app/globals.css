@@ -1,26 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Enforce Dark Mode by Default */
+  --background: #020617; /* Deep Midnight Blue/Black */
+  --foreground: #f8fafc; /* Soft Silver / White */
+  
+  /* Brand Colors */
+  --nova-blue: #3b82f6; /* Electric Blue Accent */
+  --nova-blue-glow: rgba(59, 130, 246, 0.5);
+  --nova-amber: #f59e0b; /* Glowing Amber Accent */
+  --nova-navy: #0f172a; /* Deep Navy Blue */
+  --nova-silver: #94a3b8; /* Soft Silver */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-nova-blue: var(--nova-blue);
+  --color-nova-amber: var(--nova-amber);
+  --color-nova-navy: var(--nova-navy);
+  --color-nova-silver: var(--nova-silver);
+  --font-sans: var(--font-geist-sans), Inter, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6); /* Translucent Navy */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-glow {
+  box-shadow: 0 0 20px var(--nova-blue-glow);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
