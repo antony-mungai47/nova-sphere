@@ -79,6 +79,10 @@ export function Navbar() {
                 Account
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nova-amber transition-all group-hover:w-full" />
               </Link>
+              <Link href="/admin" className="text-sm font-medium text-nova-emerald hover:text-white transition-colors relative group">
+                Admin
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-nova-emerald transition-all group-hover:w-full" />
+              </Link>
             </Show>
           </nav>
 
@@ -195,6 +199,9 @@ export function Navbar() {
                 <Show when="signed-in">
                   <Link href="/account" className="text-nova-blue font-medium hover:text-white transition-colors">
                     Account
+                  </Link>
+                  <Link href="/admin" className="text-nova-emerald font-medium hover:text-white transition-colors">
+                    Admin Portal
                   </Link>
                 </Show>
                 <div className="flex items-center space-x-6 pt-4 border-t border-white/10">

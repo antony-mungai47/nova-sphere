@@ -38,7 +38,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <nav className="flex-1 p-4 space-y-2">
           <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-colors">
             <LayoutDashboard className="w-5 h-5 text-nova-blue" />
-            <span className="font-medium">Overview</span>
+            <span className="font-medium">Dashboard</span>
           </Link>
           <Link href="/admin/products" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
             <PackageSearch className="w-5 h-5" />
@@ -56,9 +56,17 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <BarChart3 className="w-5 h-5" />
             <span className="font-medium">Analytics</span>
           </Link>
+          <Link href="/admin/marketing" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+            <BarChart3 className="w-5 h-5" />
+            <span className="font-medium">Marketing</span>
+          </Link>
           <Link href="/admin/settings" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
             <Settings className="w-5 h-5" />
             <span className="font-medium">Settings</span>
+          </Link>
+          <Link href="/admin/reports" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+            <BarChart3 className="w-5 h-5" />
+            <span className="font-medium">Reports</span>
           </Link>
         </nav>
 
