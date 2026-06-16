@@ -2,9 +2,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { HeroSection } from "@/components/home/hero-section";
 import { TrendingProducts } from "@/components/home/trending-products";
 import { Footer } from "@/components/layout/footer";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
   const products = await prisma.product.findMany({

@@ -1,17 +1,16 @@
 import React from 'react';
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { redirect } from 'next/navigation';
 import { CreditCard, ShieldCheck, Lock } from 'lucide-react';
 import { AnimatedButton } from '@/components/ui/animated-button';
 
-const prisma = new PrismaClient();
-
 export default async function SimulateCheckoutPage({
   searchParams,
 }: {
-  searchParams: { orderId?: string };
+  searchParams: Promise<{ orderId?: string }>;
 }) {
-  const orderId = searchParams.orderId;
+  const resolvedParams = await searchParams;
+  const orderId = resolvedParams.orderId;
 
   if (!orderId) {
     redirect('/store');

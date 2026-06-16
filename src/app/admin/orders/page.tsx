@@ -1,7 +1,7 @@
 import React from "react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { OrderActions } from "./order-actions";
 
-const prisma = new PrismaClient();
 
 export default async function AdminOrdersPage() {
   const orders = await prisma.order.findMany({
@@ -29,6 +29,7 @@ export default async function AdminOrdersPage() {
               <th className="p-4 text-nova-silver font-medium">Status</th>
               <th className="p-4 text-nova-silver font-medium">Items</th>
               <th className="p-4 text-nova-silver font-medium text-right">Total</th>
+              <th className="p-4 text-nova-silver font-medium text-center">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
@@ -45,7 +46,7 @@ export default async function AdminOrdersPage() {
                   <td className="p-4">
                     <span className={`px-2 py-1 text-xs rounded-full border ${
                       order.status === 'PENDING' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/20' :
-                      order.status === 'PAID' ? 'bg-green-500/20 text-green-400 border-green-500/20' :
+                      order.status === 'PAID' ? 'bg-nova-emerald/20 text-nova-emerald border-nova-emerald/20' :
                       'bg-nova-blue/20 text-nova-blue border-nova-blue/20'
                     }`}>
                       {order.status}
@@ -53,6 +54,9 @@ export default async function AdminOrdersPage() {
                   </td>
                   <td className="p-4 text-nova-silver text-sm">{order.items.reduce((sum, item) => sum + item.quantity, 0)} items</td>
                   <td className="p-4 text-right text-white font-medium">${order.totalAmount.toFixed(2)}</td>
+                  <td className="p-4 text-center">
+                    <OrderActions orderId={order.id} currentStatus={order.status} />
+                  </td>
                 </tr>
               ))
             )}

@@ -6,6 +6,7 @@ import { Edit, Trash2, Plus, X, Loader2 } from "lucide-react";
 import { AnimatedButton } from "@/components/ui/animated-button";
 import { createProduct, updateProduct, deleteProduct } from "@/app/admin/products/actions";
 import { motion, AnimatePresence } from "framer-motion";
+import { CldUploadWidget } from "next-cloudinary";
 
 type Product = {
   id: string;
@@ -22,14 +23,17 @@ export const ProductsClient = ({ initialProducts }: { initialProducts: Product[]
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
 
   const handleOpenNew = () => {
     setEditingProduct(null);
+    setUploadedImageUrl("");
     setIsModalOpen(true);
   };
 
   const handleOpenEdit = (product: Product) => {
     setEditingProduct(product);
+    setUploadedImageUrl(product.imageUrl || "");
     setIsModalOpen(true);
   };
 
@@ -186,14 +190,43 @@ export const ProductsClient = ({ initialProducts }: { initialProducts: Product[]
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-nova-silver mb-2">Image URL</label>
-                  <input 
-                    name="imageUrl"
-                    defaultValue={editingProduct?.imageUrl || ""}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
-                    placeholder="/hero-product.png"
-                  />
-                  <p className="text-xs text-nova-silver/70 mt-2">Leave blank to use default placeholder image.</p>
+                  <label className="block text-sm font-medium text-nova-silver mb-2">Product Image</label>
+                  
+                  {uploadedImageUrl ? (
+                    <div className="relative w-32 h-32 mb-4 rounded-xl overflow-hidden border border-white/10 bg-black/40">
+                      <Image src={uploadedImageUrl} alt="Product" fill className="object-contain" />
+                      <button 
+                        type="button" 
+                        onClick={() => setUploadedImageUrl("")}
+                        className="absolute top-2 right-2 p-1 bg-black/50 hover:bg-red-500/80 rounded-md text-white transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : null}
+
+                  <CldUploadWidget 
+                    uploadPreset="ml_default" // Note: we'll use unsigned upload preset or the default if possible
+                    onSuccess={(result: any) => {
+                      if (result?.info?.secure_url) {
+                        setUploadedImageUrl(result.info.secure_url);
+                      }
+                    }}
+                  >
+                    {({ open }) => {
+                      return (
+                        <button
+                          type="button"
+                          onClick={() => open()}
+                          className="px-4 py-2 bg-nova-blue/20 text-nova-blue border border-nova-blue/30 rounded-xl font-medium hover:bg-nova-blue/30 transition-colors"
+                        >
+                          {uploadedImageUrl ? "Change Image" : "Upload Image to Cloudinary"}
+                        </button>
+                      );
+                    }}
+                  </CldUploadWidget>
+                  <input type="hidden" name="imageUrl" value={uploadedImageUrl} />
+                  <p className="text-xs text-nova-silver/70 mt-2">Upload a high-quality product image. Defaults to placeholder if empty.</p>
                 </div>
 
                 <div className="mb-6">

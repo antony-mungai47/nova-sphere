@@ -7,11 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  STAFF
+  CUSTOMER
+}
+
 model User {
   id        String   @id @default(cuid())
   clerkId   String   @unique
   email     String   @unique
   name      String?
+  role      UserRole @default(CUSTOMER)
   
   orders    Order[]
   addresses Address[]
@@ -148,3 +156,43 @@ model OrderItem {
   quantity  Int
   price     Float
 }
+
+model StoreSettings {
+  id              String   @id @default(cuid())
+  storeName       String   @default("Nova Sphere")
+  storeLogo       String?
+  favicon         String?
+  storeDescription String?
+  contactEmail    String?
+  supportEmail    String?
+  businessPhone   String?
+  
+  facebookUrl     String?
+  twitterUrl      String?
+  instagramUrl    String?
+  linkedinUrl     String?
+  tiktokUrl       String?
+  
+  currency        String   @default("USD")
+  taxRate         Float    @default(0)
+  shippingRate    Float    @default(0)
+  
+  theme           String   @default("dark")
+  primaryColor    String   @default("#3B82F6")
+  secondaryColor  String   @default("#10B981")
+  accentColor     String   @default("#D4A017")
+  
+  watermarkEnabled Boolean  @default(true)
+  watermarkOpacity Float    @default(0.06)
+  
+  homepageLayout  String?  // JSON string for layout config
+  seoTitle        String?
+  seoDescription  String?
+  
+  analyticsId     String?
+  emailProvider   String?
+  paymentGateway  String?
+  
+  updatedAt       DateTime @updatedAt
+}
+

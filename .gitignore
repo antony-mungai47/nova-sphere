@@ -47,3 +47,4 @@ dev.db
 test-results/
 playwright-report/
 
+.vercel

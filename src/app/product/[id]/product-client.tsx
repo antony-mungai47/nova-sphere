@@ -26,7 +26,17 @@ type ProductProps = {
   features: string[];
 };
 
-export function ProductClient({ product }: { product: ProductProps }) {
+type RelatedProduct = {
+  id: string;
+  name: string;
+  price: number;
+  salePrice: number | null;
+  category: string;
+  image: string;
+  rating: number;
+};
+
+export function ProductClient({ product, relatedProducts }: { product: ProductProps; relatedProducts?: RelatedProduct[] }) {
   const { addItem } = useCartStore();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<"features" | "specs" | "reviews">("features");
@@ -347,6 +357,37 @@ export function ProductClient({ product }: { product: ProductProps }) {
             </AnimatePresence>
           </div>
         </div>
+
+        {/* Related Products Section */}
+        {relatedProducts && relatedProducts.length > 0 && (
+          <div className="mt-32">
+            <h2 className="text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4">You May Also Like</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((rp) => (
+                <a key={rp.id} href={`/product/${rp.id}`} className="group block">
+                  <div className="glass-panel p-4 rounded-2xl border border-white/5 h-full transition-all hover:border-nova-slate/50 hover:-translate-y-1">
+                    <div className="relative aspect-square w-full rounded-xl overflow-hidden mb-4 bg-white/5">
+                      <Image src={rp.image} alt={rp.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="text-nova-silver text-xs uppercase tracking-wider">{rp.category}</p>
+                      <h3 className="text-white font-bold truncate">{rp.name}</h3>
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="text-nova-gold font-medium">
+                          ${rp.salePrice ? rp.salePrice.toFixed(2) : rp.price.toFixed(2)}
+                        </span>
+                        <div className="flex items-center gap-1 text-xs text-nova-silver">
+                          <Star className="w-3 h-3 text-nova-gold fill-nova-gold" /> {rp.rating}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </main>
   );

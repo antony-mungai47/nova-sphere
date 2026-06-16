@@ -20,7 +20,7 @@ export function AnimatedButton({
   const baseStyles = "relative inline-flex items-center justify-center px-8 py-3 text-sm font-medium transition-colors rounded-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-nova-blue focus:ring-offset-2 focus:ring-offset-background";
   
   const variants = {
-    primary: "bg-nova-blue text-white hover:bg-blue-600",
+    primary: "bg-nova-blue text-white hover:bg-nova-blue/80",
     outline: "border border-white/20 text-white hover:bg-white/10",
     ghost: "text-white/80 hover:text-white hover:bg-white/5",
   };
@@ -29,7 +29,7 @@ export function AnimatedButton({
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className={cn(baseStyles, variants[variant], glow && "shadow-[0_0_20px_rgba(59,130,246,0.5)]", className)}
+      className={cn(baseStyles, variants[variant], glow && "shadow-glow-primary", className)}
       {...(props as any)}
     >
       <span className="relative z-10">{children}</span>

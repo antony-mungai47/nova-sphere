@@ -1,8 +1,7 @@
 import React from "react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { ProductsClient } from "./products-client";
 
-const prisma = new PrismaClient();
 
 export default async function AdminProducts() {
   const products = await prisma.product.findMany({

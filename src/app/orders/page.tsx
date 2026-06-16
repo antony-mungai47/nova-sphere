@@ -1,12 +1,10 @@
 import React from "react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { Package, Clock, CheckCircle } from "lucide-react";
-
-const prisma = new PrismaClient();
 
 export default async function OrdersPage() {
   const { userId } = await auth();

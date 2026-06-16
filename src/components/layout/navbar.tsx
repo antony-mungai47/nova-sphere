@@ -2,18 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { MegaMenu } from "@/components/layout/mega-menu";
-import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import { Show, UserButton } from "@clerk/nextjs";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [showResults, setShowResults] = useState(false);
   
   const { items } = useCartStore();
   const [mounted, setMounted] = useState(false);
@@ -41,8 +45,14 @@ export function Navbar() {
         <div className="container mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 rounded-full bg-nova-blue shadow-[0_0_15px_rgba(59,130,246,0.6)] flex items-center justify-center group-hover:scale-110 transition-transform">
-              <span className="text-white font-bold text-lg">N</span>
+            <div className="relative w-10 h-10 group-hover:scale-105 transition-transform">
+              <Image 
+                src="/logo.png" 
+                alt="Nova Sphere Logo" 
+                fill 
+                className="object-contain" 
+                priority
+              />
             </div>
             <span className="text-xl font-bold tracking-widest text-white">NOVA<span className="text-nova-blue">SPHERE</span></span>
           </Link>
@@ -74,68 +84,71 @@ export function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-6">
-            <div className="relative group/search">
-              <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-3 py-1.5 focus-within:bg-white/10 focus-within:border-nova-blue/50 transition-all">
-                <Search className="w-4 h-4 text-white/50" />
-                <input 
-                  type="text" 
-                  placeholder="Search products..." 
-                  className="bg-transparent border-none text-sm text-white placeholder-white/40 focus:outline-none w-32 focus:w-48 transition-all ml-2"
-                  onChange={async (e) => {
-                    const val = e.target.value;
-                    if (val.length < 2) {
-                      const el = document.getElementById('search-results');
-                      if(el) el.style.display = 'none';
-                      return;
-                    }
-                    try {
-                      const res = await fetch(`/api/search?q=${encodeURIComponent(val)}`);
-                      const data = await res.json();
-                      const el = document.getElementById('search-results');
-                      const list = document.getElementById('search-results-list');
-                      if (el && list) {
-                        el.style.display = 'block';
-                        list.innerHTML = '';
-                        if (data.results.length === 0) {
-                          list.innerHTML = '<div class="p-4 text-sm text-nova-silver">No results found.</div>';
-                        } else {
-                          data.results.forEach((p: any) => {
-                            const item = document.createElement('a');
-                            item.href = '/product/' + p.id;
-                            item.className = 'flex items-center gap-3 p-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0';
-                            item.innerHTML = `
-                              <img src="${p.image}" class="w-10 h-10 rounded bg-white/5 object-cover" />
-                              <div>
-                                <p class="text-white text-sm font-medium line-clamp-1">${p.name}</p>
-                                <p class="text-nova-blue text-xs">$${p.price.toFixed(2)}</p>
-                              </div>
-                            `;
-                            list.appendChild(item);
-                          });
-                        }
+              <div className="relative group/search">
+                <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-3 py-1.5 focus-within:bg-white/10 focus-within:border-nova-blue/50 transition-all">
+                  <Search className="w-4 h-4 text-white/50" />
+                  <input 
+                    type="text" 
+                    placeholder="Search products..." 
+                    className="bg-transparent border-none text-sm text-white placeholder-white/40 focus:outline-none w-32 focus:w-48 transition-all ml-2"
+                    value={searchQuery}
+                    onChange={async (e) => {
+                      const val = e.target.value;
+                      setSearchQuery(val);
+                      if (val.length < 2) {
+                        setShowResults(false);
+                        return;
                       }
-                    } catch(e) {}
-                  }}
-                />
+                      try {
+                        const res = await fetch(`/api/search?q=${encodeURIComponent(val)}`);
+                        const data = await res.json();
+                        setSearchResults(data.results);
+                        setShowResults(true);
+                      } catch(e) {}
+                    }}
+                    onFocus={() => {
+                      if (searchQuery.length >= 2) setShowResults(true);
+                    }}
+                    onBlur={() => {
+                      // Small delay to allow clicking results
+                      setTimeout(() => setShowResults(false), 200);
+                    }}
+                  />
+                </div>
+                
+                {showResults && (
+                  <div className="absolute top-full right-0 mt-2 w-72 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl z-50">
+                    <div className="max-h-96 overflow-y-auto">
+                      {searchResults.length === 0 ? (
+                        <div className="p-4 text-sm text-nova-silver">No results found.</div>
+                      ) : (
+                        searchResults.map((p) => (
+                          <Link 
+                            key={p.id} 
+                            href={`/product/${p.id}`}
+                            className="flex items-center gap-3 p-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-0"
+                          >
+                            <img src={p.image} alt={p.name} className="w-10 h-10 rounded bg-white/5 object-cover" />
+                            <div>
+                              <p className="text-white text-sm font-medium line-clamp-1">{p.name}</p>
+                              <p className="text-nova-blue text-xs">${p.price.toFixed(2)}</p>
+                            </div>
+                          </Link>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-              
-              <div id="search-results" className="absolute top-full right-0 mt-2 w-72 bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-50">
-                <div id="search-results-list" className="max-h-96 overflow-y-auto"></div>
-              </div>
-            </div>
             
             <div className="flex items-center space-x-4">
               <Show when="signed-out">
-                <SignInButton mode="modal">
-                  <button className="text-sm font-medium text-white/70 hover:text-white transition-colors">
-                    Sign In
-                  </button>
-                </SignInButton>
-                <SignUpButton mode="modal">
-                  <button className="text-sm font-medium text-white bg-nova-blue hover:bg-nova-blue/80 px-4 py-2 rounded-full transition-colors shadow-[0_0_15px_rgba(59,130,246,0.4)]">
-                    Sign Up
-                  </button>
-                </SignUpButton>
+                <Link href="/login" className="text-sm font-medium text-white/70 hover:text-white transition-colors">
+                  Sign In
+                </Link>
+                <Link href="/register" className="text-sm font-medium text-white bg-nova-blue hover:bg-nova-blue/80 px-4 py-2 rounded-full transition-colors shadow-glow-primary">
+                  Sign Up
+                </Link>
               </Show>
               <Show when="signed-in">
                 <UserButton appearance={{ elements: { avatarBox: "w-8 h-8" } }} />
@@ -187,14 +200,12 @@ export function Navbar() {
                 <div className="flex items-center space-x-6 pt-4 border-t border-white/10">
                   <div className="flex items-center space-x-4">
                     <Show when="signed-out">
-                      <SignInButton mode="modal">
-                        <button className="text-white/70 hover:text-white transition-colors font-medium">Sign In</button>
-                      </SignInButton>
-                      <SignUpButton mode="modal">
-                        <button className="text-sm font-medium text-white bg-nova-blue hover:bg-nova-blue/80 px-4 py-2 rounded-full transition-colors">
-                          Sign Up
-                        </button>
-                      </SignUpButton>
+                      <Link href="/login" className="text-white/70 hover:text-white transition-colors font-medium">
+                        Sign In
+                      </Link>
+                      <Link href="/register" className="text-sm font-medium text-white bg-nova-blue hover:bg-nova-blue/80 px-4 py-2 rounded-full transition-colors">
+                        Sign Up
+                      </Link>
                     </Show>
                     <Show when="signed-in">
                       <UserButton appearance={{ elements: { avatarBox: "w-8 h-8" } }} />

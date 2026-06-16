@@ -1,7 +1,6 @@
 import React from "react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
 
 export default async function AdminCustomersPage() {
   const users = await prisma.user.findMany({

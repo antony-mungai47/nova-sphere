@@ -272,7 +272,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                 <AnimatedButton 
                   onClick={handleCheckout} 
                   disabled={isCheckingOut}
-                  className="w-full py-4 text-lg font-bold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)] disabled:opacity-50"
+                  className="w-full py-4 text-lg font-bold flex items-center justify-center gap-2 shadow-glow-primary disabled:opacity-50"
                 >
                   {isCheckingOut ? (
                     <>

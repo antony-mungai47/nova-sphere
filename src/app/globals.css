@@ -1,27 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  /* Enforce Dark Mode by Default */
-  --background: #020617; /* Deep Midnight Blue/Black */
-  --foreground: #f8fafc; /* Soft Silver / White */
+  /* Core Background & Text */
+  --background: #0B1F3A; /* Deep Navy */
+  --foreground: #F8FAFC;
+  --surface: #1F2937; /* Charcoal / Dark Surface */
   
-  /* Brand Colors */
-  --nova-blue: #3b82f6; /* Electric Blue Accent */
-  --nova-blue-glow: rgba(59, 130, 246, 0.5);
-  --nova-amber: #f59e0b; /* Glowing Amber Accent */
-  --nova-navy: #0f172a; /* Deep Navy Blue */
-  --nova-silver: #94a3b8; /* Soft Silver */
+  /* Brand Tokens */
+  --color-primary: #3B82F6; /* Electric Blue CTA */
+  --color-secondary: #10B981; /* Emerald CTA/Success */
+  --color-accent: #D4AF37; /* Premium Gold */
+  
+  /* UI Tokens */
+  --color-primary-dark: #101820; /* Primary Dark */
+  --color-surface-light: #F8FAFC; /* Light Surface */
+  --color-text-main: #111827; /* Dark Text */
+  --color-muted: #94A3B8; /* Muted Text/Elements (Silver-ish) */
+  --color-slate: #475569; /* Darker Slate Gray */
+  
+  /* Shadows / Elevations */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-glow-primary: 0 0 20px rgba(59, 130, 246, 0.4); /* Blue Glow */
+  --shadow-glow-secondary: 0 0 20px rgba(16, 185, 129, 0.3); /* Emerald Glow */
+  --shadow-glow-accent: 0 0 15px rgba(212, 175, 55, 0.4); /* Gold Glow */
+  
+  /* Backwards Compat mappings for existing components */
+  --nova-blue: var(--color-primary);
+  --nova-amber: var(--color-accent);
+  --nova-gold: var(--color-accent);
+  --nova-emerald: var(--color-secondary);
+  --nova-charcoal: var(--surface);
+  --nova-slate: var(--color-slate);
+  --nova-silver: var(--color-muted);
+  --nova-navy: var(--background);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-nova-blue: var(--nova-blue);
-  --color-nova-amber: var(--nova-amber);
-  --color-nova-navy: var(--nova-navy);
-  --color-nova-silver: var(--nova-silver);
-  --font-sans: var(--font-geist-sans), Inter, sans-serif;
+  --color-surface: var(--surface);
+  
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+  --color-muted: var(--color-muted);
+  --color-slate: var(--color-slate);
+  
+  --color-nova-blue: var(--color-primary);
+  --color-nova-amber: var(--color-accent);
+  --color-nova-gold: var(--color-accent);
+  --color-nova-emerald: var(--color-secondary);
+  --color-nova-charcoal: var(--surface);
+  --color-nova-slate: var(--color-slate);
+  --color-nova-silver: var(--color-muted);
+  --color-nova-navy: var(--background);
+
+  --font-sans: var(--font-geist-sans), Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
+  
+  --shadow-glow-primary: var(--shadow-glow-primary);
+  --shadow-glow-secondary: var(--shadow-glow-secondary);
+  --shadow-glow-accent: var(--shadow-glow-accent);
 }
 
 body {
@@ -33,16 +74,21 @@ body {
   overflow-x: hidden;
 }
 
-/* Glassmorphism Utilities */
+/* Premium Glassmorphism Utilities */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.6); /* Translucent Navy */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(31, 41, 55, 0.4); /* Charcoal Translucent */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .glass-panel-glow {
-  box-shadow: 0 0 20px var(--nova-blue-glow);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.glass-panel-glow:hover {
+  box-shadow: var(--shadow-glow-primary), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 /* Smooth Scrolling */

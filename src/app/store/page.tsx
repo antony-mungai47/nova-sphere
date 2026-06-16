@@ -1,16 +1,57 @@
 import React from "react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ProductGrid } from "@/components/store/product-grid";
 
-const prisma = new PrismaClient();
+export default async function StorePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const query = typeof resolvedParams.q === 'string' ? resolvedParams.q : undefined;
+  const category = typeof resolvedParams.category === 'string' ? resolvedParams.category : undefined;
+  const brand = typeof resolvedParams.brand === 'string' ? resolvedParams.brand : undefined;
+  const minPrice = typeof resolvedParams.minPrice === 'string' ? parseFloat(resolvedParams.minPrice) : undefined;
+  const maxPrice = typeof resolvedParams.maxPrice === 'string' ? parseFloat(resolvedParams.maxPrice) : undefined;
+  const sort = typeof resolvedParams.sort === 'string' ? resolvedParams.sort : 'newest';
 
-export default async function StorePage() {
-  const products = await prisma.product.findMany({
-    orderBy: { createdAt: 'desc' },
-    include: { images: true }
-  });
+  // Build Prisma where clause
+  const where: any = {};
+  if (query) {
+    where.OR = [
+      { name: { contains: query, mode: 'insensitive' } },
+      { description: { contains: query, mode: 'insensitive' } },
+    ];
+  }
+  if (category && category !== 'All') where.category = category;
+  if (brand && brand !== 'All') where.brand = brand;
+  if (minPrice !== undefined || maxPrice !== undefined) {
+    where.price = {};
+    if (minPrice !== undefined) where.price.gte = minPrice;
+    if (maxPrice !== undefined) where.price.lte = maxPrice;
+  }
+
+  // Build Prisma orderBy
+  let orderBy: any = { createdAt: 'desc' };
+  if (sort === 'price-low') orderBy = { price: 'asc' };
+  if (sort === 'price-high') orderBy = { price: 'desc' };
+  if (sort === 'rating') orderBy = { rating: 'desc' };
+
+  // Run Queries in parallel: filtered products, and aggregations for the filter sidebar
+  const [products, allCategories, allBrands] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      orderBy,
+      include: { images: true },
+    }),
+    prisma.product.findMany({ select: { category: true }, distinct: ['category'] }),
+    prisma.product.findMany({ select: { brand: true }, distinct: ['brand'] }),
+  ]);
+
+  const uniqueCategories = ['All', ...allCategories.map(c => c.category)];
+  const uniqueBrands = ['All', ...allBrands.map(b => b.brand)];
 
   const formattedProducts = products.map((p) => ({
     id: p.id,
@@ -46,7 +87,11 @@ export default async function StorePage() {
       {/* Main Content */}
       <section className="flex-1 pb-24">
         <div className="container mx-auto px-6">
-          <ProductGrid initialProducts={formattedProducts} />
+          <ProductGrid 
+            initialProducts={formattedProducts} 
+            uniqueCategories={uniqueCategories} 
+            uniqueBrands={uniqueBrands} 
+          />
         </div>
       </section>
 

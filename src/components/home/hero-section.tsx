@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedButton } from "@/components/ui/animated-button";
 
@@ -44,12 +45,16 @@ export function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 pt-4">
-            <AnimatedButton glow={true}>
-              Shop Now
-            </AnimatedButton>
-            <AnimatedButton variant="outline">
-              Trending Products
-            </AnimatedButton>
+            <Link href="/store">
+              <AnimatedButton glow={true}>
+                Shop Now
+              </AnimatedButton>
+            </Link>
+            <Link href="/store?sort=trending">
+              <AnimatedButton variant="outline">
+                Trending Products
+              </AnimatedButton>
+            </Link>
           </div>
         </motion.div>
 
@@ -63,7 +68,8 @@ export function HeroSection() {
           <motion.div
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-[80%] h-[80%] z-20 drop-shadow-[0_0_40px_rgba(59,130,246,0.3)]"
+            className="relative w-[80%] h-[80%] z-20"
+            style={{ filter: "drop-shadow(var(--shadow-glow-primary))" }}
           >
             <Image
               src="/hero-product.png"
