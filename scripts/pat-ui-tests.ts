@@ -42,7 +42,7 @@ async function runUITests() {
   
   // Launch headless since we don't need manual intervention anymore!
   const browser = await puppeteer.launch({ 
-    headless: "new",
+    headless: true,
     defaultViewport: { width: 1280, height: 800 }
   });
   
@@ -112,14 +112,14 @@ async function runUITests() {
   console.log("Modifying primary color and watermark opacity...");
   // Clear and type new primary color
   await page.evaluate(() => {
-    const primaryColorInput = document.querySelector('input[name="primaryColor"]');
+    const primaryColorInput = document.querySelector('input[name="primaryColor"]') as HTMLInputElement;
     if (primaryColorInput) {
       primaryColorInput.value = '#FF0055'; // Change to a pink/red for clear visual change
       primaryColorInput.dispatchEvent(new Event('input', { bubbles: true }));
       primaryColorInput.dispatchEvent(new Event('change', { bubbles: true }));
     }
     
-    const watermarkOpacityInput = document.querySelector('input[name="watermarkOpacity"]');
+    const watermarkOpacityInput = document.querySelector('input[name="watermarkOpacity"]') as HTMLInputElement;
     if (watermarkOpacityInput) {
       watermarkOpacityInput.value = '0.5'; // Make it very visible
       watermarkOpacityInput.dispatchEvent(new Event('input', { bubbles: true }));
