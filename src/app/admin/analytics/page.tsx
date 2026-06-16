@@ -14,7 +14,7 @@ export default async function AdminAnalyticsPage() {
 
   const [orders, customers, products] = await Promise.all([
     prisma.order.findMany({ 
-      include: { orderItems: { include: { product: true } } }
+      include: { items: { include: { product: true } } }
     }),
     prisma.user.findMany({
       include: { orders: true }
@@ -48,7 +48,7 @@ export default async function AdminAnalyticsPage() {
   const productSales: Record<string, {name: string, count: number}> = {};
   orders.forEach(order => {
     if (order.status !== 'CANCELLED') {
-      order.orderItems.forEach(item => {
+      order.items.forEach(item => {
         if (!productSales[item.productId]) {
           productSales[item.productId] = { name: item.product.name, count: 0 };
         }
