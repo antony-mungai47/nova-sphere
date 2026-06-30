@@ -1,39 +1,56 @@
-# Nova Sphere Agents Configuration
+# Nova Sphere Engineering Policies
 
-## General Rules
+## Continuous Controlled Delivery
 
-- **The Golden Rule:** No feature should be implemented unless it is architected, tested, documented, deployed to staging, verified, and regression-tested before moving to the next milestone. This prevents one change from breaking another.
-- **Role & Mindset:** Antigravity must act as a Senior Engineering Team with defined quality gates, not a raw code generator. Never mix architecture changes, UI redesigns, database migrations, and new features into a single chaotic implementation.
+Every sprint and feature expansion must strictly adhere to the Continuous Controlled Delivery policy.
 
-## The Release Management Lifecycle
+### 1. Architecture Gate
+Before any Sprint begins, an Architecture Review must be presented and approved via an `implementation_plan.md` artifact. The sequence is:
+Architecture Review -> Implementation -> Automated Testing -> Manual QA -> Performance Audit -> Security Check -> Visual Review -> Documentation -> RC Tag -> Next Sprint.
 
-Every single new feature or architectural change MUST strictly follow this quality gate lifecycle:
-1. **Idea / Request**
-2. **Architecture Review**
-3. **Database Design**
-4. **API Design**
-5. **Implementation**
-6. **Automated Testing**
-7. **Manual Testing**
-8. **UI/UX Review**
-9. **Performance Review**
-10. **Security Review**
-11. **Regression Testing**
-12. **Deployment to Staging**
-13. **Production Approval**
-14. **Vercel Deployment**
+### 2. Independent Deployability
+Every Sprint/Milestone must result in a production-ready, independently deployable codebase. 
+Sprint (N+1) cannot begin until Sprint (N) is fully deployable and tagged.
 
-## Immutable Architecture Principles (V2)
+### 3. Sprint Deliverables
+At the end of every sprint, the following deliverables MUST be provided via a `qa_report.md` artifact:
+- Functional Demo (Visual Evidence)
+- QA Report
+- Performance Report
+- Architecture Compliance Report
+- Database Migration Report (if applicable)
+- API Change Log
+- Feature Flag Status
+- Rollback Plan
+- Known Issues
+- Technical Debt Introduced (must be none)
+- Documentation Updates
 
-1. **Foundation Freeze:** The Domain-Driven architecture is the single source of truth. No feature may bypass domain boundaries.
-2. **Domain Independence:** Every domain MUST follow the internal structure: `components/`, `actions/`, `services/`, `repositories/`, `validators/`, `schemas/`, `types/`, `events/`, `tests/`.
-3. **Event-Driven Architecture:** Workflows spanning domains must use events (e.g. `OrderPlaced`, `InventoryChanged`). Side effects must subscribe to these events.
-4. **Repository Pattern:** UI → Action → Service → Repository → Database. UI must never access Prisma directly.
-5. **Enterprise Search Domain:** Search is a first-class domain (Autocomplete, Suggestions, Filters, Synonyms, AI Search).
-6. **Recommendation Engine:** Recommendations are a first-class domain (Trending, Seasonal, Personalization).
-7. **Notification Center:** All notifications (Email, In-App, SMS, Push, Alerts) are centralized. No feature sends notifications directly.
-8. **Shared Infrastructure:** The shared layer includes `hooks/`, `constants/`, `validators/`, `config/`, `schemas/`, `helpers/`, `icons/`, `assets/`, `errors/`, `utilities/`.
-9. **Enterprise Observability:** Operations must monitor Performance, Errors, Audit Logs, Security, Background Jobs, and Caches.
-10. **Feature Flag Policy:** Every major feature remains flagged until Development, Tests, A11y, Performance, Security, and Prod Approval are all passed.
-11. **Design System:** UI must use centralized tokens (Typography, spacing, colors, motion). No independent page styling.
-12. **Future Scalability:** Architecture must anticipate multi-vendor, subscriptions, AI assistants, live auctions, i18n, multi-currency, and mobile APIs.
+### 4. No Regression Rule
+No sprint can sacrifice quality for speed. Before moving to the next sprint, verify:
+- Existing features still work.
+- Performance, Lighthouse scores, Accessibility, and Mobile UX have not degraded.
+
+### 5. Feature Flags
+Every major feature must be hidden behind a Feature Flag (e.g., `LIVE_AUCTIONS`, `LIVE_INVENTORY`, `LIVE_SUPPORT`) to allow safe merging of code without exposing unfinished functionality.
+
+### 6. Performance Budgets
+Each sprint must define and meet measurable targets:
+- Page load < 2 seconds
+- Realtime latency < 150 ms
+- Bundle increase < 50 KB (unless justified)
+- Lighthouse Performance > 90
+- Accessibility > 95
+- CLS < 0.1
+
+### 7. Release Hardening Phase
+The final Sprint of any Release Candidate (e.g., Sprint 6 for RC2) is reserved entirely for Engineering Stabilization (Stress testing, memory profiling, load testing, security review). No new UI can be added during this phase.
+
+### 8. Proper Release Tagging
+Releases must be tagged using strict semantic versioning (e.g., `v2.0.0-rc2.1`) to maintain a clean, traceable history.
+
+### 9. 15-Point Acceptance Checklist
+A sprint is only complete if it satisfies the strict 15-point acceptance checklist (Build, TS, Lint, Tests, E2E, Console/Network errors, Mobile, A11y, Performance, Security, Docs, Feature Flags).
+
+### 10. Observability First
+Every new capability must include monitoring (Error logging, Latency metrics, Provider health, etc.) from day one. If it cannot be observed, it cannot be shipped.

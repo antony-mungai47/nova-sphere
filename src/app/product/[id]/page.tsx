@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { ProductClient } from "./product-client";
 import { notFound } from "next/navigation";
+import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
+import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
 import { Navbar } from "@/shared/components/layout/navbar";
 import { Footer } from "@/shared/components/layout/footer";
 
@@ -64,10 +66,16 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     rating: rp.rating,
   }));
 
+  const liveInventoryEnabled = await getFeatureFlag(FeatureFlags.LIVE_INVENTORY);
+
   return (
     <>
       <Navbar />
-      <ProductClient product={formattedProduct} relatedProducts={relatedProducts} />
+      <ProductClient 
+        product={formattedProduct} 
+        relatedProducts={relatedProducts} 
+        liveInventoryEnabled={liveInventoryEnabled} 
+      />
       <Footer />
     </>
   );

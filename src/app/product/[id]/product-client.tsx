@@ -7,6 +7,7 @@ import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw, Star, StarHalf, Che
 import { Button } from "@/shared/components/ui/button";
 import { useCartStore } from "@/store/useCartStore";
 import { toggleWishlist } from "@/domains/Customer/wishlist/actions";
+import { useInventory } from "@/domains/Realtime/hooks/useInventory";
 
 type ProductProps = {
   id: string;
@@ -36,12 +37,15 @@ type RelatedProduct = {
   rating: number;
 };
 
-export function ProductClient({ product, relatedProducts }: { product: ProductProps; relatedProducts?: RelatedProduct[] }) {
+export function ProductClient({ product, relatedProducts, liveInventoryEnabled = false }: { product: ProductProps; relatedProducts?: RelatedProduct[]; liveInventoryEnabled?: boolean }) {
   const { addItem } = useCartStore();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<"features" | "specs" | "reviews">("features");
 
-  const handleAddToCart = () => {
+  const { stock, connectionState, publish } = useInventory(product.id, product.stock);
+  const currentStock = liveInventoryEnabled ? stock : product.stock;
+
+  const handleAddToCart = async () => {
     addItem({
       id: product.id,
       name: product.name,
@@ -49,6 +53,14 @@ export function ProductClient({ product, relatedProducts }: { product: ProductPr
       image: product.image,
       quantity: 1
     });
+
+    if (liveInventoryEnabled && currentStock > 0) {
+      await publish({
+        productId: product.id,
+        newStock: currentStock - 1,
+        reservedCount: 0
+      });
+    }
   };
 
   const handleToggleWishlist = async () => {
@@ -194,9 +206,13 @@ export function ProductClient({ product, relatedProducts }: { product: ProductPr
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-white font-medium">Availability:</span>
-                {product.stock > 0 ? (
-                  <span className="text-green-400 flex items-center gap-1">
-                    <Check className="w-4 h-4" /> In Stock ({product.stock})
+                {currentStock > 0 ? (
+                  <span className="text-green-400 flex items-center gap-2">
+                    <Check className="w-4 h-4" /> 
+                    <span>In Stock <span className={liveInventoryEnabled ? "font-bold text-white tabular-nums animate-pulse" : ""}>({currentStock})</span></span>
+                    {liveInventoryEnabled && connectionState === 'Reconnecting' && (
+                       <span className="text-xs text-orange-400 ml-2 animate-pulse">(Reconnecting...)</span>
+                    )}
                   </span>
                 ) : (
                   <span className="text-red-400">Out of Stock</span>
@@ -207,11 +223,11 @@ export function ProductClient({ product, relatedProducts }: { product: ProductPr
             <div className="flex items-center gap-4 mb-12">
               <Button 
                 onClick={handleAddToCart}
-                disabled={product.stock === 0}
+                disabled={currentStock === 0}
                 className="flex-1 text-lg py-4 shadow-[0_0_30px_rgba(59,130,246,0.2)] flex items-center justify-center gap-3"
               >
                 <ShoppingCart className="w-5 h-5" />
-                {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+                {currentStock > 0 ? 'Add to Cart' : 'Out of Stock'}
               </Button>
               <button 
                 onClick={handleToggleWishlist}

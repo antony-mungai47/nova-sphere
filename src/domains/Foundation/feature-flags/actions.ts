@@ -8,6 +8,13 @@ import { FeatureFlag } from "@prisma/client";
 // For demonstration, we hardcode an admin ID or expect it to be passed in.
 const SYSTEM_ADMIN_ID = "SYSTEM_ADMIN";
 
+export async function getFeatureFlag(id: string): Promise<boolean> {
+  const flags = await FeatureFlagCache.getAllFlags();
+  const flag = flags.find(f => f.id === id);
+  if (!flag) return false;
+  return flag.enabled;
+}
+
 export async function toggleFeatureFlag(id: string, enabled: boolean, reason: string = "Manual toggle via dashboard") {
   try {
     await FeatureFlagRepository.update(id, { enabled }, SYSTEM_ADMIN_ID, reason, "127.0.0.1");

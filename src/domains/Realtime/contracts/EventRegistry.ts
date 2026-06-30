@@ -16,6 +16,9 @@ export const RealtimeEvents = {
   BID_OUTBID: 'BID_OUTBID',
   AUCTION_ENDED: 'AUCTION_ENDED',
 
+  // Global Feed
+  ACTIVITY_FEED_EVENT: 'ACTIVITY_FEED_EVENT',
+
   // Support & Presence
   SUPPORT_REPLY: 'SUPPORT_REPLY',
   USER_ONLINE: 'USER_ONLINE',
@@ -31,6 +34,14 @@ export const EventSchemas = {
     productId: z.string(),
     newStock: z.number().int().min(0),
     reservedCount: z.number().int().min(0),
+  }),
+  [RealtimeEvents.ACTIVITY_FEED_EVENT]: z.object({
+    id: z.string(),
+    type: z.enum(['BID', 'PURCHASE', 'REVIEW', 'USER_JOINED']),
+    title: z.string(),
+    description: z.string(),
+    timestamp: z.string().datetime(),
+    link: z.string().optional(),
   }),
   [RealtimeEvents.BID_PLACED]: z.object({
     auctionId: z.string(),
