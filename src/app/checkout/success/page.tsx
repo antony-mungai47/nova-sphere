@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle, Package, ArrowRight } from "lucide-react";
-import { AnimatedButton } from "@/components/ui/animated-button";
+import { Button } from "@/shared/components/ui/button";
 import { useCartStore } from "@/store/useCartStore";
-import { Navbar } from "@/components/layout/navbar";
+import { Navbar } from "@/shared/components/layout/navbar";
 
 export default function CheckoutSuccessPage() {
   const clearCart = useCartStore((state) => state.clearCart);
@@ -82,9 +82,9 @@ export default function CheckoutSuccessPage() {
           transition={{ delay: 0.9 }}
         >
           <Link href="/">
-            <AnimatedButton glow={true} className="w-full flex items-center justify-center gap-2 py-4 text-lg font-medium shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+            <Button className="w-full flex items-center justify-center gap-2 py-4 text-lg font-medium shadow-[0_0_20px_rgba(59,130,246,0.3)]">
               Return to Store <ArrowRight className="w-5 h-5" />
-            </AnimatedButton>
+            </Button>
           </Link>
         </motion.div>
       </motion.div>

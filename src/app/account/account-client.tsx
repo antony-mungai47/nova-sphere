@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Package, Heart, MapPin, Settings, LogOut, ChevronRight, ShoppingCart, Trash2 } from "lucide-react";
 import { useClerk } from "@clerk/nextjs";
-import { AnimatedButton } from "@/components/ui/animated-button";
+import { Button } from "@/shared/components/ui/button";
 import { useCartStore } from "@/store/useCartStore";
-import { toggleWishlist } from "@/app/actions/wishlist";
+import { toggleWishlist } from "@/domains/Customer/wishlist/actions";
 
 type AccountProps = {
   user: { name: string | null; email: string; imageUrl: string };
@@ -124,7 +124,7 @@ export function AccountClient({ user, orders, wishlist, addresses }: AccountProp
                       <h3 className="text-xl font-bold text-white mb-2">No orders yet</h3>
                       <p className="text-nova-silver mb-8">When you place an order, it will appear here.</p>
                       <Link href="/store">
-                        <AnimatedButton>Start Shopping</AnimatedButton>
+                        <Button>Start Shopping</Button>
                       </Link>
                     </div>
                   ) : (
@@ -165,7 +165,7 @@ export function AccountClient({ user, orders, wishlist, addresses }: AccountProp
                                 <p className="text-white font-bold">${item.price.toFixed(2)}</p>
                               </div>
                               <div className="hidden sm:block">
-                                <AnimatedButton variant="outline" className="px-6 py-2 text-sm">Buy Again</AnimatedButton>
+                                <Button variant="outline" className="px-6 py-2 text-sm">Buy Again</Button>
                               </div>
                             </div>
                           ))}
@@ -194,7 +194,7 @@ export function AccountClient({ user, orders, wishlist, addresses }: AccountProp
                       <h3 className="text-xl font-bold text-white mb-2">Your wishlist is empty</h3>
                       <p className="text-nova-silver mb-8">Save items you like and they will appear here.</p>
                       <Link href="/store">
-                        <AnimatedButton>Discover Products</AnimatedButton>
+                        <Button>Discover Products</Button>
                       </Link>
                     </div>
                   ) : (
@@ -250,7 +250,7 @@ export function AccountClient({ user, orders, wishlist, addresses }: AccountProp
                 >
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-bold text-white">Saved Addresses</h2>
-                    <AnimatedButton variant="outline" className="px-6 py-2 text-sm">+ Add New</AnimatedButton>
+                    <Button variant="outline" className="px-6 py-2 text-sm">+ Add New</Button>
                   </div>
                   
                   {addresses.length === 0 ? (
@@ -322,7 +322,7 @@ export function AccountClient({ user, orders, wishlist, addresses }: AccountProp
                     </div>
 
                     <div className="pt-6 border-t border-white/10">
-                      <AnimatedButton>Save Changes</AnimatedButton>
+                      <Button>Save Changes</Button>
                     </div>
                   </div>
                 </motion.div>

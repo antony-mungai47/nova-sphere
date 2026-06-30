@@ -1,0 +1,9 @@
+{
+  "products": 41,
+  "brokenImages": 0,
+  "duplicateSkus": 0,
+  "orphanImages": 0,
+  "invalidJson": 0,
+  "missingCategories": 0,
+  "zeroOrNegativePrices": 0
+}

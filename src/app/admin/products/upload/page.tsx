@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import { Upload, Image as ImageIcon, Loader2 } from "lucide-react";
-import { AnimatedButton } from "@/components/ui/animated-button";
-import { createProduct } from "@/app/actions/product";
+import { Button } from "@/shared/components/ui/button";
+import { createProduct } from "@/domains/Commerce/products/actions";
 import { useRouter } from "next/navigation";
 
 export default function ProductUploadPage() {
@@ -140,9 +140,9 @@ export default function ProductUploadPage() {
           </div>
         </div>
 
-        <AnimatedButton type="submit" disabled={loading} className="w-full py-4 text-lg font-bold flex items-center justify-center gap-2">
+        <Button type="submit" disabled={loading} className="w-full py-4 text-lg font-bold flex items-center justify-center gap-2">
           {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <><Upload className="w-5 h-5" /> Publish Product</>}
-        </AnimatedButton>
+        </Button>
       </form>
     </div>
   );

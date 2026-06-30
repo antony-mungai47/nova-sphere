@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect } from "react";
-import { AnimatedButton } from "@/components/ui/animated-button";
+import { Button } from "@/shared/components/ui/button";
 import { AlertTriangle, Home, RefreshCcw } from "lucide-react";
 
 export default function GlobalError({
@@ -33,20 +34,20 @@ export default function GlobalError({
         </p>
 
         <div className="flex flex-col gap-4">
-          <AnimatedButton 
+          <Button 
             onClick={() => reset()}
             className="w-full flex items-center justify-center gap-2 bg-nova-blue hover:bg-nova-blue/80 text-white py-4 rounded-xl font-bold"
           >
             <RefreshCcw className="w-5 h-5" />
             Reinitialize Sequence
-          </AnimatedButton>
+          </Button>
           
-          <a href="/">
+          <Link href="/">
             <button className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-nova-silver hover:text-white py-4 rounded-xl font-bold transition-all border border-white/10">
               <Home className="w-5 h-5" />
               Return to Core Hub
             </button>
-          </a>
+          </Link>
         </div>
         
         {error.digest && (

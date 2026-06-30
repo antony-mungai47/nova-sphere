@@ -1,8 +1,8 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { ProductGrid } from "@/components/store/product-grid";
+import { Navbar } from "@/shared/components/layout/navbar";
+import { Footer } from "@/shared/components/layout/footer";
+import { ProductGrid } from "@/domains/Commerce/products/components/store/product-grid";
 
 export default async function StorePage({
   searchParams,

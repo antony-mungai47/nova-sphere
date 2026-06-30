@@ -1,0 +1,39 @@
+{
+  "totalProducts": 46,
+  "totalAuctions": 5,
+  "totalImages": 46,
+  "brokenImages": [],
+  "missingImages": [],
+  "duplicateProducts": [],
+  "outOfStockProducts": [
+    {
+      "id": "cmqfsoqox001ktxl4goef3gnf",
+      "name": "Immerse VR Headset"
+    },
+    {
+      "id": "cmqfso5fx000ctxl4c1sd2pnj",
+      "name": "SoundWave Mini Speaker"
+    },
+    {
+      "id": "cmqfsok2n0016txl4roy5pr3q",
+      "name": "Explorer Winter Parka"
+    }
+  ],
+  "categoryAnomalies": [
+    {
+      "id": "cmqje62pw0000txrwtlpdvnop",
+      "name": "Rolex Submariner Date 116610LN",
+      "category": "Luxury Watches"
+    },
+    {
+      "id": "cmqje66210008txrwxm4il8eb",
+      "name": "1st Edition Charizard Holographic - PSA 10",
+      "category": "Collectibles"
+    },
+    {
+      "id": "cmqje67c0000ctxrwz1y55nkm",
+      "name": "Apple-1 Computer Original Motherboard",
+      "category": "Rare Electronics"
+    }
+  ]
+}

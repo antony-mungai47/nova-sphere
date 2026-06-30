@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Edit, Trash2, Plus, X, Loader2 } from "lucide-react";
-import { AnimatedButton } from "@/components/ui/animated-button";
+import { Button } from "@/shared/components/ui/button";
 import { createProduct, updateProduct, deleteProduct } from "@/app/admin/products/actions";
 import { motion, AnimatePresence } from "framer-motion";
 import { CldUploadWidget } from "next-cloudinary";
@@ -70,9 +70,9 @@ export const ProductsClient = ({ initialProducts }: { initialProducts: Product[]
           <h1 className="text-3xl font-bold text-white mb-2">Products</h1>
           <p className="text-nova-silver">Manage your tech inventory.</p>
         </div>
-        <AnimatedButton onClick={handleOpenNew} glow={true} className="flex items-center gap-2">
+        <Button onClick={handleOpenNew} className="flex items-center gap-2">
           <Plus className="w-4 h-4" /> Add Product
-        </AnimatedButton>
+        </Button>
       </div>
 
       <div className="glass-panel rounded-2xl border border-white/10 overflow-hidden">
@@ -257,9 +257,9 @@ export const ProductsClient = ({ initialProducts }: { initialProducts: Product[]
                   <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3 rounded-xl border border-white/10 text-nova-silver hover:bg-white/5 transition-colors font-medium">
                     Cancel
                   </button>
-                  <AnimatedButton type="submit" disabled={isSubmitting} className="px-8 py-3 font-medium flex items-center justify-center min-w-[140px]">
+                  <Button type="submit" disabled={isSubmitting} className="px-8 py-3 font-medium flex items-center justify-center min-w-[140px]">
                     {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Save Product'}
-                  </AnimatedButton>
+                  </Button>
                 </div>
               </form>
             </motion.div>

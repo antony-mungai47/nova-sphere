@@ -355,6 +355,14 @@ async function main() {
 
   // Clean DB
   console.log('Cleaning database...');
+  await prisma.transaction.deleteMany();
+  await prisma.orderItem.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.bid.deleteMany();
+  await prisma.auction.deleteMany();
+  await prisma.recentlyViewed.deleteMany();
+  await prisma.wishlistItem.deleteMany();
+  await prisma.review.deleteMany();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   console.log('Database cleaned.');
@@ -386,6 +394,62 @@ async function main() {
           create: imagesData
         },
         createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000)
+      }
+    });
+  }
+
+  console.log('Seeding coupons...');
+  await prisma.coupon.upsert({
+    where: { code: 'NOVA10' },
+    update: { discountPercent: 10, isActive: true },
+    create: { code: 'NOVA10', discountPercent: 10, isActive: true }
+  });
+
+  console.log('Seeding feature flags...');
+  const initialFlags = [
+    { key: "AUCTIONS", name: "Auctions", category: "Commerce", type: "Release" as const, enabled: false, description: "Real-time bidding functionality." },
+    { key: "AI_ASSISTANT", name: "AI Assistant", category: "AI", type: "Experiment" as const, enabled: false, description: "Generative AI shopping assistant." },
+    { key: "LIVE_SUPPORT", name: "Live Support", category: "Customer", type: "Release" as const, enabled: true, description: "Customer support chat widget." },
+    { key: "RECOMMENDATIONS", name: "Recommendations", category: "Marketplace", type: "Release" as const, enabled: true, description: "AI-driven product recommendations." },
+    { key: "NEW_CHECKOUT", name: "Checkout V2", category: "Commerce", type: "Release" as const, enabled: false, description: "Optimized one-page checkout." },
+    { key: "NEW_SEARCH", name: "Search V2", category: "Search", type: "Experiment" as const, enabled: false, description: "Fuzzy and typo-tolerant search." },
+    { key: "SELLER_CENTER", name: "Seller Center", category: "Marketplace", type: "Permission" as const, enabled: false, description: "Vendor onboarding portal." },
+    { key: "DARK_THEME", name: "Dark Theme", category: "Experimental", type: "Release" as const, enabled: true, description: "Deep navy color scheme." },
+    { key: "LIGHT_THEME", name: "Light Theme", category: "Experimental", type: "Release" as const, enabled: false, description: "Clean white color scheme." },
+    { key: "EXECUTIVE_THEME", name: "Executive Theme", category: "Experimental", type: "Release" as const, enabled: false, description: "Luxury gold/black scheme." },
+    { key: "ABANDONED_CART", name: "Abandoned Cart", category: "Customer", type: "Release" as const, enabled: true, description: "Email reminders for left items." },
+    { key: "LOYALTY", name: "Loyalty Program", category: "Customer", type: "Release" as const, enabled: false, description: "Points system for repeat buyers." },
+    { key: "WISHLIST_V2", name: "Wishlist V2", category: "Customer", type: "Experiment" as const, enabled: false, description: "Sharable wishlists." },
+    { key: "LIVE_CHAT", name: "Live Chat", category: "Operational", type: "Release" as const, enabled: true, description: "Live WebSocket chat system." },
+    { key: "NOTIFICATIONS", name: "Push Notifications", category: "Customer", type: "Release" as const, enabled: false, description: "Browser notifications." },
+    { key: "BIDDING", name: "Bidding Engine", category: "Commerce", type: "Release" as const, enabled: false, description: "Underlying auction bid engine.", dependencies: ["AUCTIONS"] },
+    { key: "ANALYTICS_V2", name: "Analytics V2", category: "Analytics", type: "Release" as const, enabled: false, description: "Advanced dashboard charts." },
+    { key: "REGIONAL_PRODUCTS", name: "Regional Products", category: "Commerce", type: "Permission" as const, enabled: false, description: "Geofenced catalogs." },
+    { key: "SMART_SEARCH", name: "Smart Search", category: "Search", type: "Release" as const, enabled: false, description: "Search by image/AI." },
+    { key: "VOICE_SEARCH", name: "Voice Search", category: "Search", type: "Experiment" as const, enabled: false, description: "Microphone search input." },
+    { key: "PAYMENTS", name: "Payments System", category: "Payments", type: "KillSwitch" as const, enabled: true, description: "Master switch for Stripe." },
+  ];
+
+  for (const flag of initialFlags) {
+    await prisma.featureFlag.upsert({
+      where: { key: flag.key },
+      update: {
+        name: flag.name,
+        category: flag.category,
+        type: flag.type,
+        enabled: flag.enabled,
+        description: flag.description,
+        dependencies: flag.dependencies ? flag.dependencies : [],
+      },
+      create: {
+        key: flag.key,
+        name: flag.name,
+        category: flag.category,
+        type: flag.type,
+        enabled: flag.enabled,
+        description: flag.description,
+        dependencies: flag.dependencies ? flag.dependencies : [],
+        createdBy: "SYSTEM_SEED",
       }
     });
   }

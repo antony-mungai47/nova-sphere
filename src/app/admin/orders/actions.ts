@@ -10,7 +10,7 @@ export async function updateOrderStatus(orderId: string, status: string) {
 
   await prisma.order.update({
     where: { id: orderId },
-    data: { status }
+    data: { status: status as any }
   });
 
   revalidatePath("/admin/orders");

@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { ProductClient } from "./product-client";
 import { notFound } from "next/navigation";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/shared/components/layout/navbar";
+import { Footer } from "@/shared/components/layout/footer";
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -30,8 +30,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   let specs = {};
   let features = [];
   try {
-    if (product.specs) specs = JSON.parse(product.specs);
-    if (product.features) features = JSON.parse(product.features);
+    if (product.specs) specs = typeof product.specs === 'string' ? JSON.parse(product.specs) : product.specs;
+    if (product.features) features = typeof product.features === 'string' ? JSON.parse(product.features) : product.features;
   } catch (e) {
     console.error("Failed to parse product JSON fields", e);
   }

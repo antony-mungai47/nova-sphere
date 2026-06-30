@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw, Star, StarHalf, ChevronRight, Check } from "lucide-react";
-import { AnimatedButton } from "@/components/ui/animated-button";
+import { Button } from "@/shared/components/ui/button";
 import { useCartStore } from "@/store/useCartStore";
-import { toggleWishlist } from "@/app/actions/wishlist";
+import { toggleWishlist } from "@/domains/Customer/wishlist/actions";
 
 type ProductProps = {
   id: string;
@@ -205,14 +205,14 @@ export function ProductClient({ product, relatedProducts }: { product: ProductPr
             </div>
 
             <div className="flex items-center gap-4 mb-12">
-              <AnimatedButton 
+              <Button 
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
                 className="flex-1 text-lg py-4 shadow-[0_0_30px_rgba(59,130,246,0.2)] flex items-center justify-center gap-3"
               >
                 <ShoppingCart className="w-5 h-5" />
                 {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
-              </AnimatedButton>
+              </Button>
               <button 
                 onClick={handleToggleWishlist}
                 className="w-16 h-16 rounded-2xl glass-panel border border-white/10 flex items-center justify-center text-nova-silver hover:text-red-400 hover:border-red-400/50 hover:bg-red-400/10 transition-all shadow-lg"
@@ -325,7 +325,7 @@ export function ProductClient({ product, relatedProducts }: { product: ProductPr
                           <p className="text-nova-silver text-sm">Based on {product.reviewCount} reviews</p>
                         </div>
                       </div>
-                      <AnimatedButton variant="outline" className="w-full">Write a Review</AnimatedButton>
+                      <Button variant="outline" className="w-full">Write a Review</Button>
                     </div>
 
                     {/* Review List (Mock for now until we load real reviews from DB) */}

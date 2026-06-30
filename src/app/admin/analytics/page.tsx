@@ -30,7 +30,7 @@ export default async function AdminAnalyticsPage() {
 
   // Order Counts
   const pendingOrders = orders.filter(o => o.status === 'PENDING').length;
-  const processingOrders = orders.filter(o => o.status === 'PROCESSING').length;
+  const processingOrders = orders.filter(o => o.status === 'PROCESSING' as any).length;
   const completedOrders = orders.filter(o => o.status === 'DELIVERED' || o.status === 'PAID').length;
   const cancelledOrders = orders.filter(o => o.status === 'CANCELLED').length;
 

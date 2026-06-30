@@ -1,0 +1,102 @@
+﻿prisma/seed-production.ts(439,9): error TS2322: Type 'string' is not assignable to type 'FeatureFlagType | EnumFeatureFlagTypeFieldUpdateOperationsInput | undefined'.
+prisma/seed-production.ts(442,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+  Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+prisma/seed-production.ts(448,9): error TS2322: Type 'string' is not assignable to type 'FeatureFlagType'.
+prisma/seed-production.ts(451,9): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+  Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+scripts/db-audit.ts(30,9): error TS2365: Operator '<=' cannot be applied to types 'Decimal' and 'number'.
+scripts/db-audit.ts(34,24): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+scripts/db-audit.ts(37,24): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/app/admin/analytics/page.tsx(29,114): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/analytics/page.tsx(30,137): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/analytics/page.tsx(31,148): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/analytics/page.tsx(32,150): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/analytics/page.tsx(36,47): error TS2367: This comparison appears to be unintentional because the types 'OrderStatus' and '"PROCESSING"' have no overlap.
+src/app/admin/auctions/page.tsx(27,56): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/auctions/page.tsx(109,59): error TS2365: Operator '>' cannot be applied to types 'Decimal' and 'number'.
+src/app/admin/feature-flags/feature-flag-client.tsx(97,22): error TS2367: This comparison appears to be unintentional because the types 'FeatureFlagType' and '"Kill Switch"' have no overlap.
+src/app/admin/feature-flags/feature-flag-client.tsx(100,49): error TS2367: This comparison appears to be unintentional because the types 'FeatureFlagType' and '"Kill Switch"' have no overlap.
+src/app/admin/feature-flags/page.tsx(14,42): error TS2367: This comparison appears to be unintentional because the types 'FeatureFlagType' and '"Kill Switch"' have no overlap.
+src/app/admin/financials/page.tsx(31,57): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/financials/page.tsx(32,53): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/financials/page.tsx(33,58): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/financials/page.tsx(36,29): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/logs/page.tsx(76,81): error TS2322: Type 'string | number | true | JsonObject | JsonArray' is not assignable to type 'ReactNode'.
+  Type 'JsonObject' is not assignable to type 'ReactNode'.
+    Type 'JsonObject' is missing the following properties from type 'ReactPortal': children, type, props, key
+src/app/admin/orders/actions.ts(13,13): error TS2322: Type 'string' is not assignable to type 'OrderStatus | EnumOrderStatusFieldUpdateOperationsInput | undefined'.
+src/app/admin/page.tsx(34,57): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/products/page.tsx(23,26): error TS2322: Type '{ id: string; name: string; price: Decimal; category: string; imageUrl: string; stock: number; isTrending: boolean; description: string; }[]' is not assignable to type 'Product[]'.
+  Type '{ id: string; name: string; price: Decimal; category: string; imageUrl: string; stock: number; isTrending: boolean; description: string; }' is not assignable to type 'Product'.
+    Types of property 'price' are incompatible.
+      Type 'Decimal' is not assignable to type 'number'.
+src/app/api/checkout/simulate-webhook/route.ts(54,63): error TS2345: Argument of type 'Decimal' is not assignable to parameter of type 'number'.
+src/app/auctions/[id]/page.tsx(116,23): error TS2365: Operator '>' cannot be applied to types 'Decimal' and 'number'.
+src/app/auctions/[id]/page.tsx(133,21): error TS2322: Type 'Decimal' is not assignable to type 'number'.
+src/app/auctions/[id]/page.tsx(134,21): error TS2322: Type 'Decimal' is not assignable to type 'number'.
+src/app/auctions/page.tsx(109,59): error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/app/auctions/page.tsx(109,74): error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/app/checkout/simulate/page.tsx(68,60): error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/app/compare/page.tsx(50,42): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/app/order/[id]/invoice/page.tsx(75,78): error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/app/order/[id]/invoice/page.tsx(88,14): error TS2365: Operator '>' cannot be applied to types 'Decimal' and 'number'.
+src/app/order/[id]/invoice/page.tsx(96,22): error TS2365: Operator '>' cannot be applied to types 'Decimal' and 'number'.
+src/app/orders/page.tsx(105,77): error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/app/page.tsx(69,25): error TS2322: Type '{ id: string; name: string; price: Decimal; category: string; brand: string; image: string; description: string; salePrice: Decimal | null; rating: number; reviewCount: number; stock: number; }[]' is not assignable to type 'ProductProps[]'.
+  Type '{ id: string; name: string; price: Decimal; category: string; brand: string; image: string; description: string; salePrice: Decimal | null; rating: number; reviewCount: number; stock: number; }' is not assignable to type 'ProductProps'.
+    Types of property 'price' are incompatible.
+      Type 'Decimal' is not assignable to type 'number'.
+src/app/product/[id]/page.tsx(101,43): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/app/product/[id]/page.tsx(102,49): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/app/product/[id]/page.tsx(169,9): error TS2322: Type '{ id: string; name: string; price: Decimal; salePrice: Decimal | null; category: string; brand: string; images: string[]; image: string; description: string; rating: number; reviewCount: number; ... 4 more ...; reviews: { ...; }[]; }' is not assignable to type 'ProductProps'.
+  Types of property 'price' are incompatible.
+    Type 'Decimal' is not assignable to type 'number'.
+src/app/product/[id]/page.tsx(170,9): error TS2322: Type '{ id: string; name: string; price: Decimal; salePrice: Decimal | null; category: string; image: string; rating: number; }[]' is not assignable to type 'RelatedProduct[]'.
+  Type '{ id: string; name: string; price: Decimal; salePrice: Decimal | null; category: string; image: string; rating: number; }' is not assignable to type 'RelatedProduct'.
+    Types of property 'price' are incompatible.
+      Type 'Decimal' is not assignable to type 'number'.
+src/app/product/[id]/page.tsx(172,9): error TS2322: Type '{ id: string; name: string; price: Decimal; salePrice: Decimal | null; category: string; image: string; rating: number; }[]' is not assignable to type 'RelatedProduct[]'.
+  Type '{ id: string; name: string; price: Decimal; salePrice: Decimal | null; category: string; image: string; rating: number; }' is not assignable to type 'RelatedProduct'.
+    Types of property 'price' are incompatible.
+      Type 'Decimal' is not assignable to type 'number'.
+src/app/recommended/page.tsx(142,13): error TS2322: Type '{ id: string; name: string; price: Decimal; category: string; brand: string; image: string; description: string; salePrice: Decimal | null; rating: number; reviewCount: number; stock: number; }[]' is not assignable to type 'ProductProps[]'.
+  Type '{ id: string; name: string; price: Decimal; category: string; brand: string; image: string; description: string; salePrice: Decimal | null; rating: number; reviewCount: number; stock: number; }' is not assignable to type 'ProductProps'.
+    Types of property 'price' are incompatible.
+      Type 'Decimal' is not assignable to type 'number'.
+src/app/store/page.tsx(116,13): error TS2322: Type '{ id: string; name: string; price: Decimal; category: string; brand: string; image: string; description: string; salePrice: Decimal | null; rating: number; reviewCount: number; stock: number; }[]' is not assignable to type 'ProductProps[]'.
+  Type '{ id: string; name: string; price: Decimal; category: string; brand: string; image: string; description: string; salePrice: Decimal | null; rating: number; reviewCount: number; stock: number; }' is not assignable to type 'ProductProps'.
+    Types of property 'price' are incompatible.
+      Type 'Decimal' is not assignable to type 'number'.
+src/domains/Customer/account/actions.ts(31,7): error TS2322: Type 'string | null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+  Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/domains/Customer/account/support-actions.ts(79,13): error TS2322: Type '"CLOSED"' is not assignable to type 'TicketStatus | EnumTicketStatusFieldUpdateOperationsInput | undefined'.
+src/domains/Foundation/feature-flags/repositories/featureFlag.repository.ts(19,50): error TS2322: Type 'Omit<{ name: string; id: string; createdAt: Date; updatedAt: Date; createdBy: string | null; updatedBy: string | null; description: string | null; category: string; type: FeatureFlagType; ... 9 more ...; endDate: Date | null; }, "id" | ... 1 more ... | "updatedAt">' is not assignable to type '(Without<FeatureFlagCreateInput, FeatureFlagUncheckedCreateInput> & FeatureFlagUncheckedCreateInput) | (Without<...> & FeatureFlagCreateInput)'.
+  Type 'Omit<{ name: string; id: string; createdAt: Date; updatedAt: Date; createdBy: string | null; updatedBy: string | null; description: string | null; category: string; type: FeatureFlagType; ... 9 more ...; endDate: Date | null; }, "id" | ... 1 more ... | "updatedAt">' is not assignable to type 'Without<FeatureFlagUncheckedCreateInput, FeatureFlagCreateInput> & FeatureFlagCreateInput'.
+    Type 'Omit<{ name: string; id: string; createdAt: Date; updatedAt: Date; createdBy: string | null; updatedBy: string | null; description: string | null; category: string; type: FeatureFlagType; ... 9 more ...; endDate: Date | null; }, "id" | ... 1 more ... | "updatedAt">' is not assignable to type 'FeatureFlagCreateInput'.
+      Types of property 'enabledForRoles' are incompatible.
+        Type 'JsonValue' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+          Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/domains/Foundation/feature-flags/repositories/featureFlag.repository.ts(24,11): error TS2322: Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/domains/Foundation/feature-flags/repositories/featureFlag.repository.ts(42,9): error TS2322: Type 'Partial<{ name: string; id: string; createdAt: Date; updatedAt: Date; createdBy: string | null; updatedBy: string | null; description: string | null; category: string; type: FeatureFlagType; ... 9 more ...; endDate: Date | null; }>' is not assignable to type '(Without<FeatureFlagUpdateInput, FeatureFlagUncheckedUpdateInput> & FeatureFlagUncheckedUpdateInput) | (Without<...> & FeatureFlagUpdateInput)'.
+  Type 'Partial<{ name: string; id: string; createdAt: Date; updatedAt: Date; createdBy: string | null; updatedBy: string | null; description: string | null; category: string; type: FeatureFlagType; ... 9 more ...; endDate: Date | null; }>' is not assignable to type 'Without<FeatureFlagUncheckedUpdateInput, FeatureFlagUpdateInput> & FeatureFlagUpdateInput'.
+    Type 'Partial<{ name: string; id: string; createdAt: Date; updatedAt: Date; createdBy: string | null; updatedBy: string | null; description: string | null; category: string; type: FeatureFlagType; ... 9 more ...; endDate: Date | null; }>' is not assignable to type 'FeatureFlagUpdateInput'.
+      Types of property 'enabledForRoles' are incompatible.
+        Type 'JsonValue | undefined' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+          Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/domains/Foundation/feature-flags/repositories/featureFlag.repository.ts(68,13): error TS2322: Type 'null' is not assignable to type 'NullableJsonNullValueInput | InputJsonValue | undefined'.
+src/domains/Foundation/feature-flags/services/featureFlag.service.ts(68,27): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/domains/Foundation/feature-flags/services/featureFlag.service.ts(105,36): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/domains/Foundation/feature-flags/services/featureFlag.service.ts(116,40): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/domains/Foundation/feature-flags/services/featureFlag.service.ts(126,36): error TS2345: Argument of type 'string | number | true | JsonObject | JsonArray' is not assignable to parameter of type 'string'.
+  Type 'number' is not assignable to type 'string'.
+src/domains/Marketplace/auctions/actions.ts(46,27): error TS2345: Argument of type 'Decimal' is not assignable to parameter of type 'number'.
+src/domains/Marketplace/auctions/actions.ts(46,48): error TS2365: Operator '+' cannot be applied to types 'Decimal' and 'number'.
+src/domains/Marketplace/auctions/actions.ts(57,28): error TS2365: Operator '<=' cannot be applied to types 'number' and 'Decimal'.

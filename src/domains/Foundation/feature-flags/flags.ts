@@ -1,0 +1,43 @@
+export enum FeatureFlags {
+  AUCTIONS = "AUCTIONS",
+  AI_ASSISTANT = "AI_ASSISTANT",
+  LIVE_SUPPORT = "LIVE_SUPPORT",
+  RECOMMENDATIONS = "RECOMMENDATIONS",
+  NEW_CHECKOUT = "NEW_CHECKOUT",
+  NEW_SEARCH = "NEW_SEARCH",
+  SELLER_CENTER = "SELLER_CENTER",
+  DARK_THEME = "DARK_THEME",
+  LIGHT_THEME = "LIGHT_THEME",
+  EXECUTIVE_THEME = "EXECUTIVE_THEME",
+  ABANDONED_CART = "ABANDONED_CART",
+  LOYALTY = "LOYALTY",
+  WISHLIST_V2 = "WISHLIST_V2",
+  LIVE_CHAT = "LIVE_CHAT",
+  NOTIFICATIONS = "NOTIFICATIONS",
+  BIDDING = "BIDDING",
+  ANALYTICS_V2 = "ANALYTICS_V2",
+  REGIONAL_PRODUCTS = "REGIONAL_PRODUCTS",
+  SMART_SEARCH = "SMART_SEARCH",
+  VOICE_SEARCH = "VOICE_SEARCH",
+}
+
+export enum FlagCategory {
+  COMMERCE = "Commerce",
+  MARKETPLACE = "Marketplace",
+  CUSTOMER = "Customer",
+  ADMIN = "Admin",
+  AI = "AI",
+  ANALYTICS = "Analytics",
+  SEARCH = "Search",
+  SECURITY = "Security",
+  PAYMENTS = "Payments",
+  EXPERIMENTAL = "Experimental"
+}
+
+export enum FlagType {
+  RELEASE = "Release",
+  EXPERIMENT = "Experiment",
+  PERMISSION = "Permission",
+  OPERATIONAL = "Operational",
+  KILL_SWITCH = "Kill Switch"
+}

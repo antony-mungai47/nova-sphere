@@ -2,7 +2,7 @@ import React from 'react';
 import { prisma } from "@/lib/prisma";
 import { redirect } from 'next/navigation';
 import { CreditCard, ShieldCheck, Lock } from 'lucide-react';
-import { AnimatedButton } from '@/components/ui/animated-button';
+import { AnimatedButton } from '@/shared/components/ui/animated-button';
 
 export default async function SimulateCheckoutPage({
   searchParams,

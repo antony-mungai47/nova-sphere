@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-06-29T15:24:16.063Z",
+  "databaseUrl": "postgresql://neondb_owner:***@ep-jolly-frog-ajrzk93h.c-3.us-east-2.aws.neon.tech/neondb?sslmode=require",
+  "tableCounts": {
+    "User": 1,
+    "Address": 0,
+    "Product": 41,
+    "ProductImage": 41,
+    "Review": 0,
+    "WishlistItem": 0,
+    "Coupon": 1,
+    "Order": 0,
+    "OrderItem": 0,
+    "StoreSettings": 1,
+    "SupportTicket": 3,
+    "TicketMessage": 4,
+    "Auction": 0,
+    "Bid": 0,
+    "RecentlyViewed": 0,
+    "SavedSearch": 0,
+    "AdminLog": 0,
+    "Transaction": 0,
+    "SystemLog": 0,
+    "FeatureFlag": 21,
+    "FeatureFlagHistory": 0
+  }
+}

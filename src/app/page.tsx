@@ -1,7 +1,7 @@
-import { Navbar } from "@/components/layout/navbar";
-import { HeroSection } from "@/components/home/hero-section";
-import { TrendingProducts } from "@/components/home/trending-products";
-import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/shared/components/layout/navbar";
+import { HeroSection } from "@/domains/Experience/components/home/hero-section";
+import { TrendingProducts } from "@/domains/Experience/components/home/trending-products";
+import { Footer } from "@/shared/components/layout/footer";
 import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
