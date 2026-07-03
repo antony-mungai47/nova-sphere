@@ -28,7 +28,7 @@ export default async function AdminOverview() {
     })
   ]);
 
-  const totalRevenue = allOrders.reduce((sum, order) => sum + order.totalAmount, 0);
+  const totalRevenue = allOrders.reduce((sum, order) => sum + order.totalAmount.toNumber(), 0);
   
   // Pending orders
   const pendingOrders = allOrders.filter(o => o.status === 'PENDING').length;

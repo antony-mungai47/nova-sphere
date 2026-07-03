@@ -19,11 +19,17 @@ export const RealtimeEvents = {
   // Global Feed
   ACTIVITY_FEED_EVENT: 'ACTIVITY_FEED_EVENT',
 
-  // Support & Presence
-  SUPPORT_REPLY: 'SUPPORT_REPLY',
+  // Support, Conversations & Presence
+  MESSAGE_SENT: 'MESSAGE_SENT',
+  MESSAGE_DELIVERED: 'MESSAGE_DELIVERED',
+  MESSAGE_SEEN: 'MESSAGE_SEEN',
   USER_ONLINE: 'USER_ONLINE',
   USER_OFFLINE: 'USER_OFFLINE',
   USER_TYPING: 'USER_TYPING',
+  PRESENCE_UPDATE: 'PRESENCE_UPDATE',
+
+  // Notifications
+  NOTIFICATION_RECEIVED: 'NOTIFICATION_RECEIVED',
 } as const;
 
 export type RealtimeEventName = typeof RealtimeEvents[keyof typeof RealtimeEvents];
@@ -58,12 +64,49 @@ export const EventSchemas = {
   [RealtimeEvents.USER_ONLINE]: z.object({
     userId: z.string(),
     role: z.string().optional(),
+    timestamp: z.string().datetime().optional(),
   }),
   [RealtimeEvents.USER_OFFLINE]: z.object({
     userId: z.string(),
+    timestamp: z.string().datetime().optional(),
   }),
   [RealtimeEvents.USER_TYPING]: z.object({
+    conversationId: z.string(),
     userId: z.string(),
     isTyping: z.boolean(),
+  }),
+  [RealtimeEvents.PRESENCE_UPDATE]: z.object({
+    userId: z.string(),
+    status: z.enum(['ONLINE', 'OFFLINE', 'AWAY', 'IDLE']),
+    lastSeenAt: z.string().datetime().optional(),
+  }),
+  [RealtimeEvents.MESSAGE_SENT]: z.object({
+    messageId: z.string(),
+    conversationId: z.string(),
+    senderId: z.string(),
+    content: z.string(),
+    timestamp: z.string().datetime(),
+    attachments: z.array(z.any()).optional(),
+  }),
+  [RealtimeEvents.MESSAGE_DELIVERED]: z.object({
+    messageId: z.string(),
+    conversationId: z.string(),
+    timestamp: z.string().datetime(),
+  }),
+  [RealtimeEvents.MESSAGE_SEEN]: z.object({
+    messageId: z.string(),
+    conversationId: z.string(),
+    userId: z.string(),
+    timestamp: z.string().datetime(),
+  }),
+  [RealtimeEvents.NOTIFICATION_RECEIVED]: z.object({
+    id: z.string(),
+    type: z.string(),
+    priority: z.string(),
+    title: z.string(),
+    message: z.string(),
+    link: z.string().nullable().optional(),
+    timestamp: z.string(),
+    isRead: z.boolean(),
   }),
 };

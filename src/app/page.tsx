@@ -1,4 +1,4 @@
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { HeroSection } from "@/domains/Experience/components/home/hero-section";
 import { TrendingProducts } from "@/domains/Experience/components/home/trending-products";
 import { LiveTicker } from "@/domains/Experience/components/home/live-ticker";
@@ -17,12 +17,12 @@ export default async function Home() {
   const formattedProducts = products.map((p) => ({
     id: p.id,
     name: p.name,
-    price: p.price,
+    price: p.price.toNumber(),
     category: p.category,
     brand: p.brand,
     image: p.images[0]?.url || "/hero-product.png",
     description: p.description,
-    salePrice: p.salePrice,
+    salePrice: p.salePrice ? p.salePrice.toNumber() : null,
     rating: p.rating,
     reviewCount: p.reviewCount,
   }));

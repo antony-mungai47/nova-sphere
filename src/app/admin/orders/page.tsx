@@ -46,7 +46,7 @@ export default async function AdminOrdersPage() {
                   <td className="p-4">
                     <span className={`px-2 py-1 text-xs rounded-full border ${
                       order.status === 'PENDING' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/20' :
-                      order.status === 'PAID' ? 'bg-nova-emerald/20 text-nova-emerald border-nova-emerald/20' :
+                      order.status === 'CAPTURED' ? 'bg-nova-emerald/20 text-nova-emerald border-nova-emerald/20' :
                       'bg-nova-blue/20 text-nova-blue border-nova-blue/20'
                     }`}>
                       {order.status}

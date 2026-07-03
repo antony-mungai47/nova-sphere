@@ -29,7 +29,7 @@ export async function placeBid(auctionId: string, amount: number) {
     throw new Error("Auction not found.");
   }
 
-  if (auction.status !== "ACTIVE") {
+  if (auction.status !== "LIVE") {
     throw new Error("This auction is no longer active.");
   }
 
@@ -37,7 +37,7 @@ export async function placeBid(auctionId: string, amount: number) {
     throw new Error("This auction has ended.");
   }
 
-  const minBid = Math.max(auction.startingBid, Number(auction.currentBid.toString()) + 1); // require at least $1 more than current
+  const minBid = Math.max(auction.baseAmount.toNumber(), Number(auction.currentBid.toString()) + 1); // require at least $1 more than current
   if (amount < minBid) {
     throw new Error(`Your bid must be at least $${minBid.toFixed(2)}.`);
   }
@@ -48,7 +48,7 @@ export async function placeBid(auctionId: string, amount: number) {
       where: { id: auctionId },
     });
 
-    if (!currentAuction || amount <= currentAuction.currentBid) {
+    if (!currentAuction || amount <= currentAuction.currentBid.toNumber()) {
       throw new Error("Someone else just placed a higher bid!");
     }
 

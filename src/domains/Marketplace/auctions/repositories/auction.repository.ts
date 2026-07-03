@@ -4,7 +4,7 @@ export const AuctionRepository = {
   ...prisma.auction,
   getActiveAuctions: async (take: number = 4) => {
     return prisma.auction.findMany({
-      where: { status: "ACTIVE" },
+      where: { status: "LIVE" },
       include: {
         product: {
           include: { images: true }

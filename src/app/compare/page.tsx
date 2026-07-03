@@ -1,6 +1,6 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import Image from "next/image";
 import Link from "next/link";

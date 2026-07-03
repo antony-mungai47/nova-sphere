@@ -27,7 +27,7 @@ async function main() {
     if (skuSet.has(p.sku)) auditReport.duplicateSkus++;
     skuSet.add(p.sku);
 
-    if (p.price <= 0) auditReport.zeroOrNegativePrices++;
+    if (p.price.toNumber() <= 0) auditReport.zeroOrNegativePrices++;
     
     // Check JSON
     if (p.specs) {

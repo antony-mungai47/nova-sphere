@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { AccountClient } from "./account-client";
 

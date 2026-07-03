@@ -1,0 +1,28 @@
+"use server";
+
+import { auth } from "@clerk/nextjs/server";
+import { isAdmin } from "@/lib/auth";
+import { AISupportService } from "./AISupportService";
+
+export async function generateSummaryAction(conversationId: string) {
+  const authorized = await isAdmin();
+  if (!authorized) throw new Error("Unauthorized");
+
+  return await AISupportService.generateSummary(conversationId);
+}
+
+export async function generateSuggestedRepliesAction(conversationId: string) {
+  const authorized = await isAdmin();
+  if (!authorized) throw new Error("Unauthorized");
+
+  return await AISupportService.generateSuggestedReplies(conversationId);
+}
+
+export async function triggerAutoReplyAction(conversationId: string) {
+  // Can be triggered by the user sending a message, or by a background job
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  await AISupportService.triggerAutoReply(conversationId);
+  return { success: true };
+}

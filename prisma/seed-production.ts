@@ -355,7 +355,7 @@ async function main() {
 
   // Clean DB
   console.log('Cleaning database...');
-  await prisma.transaction.deleteMany();
+  await prisma.paymentTransaction.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
   await prisma.bid.deleteMany();

@@ -11,15 +11,15 @@ export default async function FinancialsDashboard() {
     recentRefunds
   ] = await Promise.all([
     prisma.order.findMany({
-      where: { status: { in: ["PAID", "SHIPPED", "DELIVERED", "REFUNDED"] } },
+      where: { status: { in: ["CAPTURED", "SHIPPED", "DELIVERED", "REFUNDED"] } },
       select: { totalAmount: true, status: true, tax: true, shippingCost: true, discount: true }
     }),
-    prisma.transaction.findMany({
+    prisma.paymentTransaction.findMany({
       orderBy: { createdAt: "desc" },
       take: 20,
       include: { order: true }
     }),
-    prisma.transaction.findMany({
+    prisma.paymentTransaction.findMany({
       where: { type: "REFUND" },
       orderBy: { createdAt: "desc" },
       take: 5,
@@ -27,12 +27,12 @@ export default async function FinancialsDashboard() {
     })
   ]);
 
-  const grossRevenue = allOrders.reduce((sum, order) => sum + order.totalAmount, 0);
-  const totalTax = allOrders.reduce((sum, order) => sum + order.tax, 0);
-  const totalShipping = allOrders.reduce((sum, order) => sum + order.shippingCost, 0);
+  const grossRevenue = allOrders.reduce((sum, order) => sum + order.totalAmount.toNumber(), 0);
+  const totalTax = allOrders.reduce((sum, order) => sum + order.tax.toNumber(), 0);
+  const totalShipping = allOrders.reduce((sum, order) => sum + order.shippingCost.toNumber(), 0);
   const totalRefunded = allOrders
     .filter(o => o.status === "REFUNDED")
-    .reduce((sum, order) => sum + order.totalAmount, 0);
+    .reduce((sum, order) => sum + order.totalAmount.toNumber(), 0);
   
   const netRevenue = grossRevenue - totalRefunded - totalTax - totalShipping;
 
@@ -125,7 +125,7 @@ export default async function FinancialsDashboard() {
                           {tx.type}
                         </span>
                       </td>
-                      <td className="p-4 text-nova-silver font-mono text-xs">{tx.stripeId || "SIMULATED"}</td>
+                      <td className="p-4 text-nova-silver font-mono text-xs">{tx.providerId || "SIMULATED"}</td>
                       <td className="p-4">
                         <span className="text-nova-silver text-sm">{tx.status}</span>
                       </td>
@@ -150,7 +150,7 @@ export default async function FinancialsDashboard() {
                 <div key={refund.id} className="flex items-center justify-between border-b border-white/5 pb-4 last:border-0 last:pb-0">
                   <div>
                     <h4 className="text-white font-medium text-sm">Order #{refund.orderId.slice(-8)}</h4>
-                    <p className="text-nova-silver text-xs font-mono">{refund.stripeId || "SIMULATED"}</p>
+                    <p className="text-nova-silver text-xs font-mono">{refund.providerId || "SIMULATED"}</p>
                   </div>
                   <span className="text-red-400 font-bold text-sm">
                     -${refund.amount.toFixed(2)}

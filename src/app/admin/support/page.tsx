@@ -12,9 +12,10 @@ export default async function AdminSupportPage() {
     redirect("/");
   }
 
-  const tickets = await prisma.supportTicket.findMany({
+  const conversations = await prisma.conversation.findMany({
     orderBy: { updatedAt: "desc" },
     include: {
+      participants: true,
       messages: {
         orderBy: { createdAt: "asc" }
       }
@@ -28,7 +29,7 @@ export default async function AdminSupportPage() {
         <p className="text-nova-silver">Manage customer support tickets and live chats.</p>
       </div>
 
-      <SupportClient initialTickets={tickets} />
+      <SupportClient initialConversations={conversations} />
     </div>
   );
 }

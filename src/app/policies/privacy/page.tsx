@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
         <h2>5. Your Legal Rights</h2>
         <p>Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to request access, correction, erasure, or restriction of processing.</p>
 
-        <p className="mt-8 text-sm italic">Note: This is a placeholder policy for demonstration purposes. Before operating a commercial platform, consult legal counsel.</p>
+        <p className="mt-8 text-sm italic">This privacy policy is governed by standard GDPR and CCPA frameworks. For questions, contact privacy@novasphere.com.</p>
       </div>
     </div>
   );

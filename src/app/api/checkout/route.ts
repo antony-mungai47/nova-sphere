@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
-
 import { prisma } from "@/lib/prisma";
+import { PaymentEngine } from "@/domains/Finance/PaymentEngine/PaymentEngine";
 
 export async function POST(req: Request) {
   try {
@@ -33,7 +33,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Calculate realistic totals for security instead of trusting client total
     let subtotal = 0;
     const dbItems = await prisma.product.findMany({
       where: { id: { in: items.map((i: any) => i.id) } }
@@ -42,7 +41,7 @@ export async function POST(req: Request) {
     const itemsToCreate = items.map((item: any) => {
       const dbProduct = dbItems.find(p => p.id === item.id);
       const priceToUse = dbProduct ? (dbProduct.salePrice || dbProduct.price) : item.price;
-      subtotal += priceToUse * item.quantity;
+      subtotal += Number(priceToUse) * item.quantity;
       return {
         productId: item.id,
         quantity: item.quantity,
@@ -50,12 +49,12 @@ export async function POST(req: Request) {
       };
     });
 
-    const discountAmount = subtotal - total; // Since total sent from client is discounted
-    const tax = subtotal * 0.08; // 8% mock tax
-    const shippingCost = subtotal > 100 ? 0 : 15.00; // Free shipping over $100
+    // In a real system, TaxEngine and PricingEngine would run here.
+    const discountAmount = subtotal - total; 
+    const tax = subtotal * 0.08; 
+    const shippingCost = subtotal > 100 ? 0 : 15.00; 
     const finalTotal = subtotal - discountAmount + tax + shippingCost;
 
-    // Create the order
     const order = await prisma.order.create({
       data: {
         userId: dbUser.id,
@@ -64,14 +63,23 @@ export async function POST(req: Request) {
         shippingCost: shippingCost,
         discount: discountAmount,
         totalAmount: finalTotal,
-        status: "PENDING", // Mocking pending status until simulated webhook
+        status: "CREATED", // Starts as CREATED before PaymentEngine
+        currency: "USD",
         items: {
           create: itemsToCreate,
         },
       },
     });
 
-    return NextResponse.json({ success: true, checkoutUrl: "/checkout/simulate?orderId=" + order.id });
+    // Route through Payment Engine
+    const paymentEngine = new PaymentEngine("STRIPE");
+    const { checkoutUrl } = await paymentEngine.authorize(
+      order.id, 
+      `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?orderId=${order.id}`, 
+      `${process.env.NEXT_PUBLIC_APP_URL}/cart`
+    );
+
+    return NextResponse.json({ success: true, checkoutUrl });
   } catch (error) {
     console.error("[CHECKOUT_ERROR]", error);
     return new NextResponse("Internal Error", { status: 500 });

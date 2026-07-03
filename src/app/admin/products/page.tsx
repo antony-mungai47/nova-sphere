@@ -12,7 +12,7 @@ export default async function AdminProducts() {
   const formattedProducts = products.map((p) => ({
     id: p.id,
     name: p.name,
-    price: p.price,
+    price: p.price.toNumber(),
     category: p.category,
     imageUrl: p.images[0]?.url || "/hero-product.png",
     stock: p.stock,

@@ -88,9 +88,9 @@ async function main() {
       await prisma.auction.create({
         data: {
           productId: product.id,
-          startingBid: p.price * 0.5, // Start bidding at 50% of value
+          baseAmount: p.price * 0.5, // Start bidding at 50% of value
           currentBid: 0,
-          status: "ACTIVE",
+          status: "LIVE",
           endTime: endTime
         }
       });

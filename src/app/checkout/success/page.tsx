@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { CheckCircle, Package, ArrowRight } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { useCartStore } from "@/store/useCartStore";
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 
 export default function CheckoutSuccessPage() {
   const clearCart = useCartStore((state) => state.clearCart);
@@ -14,6 +14,34 @@ export default function CheckoutSuccessPage() {
   useEffect(() => {
     // Clear cart upon successful checkout
     clearCart();
+
+    // Trigger premium delight confetti
+    import("canvas-confetti").then((confetti) => {
+      const duration = 3000;
+      const end = Date.now() + duration;
+
+      const frame = () => {
+        confetti.default({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#3B82F6', '#10B981', '#D4AF37'] // Nova colors
+        });
+        confetti.default({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#3B82F6', '#10B981', '#D4AF37']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+      frame();
+    });
   }, [clearCart]);
 
   return (

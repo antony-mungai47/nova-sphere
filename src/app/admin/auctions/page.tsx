@@ -19,9 +19,9 @@ export default async function AdminAuctionsPage() {
     orderBy: { createdAt: "desc" }
   });
 
-  const activeAuctions = auctions.filter(a => a.status === "ACTIVE" && new Date(a.endTime) > new Date());
+  const activeAuctions = auctions.filter(a => a.status === "LIVE" && new Date(a.endTime) > new Date());
   const endedAuctions = auctions.filter(a => a.status === "ENDED" || new Date(a.endTime) <= new Date());
-  const totalVolume = endedAuctions.reduce((sum, a) => sum + (a.bids[0]?.amount || 0), 0);
+  const totalVolume = endedAuctions.reduce((sum, a) => sum + (a.bids[0]?.amount?.toNumber() || 0), 0);
   
   async function cancelAuction(formData: FormData) {
     "use server";

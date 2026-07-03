@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { Button } from "@/shared/components/ui/button";
 import { ShieldCheck, TrendingUp, Gavel, FileCheck } from "lucide-react";

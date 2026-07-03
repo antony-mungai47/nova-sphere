@@ -300,7 +300,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
               name="taxRate" 
               type="number"
               step="0.01"
-              defaultValue={initialData.taxRate} 
+              defaultValue={initialData.taxRate.toNumber()} 
               className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
             />
           </div>
@@ -310,7 +310,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
               name="shippingRate" 
               type="number"
               step="0.01"
-              defaultValue={initialData.shippingRate} 
+              defaultValue={initialData.shippingRate.toNumber()} 
               className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
             />
           </div>

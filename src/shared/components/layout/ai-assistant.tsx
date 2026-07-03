@@ -2,59 +2,34 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, X, Send, Search, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Sparkles, X, Send, Search, Loader2 } from "lucide-react";
+import { useChat } from '@ai-sdk/react';
 
 export function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [isThinking, setIsThinking] = useState(false);
-  const [chatHistory, setChatHistory] = useState<{ role: "assistant" | "user", content: string, links?: { label: string, url: string }[] }[]>([
-    { 
-      role: "assistant", 
-      content: "Hello! I am Nova, your premium shopping concierge. Looking for a specific watch, the latest tech, or exclusive auctions?" 
-    }
-  ]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { messages, sendMessage, status } = useChat({
+    id: 'chat-1',
+    messages: [
+      { 
+        id: '1',
+        role: "assistant", 
+        content: "Hello! I am Nova, your premium shopping concierge. Looking for a specific watch, the latest tech, or exclusive auctions?",
+        parts: [{ type: 'text', text: "Hello! I am Nova..." }]
+      } as any
+    ]
+  });
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!query.trim() || isThinking) return;
-
-    setChatHistory(prev => [...prev, { role: "user", content: query }]);
-    const currentQuery = query.toLowerCase();
-    setQuery("");
-    setIsThinking(true);
-
-    setTimeout(() => {
-      setIsThinking(false);
-      
-      // Basic mock AI routing/recommendation logic
-      if (currentQuery.includes("watch") || currentQuery.includes("rolex")) {
-        setChatHistory(prev => [...prev, { 
-          role: "assistant", 
-          content: "I recommend exploring our Luxury Timepieces collection. We have verified Rolex and Omega models currently available.",
-          links: [{ label: "View Luxury Watches", url: "/store?category=watches" }]
-        }]);
-      } else if (currentQuery.includes("auction") || currentQuery.includes("bid")) {
-        setChatHistory(prev => [...prev, { 
-          role: "assistant", 
-          content: "Our Premium Auctions feature rare and exclusive items. There are several ending within the next 24 hours.",
-          links: [{ label: "Go to Auctions", url: "/auctions" }]
-        }]);
-      } else if (currentQuery.includes("order") || currentQuery.includes("track")) {
-        setChatHistory(prev => [...prev, { 
-          role: "assistant", 
-          content: "You can track all your recent orders and their shipping status directly from your account dashboard.",
-          links: [{ label: "My Orders", url: "/account" }]
-        }]);
-      } else {
-        setChatHistory(prev => [...prev, { 
-          role: "assistant", 
-          content: `I've found some premium items matching "${currentQuery}". Let me take you to the search results.`,
-          links: [{ label: "View Results", url: `/store?search=${encodeURIComponent(currentQuery)}` }]
-        }]);
-      }
-    }, 1200);
+    if (!input.trim()) return;
+    setIsLoading(true);
+    await sendMessage({ role: 'user', content: input, parts: [{ type: 'text', text: input }] } as any);
+    setInput("");
+    setIsLoading(false);
   };
 
   return (
@@ -91,8 +66,8 @@ export function AIAssistant() {
                     <Sparkles className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-white">Nova AI Assistant</h2>
-                    <p className="text-xs text-nova-silver uppercase tracking-wider">Discovery & Routing Engine</p>
+                    <h2 className="text-lg font-bold text-white">Nova Intelligence</h2>
+                    <p className="text-xs text-nova-silver uppercase tracking-wider">Commerce Copilot</p>
                   </div>
                 </div>
                 <button onClick={() => setIsOpen(false)} className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-nova-silver hover:text-white hover:bg-white/10 transition-colors">
@@ -102,8 +77,8 @@ export function AIAssistant() {
 
               {/* Chat Area */}
               <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin">
-                {chatHistory.map((msg, idx) => (
-                  <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                {messages.map((msg: any) => (
+                  <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                     <div className="flex items-start gap-3 max-w-[85%]">
                       {msg.role === "assistant" && (
                         <div className="w-8 h-8 rounded-full bg-nova-blue/20 border border-nova-blue/30 flex items-center justify-center flex-shrink-0 mt-1">
@@ -116,37 +91,30 @@ export function AIAssistant() {
                           ? "bg-white/10 text-white rounded-tr-sm border border-white/10" 
                           : "bg-nova-blue/5 text-nova-silver border border-nova-blue/20 rounded-tl-sm"
                       }`}>
-                        <p className="leading-relaxed text-sm">{msg.content}</p>
+                        <p className="leading-relaxed text-sm whitespace-pre-wrap">{msg.content}</p>
                         
-                        {msg.links && msg.links.length > 0 && (
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {msg.links.map((link, i) => (
-                              <Link 
-                                key={i} 
-                                href={link.url}
-                                onClick={() => setIsOpen(false)}
-                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-nova-blue text-white text-xs font-bold hover:bg-nova-blue/80 transition-colors"
-                              >
-                                {link.label} <ArrowRight className="w-3 h-3" />
-                              </Link>
-                            ))}
+                        {/* Render Tool Invocations gracefully */}
+                        {msg.toolInvocations?.map((toolInvocation: any, idx: number) => (
+                          <div key={idx} className="mt-3 p-3 bg-black/40 rounded-lg border border-white/5 text-xs text-nova-silver font-mono">
+                            <span className="text-nova-blue">{"{ }"}</span> Executing {toolInvocation.toolName}...
+                            {toolInvocation.state === 'result' && (
+                              <span className="text-emerald-400 ml-2">✓ Success</span>
+                            )}
                           </div>
-                        )}
+                        ))}
                       </div>
                     </div>
                   </div>
                 ))}
                 
-                {isThinking && (
+                {isLoading && (
                   <div className="flex justify-start">
                     <div className="flex items-start gap-3 max-w-[85%]">
                       <div className="w-8 h-8 rounded-full bg-nova-blue/20 border border-nova-blue/30 flex items-center justify-center flex-shrink-0 mt-1">
                         <Sparkles className="w-4 h-4 text-nova-blue animate-pulse" />
                       </div>
                       <div className="p-4 rounded-2xl bg-nova-blue/5 border border-nova-blue/20 rounded-tl-sm flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-nova-blue animate-bounce" style={{ animationDelay: "0ms" }} />
-                        <span className="w-2 h-2 rounded-full bg-nova-blue animate-bounce" style={{ animationDelay: "150ms" }} />
-                        <span className="w-2 h-2 rounded-full bg-nova-blue animate-bounce" style={{ animationDelay: "300ms" }} />
+                         <Loader2 className="w-4 h-4 text-nova-blue animate-spin" />
                       </div>
                     </div>
                   </div>
@@ -155,18 +123,18 @@ export function AIAssistant() {
 
               {/* Input Area */}
               <div className="p-4 sm:p-6 border-t border-white/10 bg-black/50">
-                <form onSubmit={handleSend} className="relative flex items-center">
+                <form onSubmit={handleSubmit} className="relative flex items-center">
                   <Search className="absolute left-4 w-5 h-5 text-nova-silver/50" />
                   <input 
                     type="text" 
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Ask Nova about products, orders, or categories..."
+                    value={input}
+                    onChange={handleInputChange}
+                    placeholder="Ask Nova to compare products, check auctions, or track orders..."
                     className="w-full bg-white/5 border border-white/10 rounded-full py-4 pl-12 pr-16 text-sm text-white placeholder:text-nova-silver/50 focus:outline-none focus:border-nova-blue transition-colors"
                   />
                   <button 
                     type="submit"
-                    disabled={!query.trim() || isThinking}
+                    disabled={!input.trim() || isLoading}
                     className="absolute right-2 w-10 h-10 rounded-full bg-nova-blue text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-nova-blue/80 transition-colors shadow-glow-primary"
                   >
                     <Send className="w-4 h-4 -ml-0.5" />

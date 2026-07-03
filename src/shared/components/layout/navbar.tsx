@@ -9,9 +9,11 @@ import { cn } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import { CartSidebar } from "@/domains/Commerce/checkout/components/cart/cart-sidebar";
 import { MegaMenu } from "@/shared/components/layout/mega-menu";
-import { Show, UserButton } from "@clerk/nextjs";
+import { Show, UserButton, useAuth } from "@clerk/nextjs";
+import { NotificationCenter } from "@/domains/Engagement/Notifications/components/NotificationCenter";
 
-export function Navbar() {
+export function Navbar({ liveNotificationsEnabled = false }: { liveNotificationsEnabled?: boolean }) {
+  const { userId } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -156,6 +158,7 @@ export function Navbar() {
                 </Link>
               </Show>
               <Show when="signed-in">
+                <NotificationCenter userId={userId ?? null} enabled={liveNotificationsEnabled} />
                 <UserButton appearance={{ elements: { avatarBox: "w-8 h-8" } }} />
               </Show>
             </div>
@@ -216,6 +219,7 @@ export function Navbar() {
                       </Link>
                     </Show>
                     <Show when="signed-in">
+                      <NotificationCenter userId={userId ?? null} enabled={liveNotificationsEnabled} />
                       <UserButton appearance={{ elements: { avatarBox: "w-8 h-8" } }} />
                     </Show>
                   </div>

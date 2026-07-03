@@ -1,7 +1,8 @@
-import { OrderRepository } from "@/domains/Customer/orders/repositories/order.repository";
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { prisma } from "@/lib/prisma";
+import { PaymentEngine } from "@/domains/Finance/PaymentEngine/PaymentEngine";
+import { InvoiceEngine } from "@/domains/Finance/InvoiceEngine/InvoiceEngine";
+import { inngest } from "@/lib/inngest/client";
 
 export async function POST(req: Request) {
   if (!stripe) {
@@ -12,7 +13,6 @@ export async function POST(req: Request) {
   const signature = req.headers.get("stripe-signature");
 
   let event;
-
   try {
     event = stripe.webhooks.constructEvent(
       body,
@@ -23,6 +23,9 @@ export async function POST(req: Request) {
     return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
   }
 
+  // Webhook Controller: Normalizes events and routes them to the Payment Engine or Event Bus
+  const paymentEngine = new PaymentEngine("STRIPE");
+
   try {
     switch (event.type) {
       case "checkout.session.completed": {
@@ -31,23 +34,21 @@ export async function POST(req: Request) {
         const paymentIntentId = session.payment_intent;
         
         if (orderId) {
-          await OrderRepository.update({
-            where: { id: orderId },
-            data: { 
-              status: "PAID",
-              stripePaymentIntentId: paymentIntentId as string
-            },
-          });
+          // Instruct Payment Engine to capture the funds and update the Ledger
+          await paymentEngine.capture(
+            orderId, 
+            paymentIntentId, 
+            session.amount_total / 100, 
+            session.currency.toUpperCase()
+          );
 
-          await prisma.transaction.create({
-            data: {
-              orderId,
-              type: "CHARGE",
-              amount: session.amount_total / 100,
-              currency: session.currency.toUpperCase(),
-              stripeId: paymentIntentId as string,
-              status: "SUCCEEDED"
-            }
+          // Generate Invoice
+          await InvoiceEngine.generateInvoice(orderId);
+
+          // Emit Accounting Event for Workflow Engine (Order Engine / Shipping)
+          await inngest.send({
+            name: "payment/captured",
+            data: { orderId, paymentIntentId, amount: session.amount_total / 100 }
           });
         }
         break;
@@ -57,27 +58,10 @@ export async function POST(req: Request) {
         const charge = event.data.object as any;
         const paymentIntentId = charge.payment_intent;
         
-        const order = await OrderRepository.findUnique({
-          where: { stripePaymentIntentId: paymentIntentId as string }
+        await inngest.send({
+          name: "payment/refunded",
+          data: { paymentIntentId, amount: charge.amount_refunded / 100 }
         });
-
-        if (order) {
-          await OrderRepository.update({
-            where: { id: order.id },
-            data: { status: "REFUNDED" }
-          });
-
-          await prisma.transaction.create({
-            data: {
-              orderId: order.id,
-              type: "REFUND",
-              amount: charge.amount_refunded / 100,
-              currency: charge.currency.toUpperCase(),
-              stripeId: charge.id,
-              status: "SUCCEEDED"
-            }
-          });
-        }
         break;
       }
     }

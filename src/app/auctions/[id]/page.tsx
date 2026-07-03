@@ -89,17 +89,17 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
         <AuctionLiveView 
           auctionId={auction.id}
           productName={auction.product.name}
-          initialHighestBid={auction.bids[0]?.amount || auction.startingBid}
+          initialHighestBid={auction.bids[0]?.amount.toNumber() || auction.baseAmount.toNumber()}
           initialHighestBidderId={auction.bids[0]?.userId || null}
           initialEndTime={auction.endTime.toISOString()}
           initialBidHistory={auction.bids.map(b => ({
             id: b.id,
             bidderId: b.userId,
             bidderName: b.user.name || "Anonymous User",
-            amount: b.amount,
+            amount: b.amount.toNumber(),
             timestamp: b.createdAt.toISOString()
           }))}
-          startingBid={auction.startingBid}
+          startingBid={auction.baseAmount.toNumber()}
           status={auction.status}
           userId={userId}
         />

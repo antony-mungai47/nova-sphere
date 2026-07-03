@@ -23,15 +23,15 @@ export default async function AdminAnalyticsPage() {
   ]);
 
   // Revenue Calculations
-  const lifetimeRevenue = orders.filter(o => o.status === 'PAID' || o.status === 'DELIVERED').reduce((sum, o) => sum + o.totalAmount, 0);
-  const todayRevenue = orders.filter(o => o.createdAt >= today && (o.status === 'PAID' || o.status === 'DELIVERED')).reduce((sum, o) => sum + o.totalAmount, 0);
-  const last7DaysRevenue = orders.filter(o => o.createdAt >= sevenDaysAgo && (o.status === 'PAID' || o.status === 'DELIVERED')).reduce((sum, o) => sum + o.totalAmount, 0);
-  const last30DaysRevenue = orders.filter(o => o.createdAt >= thirtyDaysAgo && (o.status === 'PAID' || o.status === 'DELIVERED')).reduce((sum, o) => sum + o.totalAmount, 0);
+  const lifetimeRevenue = orders.filter(o => o.status === 'CAPTURED' || o.status === 'DELIVERED').reduce((sum, o) => sum + o.totalAmount.toNumber(), 0);
+  const todayRevenue = orders.filter(o => o.createdAt >= today && (o.status === 'CAPTURED' || o.status === 'DELIVERED')).reduce((sum, o) => sum + o.totalAmount.toNumber(), 0);
+  const last7DaysRevenue = orders.filter(o => o.createdAt >= sevenDaysAgo && (o.status === 'CAPTURED' || o.status === 'DELIVERED')).reduce((sum, o) => sum + o.totalAmount.toNumber(), 0);
+  const last30DaysRevenue = orders.filter(o => o.createdAt >= thirtyDaysAgo && (o.status === 'CAPTURED' || o.status === 'DELIVERED')).reduce((sum, o) => sum + o.totalAmount.toNumber(), 0);
 
   // Order Counts
   const pendingOrders = orders.filter(o => o.status === 'PENDING').length;
-  const processingOrders = orders.filter(o => o.status === 'PROCESSING' as any).length;
-  const completedOrders = orders.filter(o => o.status === 'DELIVERED' || o.status === 'PAID').length;
+  const processingOrders = orders.filter(o => o.status === 'AUTHORIZED' as any).length;
+  const completedOrders = orders.filter(o => o.status === 'DELIVERED' || o.status === 'CAPTURED').length;
   const cancelledOrders = orders.filter(o => o.status === 'CANCELLED').length;
 
   // Customer Counts

@@ -1,4 +1,6 @@
 import { inngest } from '@/lib/inngest/client';
+import { NotificationService } from './NotificationService';
+import { NotificationType, NotificationPriority } from '@prisma/client';
 
 export const orderPlacedNotification = (inngest as any).createFunction(
   { id: 'send-order-placed-notification' },
@@ -6,16 +8,38 @@ export const orderPlacedNotification = (inngest as any).createFunction(
   async ({ event, step }: any) => {
     const { orderId, userId, totalAmount } = event.data;
 
-    // Simulate sending email
-    await step.run('send-email', async () => {
-      // In a real implementation, this would call Resend/SendGrid
-      console.log(`[Notification] Sending Order Confirmation Email to User ${userId} for Order ${orderId}. Total: $${totalAmount}`);
-      // await resend.emails.send({...})
+    await step.run('create-notification', async () => {
+      await NotificationService.createNotification({
+        userId,
+        type: NotificationType.ORDER_UPDATED,
+        priority: NotificationPriority.HIGH,
+        title: "Order Confirmed",
+        message: `Your order for $${totalAmount.toFixed(2)} has been confirmed!`,
+        link: `/account/orders/${orderId}`,
+        metadata: { orderId }
+      });
     });
 
-    // Simulate push notification
-    await step.run('send-push', async () => {
-      console.log(`[Notification] Pushing app notification for Order ${orderId}`);
+    return { success: true };
+  }
+);
+
+export const bidOutbidNotification = (inngest as any).createFunction(
+  { id: 'send-bid-outbid-notification' },
+  { event: 'BidOutbid' },
+  async ({ event, step }: any) => {
+    const { auctionId, previousBidderId, newHighestBid } = event.data;
+
+    await step.run('create-outbid-notification', async () => {
+      await NotificationService.createNotification({
+        userId: previousBidderId,
+        type: NotificationType.BID_OUTBID,
+        priority: NotificationPriority.CRITICAL,
+        title: "You've been outbid!",
+        message: `Someone just placed a higher bid of $${newHighestBid.toFixed(2)}.`,
+        link: `/auctions/${auctionId}`,
+        metadata: { auctionId, newHighestBid }
+      });
     });
 
     return { success: true };

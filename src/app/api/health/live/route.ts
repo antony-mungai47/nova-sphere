@@ -1,0 +1,6 @@
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  // Liveness probe only checks if the Node.js/Edge runtime is responsive
+  return NextResponse.json({ status: 'alive', timestamp: new Date().toISOString() }, { status: 200 });
+}

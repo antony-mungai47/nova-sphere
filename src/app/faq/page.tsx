@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { HelpCircle } from "lucide-react";
 

@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server';
 
 const isProtectedRoute = createRouteMatcher(['/admin(.*)']);
 
@@ -6,6 +7,20 @@ export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
     await auth.protect();
   }
+
+  // Inject Trace ID for APM / Observability
+  const requestHeaders = new Headers(req.headers);
+  const traceId = req.headers.get('x-trace-id') || crypto.randomUUID();
+  requestHeaders.set('x-trace-id', traceId);
+
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
+
+  response.headers.set('x-trace-id', traceId);
+  return response;
 });
 
 export const config = {
@@ -18,4 +33,3 @@ export const config = {
     '/__clerk/(.*)',
   ],
 }
-

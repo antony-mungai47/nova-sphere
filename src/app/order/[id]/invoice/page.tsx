@@ -71,7 +71,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
                 </td>
                 <td className="py-4 text-center text-gray-700">{item.quantity}</td>
                 <td className="py-4 text-right text-gray-700">${item.price.toFixed(2)}</td>
-                <td className="py-4 text-right font-medium text-gray-900">${(item.price * item.quantity).toFixed(2)}</td>
+                <td className="py-4 text-right font-medium text-gray-900">${(item.price.toNumber() * item.quantity).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
@@ -84,7 +84,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
               <span>Subtotal</span>
               <span>${order.subtotal.toFixed(2)}</span>
             </div>
-            {order.discount > 0 && (
+            {order.discount.toNumber() > 0 && (
               <div className="flex justify-between text-red-600">
                 <span>Discount</span>
                 <span>-${order.discount.toFixed(2)}</span>
@@ -92,7 +92,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
             )}
             <div className="flex justify-between text-gray-600">
               <span>Shipping</span>
-              <span>{order.shippingCost > 0 ? `$${order.shippingCost.toFixed(2)}` : 'Free'}</span>
+              <span>{order.shippingCost.toNumber() > 0 ? `$${order.shippingCost.toFixed(2)}` : 'Free'}</span>
             </div>
             <div className="flex justify-between text-gray-600">
               <span>Tax (8%)</span>

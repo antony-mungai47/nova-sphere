@@ -2,7 +2,7 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { Package, Clock, CheckCircle } from "lucide-react";
 
@@ -77,12 +77,12 @@ export default async function OrdersPage() {
 
                   {/* Order Status */}
                   <div className="px-6 py-4 bg-black/20 flex items-center gap-3 border-b border-white/5">
-                    {order.status === "PAID" ? (
+                    {order.status === "CAPTURED" ? (
                       <CheckCircle className="w-5 h-5 text-green-400" />
                     ) : (
                       <Clock className="w-5 h-5 text-nova-amber" />
                     )}
-                    <span className="text-white font-medium">Status: <span className={order.status === "PAID" ? "text-green-400" : "text-nova-amber"}>{order.status}</span></span>
+                    <span className="text-white font-medium">Status: <span className={order.status === "CAPTURED" ? "text-green-400" : "text-nova-amber"}>{order.status}</span></span>
                   </div>
 
                   {/* Order Items */}
@@ -100,7 +100,7 @@ export default async function OrdersPage() {
                             <p className="text-nova-silver text-sm mb-2">{item.product.category}</p>
                             <div className="flex items-center justify-between">
                               <span className="text-white">Qty: {item.quantity}</span>
-                              <span className="text-nova-blue font-bold">${(item.price * item.quantity).toFixed(2)}</span>
+                              <span className="text-nova-blue font-bold">${(item.price.toNumber() * item.quantity).toFixed(2)}</span>
                             </div>
                           </div>
                         </div>

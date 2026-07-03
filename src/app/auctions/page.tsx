@@ -7,15 +7,8 @@ export const dynamic = "force-dynamic";
 
 export default async function AuctionsPage() {
   const auctions = await prisma.auction.findMany({
-    where: { status: "ACTIVE" },
-    include: {
-      product: {
-        include: { images: true }
-      },
-      _count: {
-        select: { bids: true }
-      }
-    },
+    where: { status: "LIVE" },
+    include: { product: { include: { images: true } }, _count: { select: { bids: true } } },
     orderBy: { endTime: "asc" }
   });
 
@@ -82,7 +75,7 @@ export default async function AuctionsPage() {
                       <div>
                         <p className="text-xs text-nova-silver mb-1">Current Bid</p>
                         <p className="text-xl font-bold text-white">
-                          ${auction.currentBid > 0 ? auction.currentBid.toFixed(2) : auction.startingBid.toFixed(2)}
+                          ${auction.currentBid.toNumber() > 0 ? auction.currentBid.toFixed(2) : auction.baseAmount.toFixed(2)}
                         </p>
                       </div>
                       <div className="text-right">

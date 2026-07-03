@@ -30,7 +30,7 @@ export default async function SimulateCheckoutPage({
     }
   });
 
-  if (!order || order.status === 'PAID') {
+  if (!order || order.status === 'CAPTURED') {
     redirect('/checkout/success');
   }
 
@@ -65,7 +65,7 @@ export default async function SimulateCheckoutPage({
                       <p className="text-nova-silver text-xs">Qty: {item.quantity}</p>
                     </div>
                   </div>
-                  <p className="text-white font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="text-white font-medium">${(item.price.toNumber() * item.quantity).toFixed(2)}</p>
                 </div>
               ))}
             </div>

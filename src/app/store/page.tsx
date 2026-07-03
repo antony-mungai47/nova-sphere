@@ -1,9 +1,10 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
-import { Navbar } from "@/shared/components/layout/navbar";
+import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { ProductGrid } from "@/domains/Commerce/products/components/store/product-grid";
 
+export const revalidate = 3600; // ISR revalidate every hour
 export default async function StorePage({
   searchParams,
 }: {
@@ -56,12 +57,12 @@ export default async function StorePage({
   const formattedProducts = products.map((p) => ({
     id: p.id,
     name: p.name,
-    price: p.price,
+    price: p.price.toNumber(),
     category: p.category,
     brand: p.brand,
     image: p.images[0]?.url || "/hero-product.png",
     description: p.description,
-    salePrice: p.salePrice,
+    salePrice: p.salePrice ? p.salePrice.toNumber() : null,
     rating: p.rating,
     reviewCount: p.reviewCount,
   }));

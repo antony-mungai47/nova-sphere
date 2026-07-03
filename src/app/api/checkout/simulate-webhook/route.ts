@@ -15,13 +15,13 @@ export async function POST(req: Request) {
     // Update order status to PAID
     const order = await prisma.order.update({
       where: { id: orderId },
-      data: { status: "PAID" },
+      data: { status: "CAPTURED" },
       include: { user: true }
     });
 
     // Simulate sending an email receipt
     if (order.user.email) {
-      await sendOrderConfirmation(order.user.email, order.id, order.totalAmount);
+      await sendOrderConfirmation(order.user.email, order.id, order.totalAmount.toNumber());
     }
 
     // Redirect user to the success page using 303 See Other

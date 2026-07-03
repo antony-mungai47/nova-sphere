@@ -1,0 +1,20 @@
+scripts/db-audit.ts(30,9): error TS2365: Operator '<=' cannot be applied to types 'Decimal' and 'number'.
+src/app/admin/auctions/page.tsx(24,56): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.
+src/app/admin/settings/settings-form.tsx(303,15): error TS2322: Type 'Decimal' is not assignable to type 'string | number | readonly string[] | undefined'.
+  Type 'Decimal' is missing the following properties from type 'readonly string[]': length, concat, join, slice, and 26 more.
+src/app/admin/settings/settings-form.tsx(313,15): error TS2322: Type 'Decimal' is not assignable to type 'string | number | readonly string[] | undefined'.
+  Type 'Decimal' is missing the following properties from type 'readonly string[]': length, concat, join, slice, and 26 more.
+src/app/api/checkout/simulate-webhook/route.ts(24,63): error TS2345: Argument of type 'Decimal' is not assignable to parameter of type 'number'.
+src/app/auctions/[id]/page.tsx(92,11): error TS2322: Type 'Decimal' is not assignable to type 'number'.
+src/app/auctions/[id]/page.tsx(102,11): error TS2322: Type 'Decimal' is not assignable to type 'number'.
+src/app/order/[id]/invoice/page.tsx(87,14): error TS2365: Operator '>' cannot be applied to types 'Decimal' and 'number'.
+src/app/product/[id]/page.tsx(76,9): error TS2322: Type '{ id: string; name: string; price: Decimal; salePrice: Decimal | null; category: string; image: string; rating: number; }[]' is not assignable to type 'RelatedProduct[]'.
+  Type '{ id: string; name: string; price: Decimal; salePrice: Decimal | null; category: string; image: string; rating: number; }' is not assignable to type 'RelatedProduct'.
+    Types of property 'price' are incompatible.
+      Type 'Decimal' is not assignable to type 'number'.
+src/domains/Marketplace/auctions/actions.ts(40,27): error TS2345: Argument of type 'Decimal' is not assignable to parameter of type 'number'.
+src/domains/Marketplace/auctions/actions.ts(51,28): error TS2365: Operator '<=' cannot be applied to types 'number' and 'Decimal'.
+src/domains/Marketplace/Engines/SettlementEngine.ts(18,88): error TS2339: Property 'amountTotal' does not exist on type '{ tenant: { name: string; id: string; createdAt: Date; updatedAt: Date; status: string; plan: string; }; } & { id: string; createdAt: Date; updatedAt: Date; amountBase: Decimal; ... 9 more ...; shipping: Decimal; }'.
+src/domains/Marketplace/Engines/SettlementEngine.ts(20,29): error TS2339: Property 'amountTotal' does not exist on type '{ tenant: { name: string; id: string; createdAt: Date; updatedAt: Date; status: string; plan: string; }; } & { id: string; createdAt: Date; updatedAt: Date; amountBase: Decimal; ... 9 more ...; shipping: Decimal; }'.
+src/domains/Marketplace/Engines/SettlementEngine.ts(20,57): error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/domains/Marketplace/Engines/WalletEngine.ts(25,20): error TS2365: Operator '<=' cannot be applied to types 'Decimal' and 'number'.

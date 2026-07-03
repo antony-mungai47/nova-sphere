@@ -1,0 +1,2 @@
+scripts/db-audit.ts(30,9): error TS2365: Operator '<=' cannot be applied to types 'Decimal' and 'number'.
+src/app/admin/auctions/page.tsx(24,56): error TS2365: Operator '+' cannot be applied to types 'number' and 'Decimal'.

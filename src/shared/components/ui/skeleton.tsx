@@ -2,19 +2,22 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
-  pulse?: boolean;
+  shimmer?: boolean;
 }
 
-export function Skeleton({ className, pulse = true, ...props }: SkeletonProps) {
+export function Skeleton({ className, shimmer = true, ...props }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "rounded-md bg-white/5 border border-white/5",
-        pulse && "animate-pulse",
+        "relative overflow-hidden rounded-md bg-slate-800/50",
         className
       )}
       {...props}
-    />
+    >
+      {shimmer && (
+        <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-slate-700/20 to-transparent" />
+      )}
+    </div>
   );
 }
 

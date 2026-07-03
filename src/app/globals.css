@@ -63,6 +63,14 @@
   --shadow-glow-primary: var(--shadow-glow-primary);
   --shadow-glow-secondary: var(--shadow-glow-secondary);
   --shadow-glow-accent: var(--shadow-glow-accent);
+
+  --animate-shimmer: shimmer 2s infinite;
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
 }
 
 body {
