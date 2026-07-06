@@ -281,6 +281,8 @@ model Order {
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  idempotencyKey String? @unique
+
   totalAmount  Decimal
   subtotal     Decimal
   tax          Decimal
@@ -721,13 +723,17 @@ model Reservation {
 }
 
 model OrderTimeline {
-  id        String   @id @default(cuid())
-  orderId   String
-  status    String // Created, Reserved, Paid, Shipped, Delivered
-  message   String?
-  metadata  Json?
-  createdAt DateTime @default(now())
-  order     Order    @relation(fields: [orderId], references: [id])
+  id            String   @id @default(cuid())
+  orderId       String
+  status        String   // Status snapshot
+  previousState String?
+  newState      String?
+  actor         String   @default("SYSTEM") // System, Customer, Admin, Webhook
+  reason        String?
+  message       String?
+  metadata      Json?
+  createdAt     DateTime @default(now())
+  order         Order    @relation(fields: [orderId], references: [id])
 }
 
 // ----------------------------------------
