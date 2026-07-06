@@ -694,13 +694,19 @@ model Inventory {
 }
 
 model InventoryMovement {
-  id          String    @id @default(cuid())
-  inventoryId String
-  type        String // Purchase, Sale, Restock, Damage, Transfer, Reservation
-  quantity    Int
-  referenceId String? // e.g. orderId
-  createdAt   DateTime  @default(now())
-  inventory   Inventory @relation(fields: [inventoryId], references: [id])
+  id             String    @id @default(cuid())
+  inventoryId    String
+  type           String    // Purchase, Sale, Restock, Damage, Transfer, Reservation
+  quantity       Int
+  beforeQuantity Int       @default(0)
+  afterQuantity  Int       @default(0)
+  reason         String?
+  referenceId    String?   // e.g. orderId
+  performedBy    String?   // User ID or System
+  source         String?   // 'API', 'ADMIN', 'SYSTEM'
+  notes          String?
+  createdAt      DateTime  @default(now())
+  inventory      Inventory @relation(fields: [inventoryId], references: [id])
 }
 
 model Reservation {
