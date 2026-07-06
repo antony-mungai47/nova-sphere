@@ -1,4 +1,4 @@
-import { Money } from '../Financial/Money';
+import { Money } from '../../Financial/Money';
 
 export class RegionalPricingEngine {
   /**

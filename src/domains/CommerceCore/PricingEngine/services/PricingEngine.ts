@@ -1,6 +1,6 @@
-import { Money } from '../Financial/Money';
+import { Money } from '../../Financial/Money';
 import { RegionalPricingEngine } from './RegionalPricingEngine';
-import { CurrencyEngine } from '../Currency/CurrencyEngine';
+import { CurrencyEngine } from '../../CurrencyEngine/services/CurrencyEngine';
 
 export class PricingEngine {
   /**

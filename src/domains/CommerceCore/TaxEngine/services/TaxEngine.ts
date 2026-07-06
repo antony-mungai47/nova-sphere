@@ -1,4 +1,4 @@
-import { Money } from '../Financial/Money';
+import { Money } from '../../Financial/Money';
 
 export interface ITaxProvider {
   calculateTax(amount: Money, categoryId: string, jurisdictionId: string): Promise<Money>;

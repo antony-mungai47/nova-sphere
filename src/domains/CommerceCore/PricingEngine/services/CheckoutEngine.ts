@@ -1,7 +1,7 @@
-import { Money } from '../Financial/Money';
-import { PricingEngine } from '../Pricing/PricingEngine';
-import { TaxEngine } from '../Tax/TaxEngine';
-import { ComplianceEngine } from '../Compliance/ComplianceEngine';
+import { Money } from '../../Financial/Money';
+import { PricingEngine } from './PricingEngine';
+import { TaxEngine } from '../../TaxEngine/services/TaxEngine';
+import { ComplianceEngine } from '../../Compliance/ComplianceEngine';
 // PromotionEngine, CurrencyEngine, etc.
 
 export class CheckoutEngine {

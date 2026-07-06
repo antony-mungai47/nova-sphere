@@ -1,4 +1,4 @@
-import { Money } from '../Financial/Money';
+import { Money } from '../../Financial/Money';
 import { ExchangeRateCache } from './ExchangeRateProvider';
 import { Decimal } from '@prisma/client/runtime/library';
 
