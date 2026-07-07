@@ -1,6 +1,7 @@
 export interface INotificationProvider {
+  name: string;
   channel: string;
-  send(userId: string, subject: string, body: string, metadata?: any): Promise<boolean>;
+  send(userId: string, subject: string, body: string, metadata?: any): Promise<{ messageId: string }>;
 }
 
 export class ProviderRegistry {

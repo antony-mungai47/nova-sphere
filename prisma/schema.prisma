@@ -809,6 +809,12 @@ model Notification {
   readAt     DateTime?
   isArchived Boolean   @default(false)
 
+  channel           String?
+  provider          String?
+  providerMessageId String?
+  sentAt            DateTime?
+  status            String    @default("PENDING")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -1438,12 +1444,25 @@ model PaymentWebhookEvent {
   processedAt DateTime?
 }
 
+enum OutboxStatus {
+  PENDING
+  PROCESSING
+  PROCESSED
+  FAILED
+}
+
 model OutboxEvent {
-  id          String   @id @default(cuid())
+  id          String       @id @default(cuid())
+  aggregateId String?
   eventType   String
+  version     Int          @default(1)
   payload     Json
-  status      String   @default("PENDING") // PENDING, PUBLISHED, FAILED
-  error       String?
-  createdAt   DateTime @default(now())
+  status      OutboxStatus @default(PENDING)
+  retryCount  Int          @default(0)
+  lockedAt    DateTime?
+  lockedBy    String?
+  lastError   String?
+  nextRetryAt DateTime?
+  createdAt   DateTime     @default(now())
   processedAt DateTime?
 }
