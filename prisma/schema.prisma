@@ -106,6 +106,30 @@ enum TransactionStatus {
   CHARGEBACK
 }
 
+enum StoreStatus {
+  ACTIVE
+  PAUSED
+  SUSPENDED
+  CLOSED
+}
+
+enum KYCStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  SUSPENDED
+  REJECTED
+  BLACKLISTED
+}
+
+enum SettlementStatus {
+  PENDING
+  HELD
+  RELEASED
+  PAID
+}
+
 enum LogLevel {
   INFO
   WARN
@@ -128,7 +152,6 @@ enum FeatureFlagType {
 }
 
 model User {
-  customerOrders CustomerOrder[]
   tenantUsers    TenantUser[]
   id             String          @id @default(cuid())
   clerkId        String          @unique
@@ -312,6 +335,7 @@ model Order {
   paymentAttempts PaymentAttempt[]
   invoice         Invoice?
   timelines       OrderTimeline[]
+  vendorOrders    VendorOrder[]
 
   version   Int     @default(1)
   createdBy String?
@@ -978,6 +1002,7 @@ model ExperimentAllocation {
 model Tenant {
   vendorOrders VendorOrder[]
   kycProfile   KYCProfile?
+  commissionPolicy CommissionPolicy?
   id           String        @id @default(cuid())
   name         String // Business or Entity Name
   plan         String        @default("BASIC") // "BASIC", "PREMIUM", "ENTERPRISE"
@@ -1017,6 +1042,8 @@ model Store {
   // SEO & Policies
   returnPolicy   String? @db.Text
   shippingPolicy String? @db.Text
+
+  status StoreStatus @default(ACTIVE)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1067,7 +1094,7 @@ model KYCProfile {
   identityDocUrl String?
   businessDocUrl String?
 
-  status          String  @default("PENDING_REVIEW") // "PENDING_REVIEW", "APPROVED", "REJECTED"
+  status          KYCStatus @default(DRAFT)
   aiRiskScore     Int? // 0-100 calculated by AI Moderation
   rejectionReason String?
 
@@ -1079,33 +1106,20 @@ model KYCProfile {
 // Marketplace: Commerce Routing
 // ==========================================
 
-model CustomerOrder {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  // 3-Currency Architecture
-  amountBase   Decimal
-  baseCurrency String  @default("USD")
-
-  amountDisplay   Decimal
-  displayCurrency String
-
-  exchangeRateUsed      Decimal?
-  exchangeRateTimestamp DateTime?
-
-  status String @default("PENDING")
-
-  vendorOrders VendorOrder[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model CommissionPolicy {
+  id              String   @id @default(cuid())
+  tenantId        String?  @unique // If null, applies globally
+  tenant          Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  percentage      Decimal  @default(10.0) // 10%
+  fixedFee        Decimal  @default(0.0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model VendorOrder {
   id              String        @id @default(cuid())
-  customerOrderId String
-  customerOrder   CustomerOrder @relation(fields: [customerOrderId], references: [id], onDelete: Cascade)
+  orderId         String
+  order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id])
@@ -1124,6 +1138,7 @@ model VendorOrder {
   shipping Decimal @default(0)
 
   status String @default("PENDING") // PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+  settlementStatus SettlementStatus @default(PENDING)
 
   items     VendorOrderItem[]
   shipments Shipment[]
@@ -1140,6 +1155,15 @@ model VendorOrderItem {
   productId       String
   quantity        Int
   priceAtPurchase Decimal
+
+  fulfillmentStatus String?
+  trackingNumber    String?
+  shipmentId        String?
+  warehouse         String?
+  carrier           String?
+  estimatedDelivery DateTime?
+  returnedQuantity  Int      @default(0)
+  refundedQuantity  Int      @default(0)
 }
 
 model Shipment {
