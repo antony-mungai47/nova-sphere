@@ -93,9 +93,17 @@ enum TransactionType {
 }
 
 enum TransactionStatus {
-  SUCCEEDED
+  CREATED
+  INTENT_CREATED
+  AUTHORIZED
+  CAPTURED
+  SETTLED
+  REFUNDED
+  PARTIALLY_REFUNDED
   FAILED
-  PENDING
+  VOIDED
+  DISPUTED
+  CHARGEBACK
 }
 
 enum LogLevel {
@@ -300,10 +308,10 @@ model Order {
   shippingAddressId String?
   shippingAddress   Address? @relation(fields: [shippingAddressId], references: [id], onDelete: SetNull)
 
-  items        OrderItem[]
-  transactions PaymentTransaction[]
-  invoice      Invoice?
-  timelines    OrderTimeline[]
+  items           OrderItem[]
+  paymentAttempts PaymentAttempt[]
+  invoice         Invoice?
+  timelines       OrderTimeline[]
 
   version   Int     @default(1)
   createdBy String?
@@ -1332,10 +1340,10 @@ enum PaymentMethod {
 }
 
 model PaymentTransaction {
-  id            String            @id @default(cuid())
-  orderId       String
-  order         Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  type          TransactionType
+  id               String            @id @default(cuid())
+  paymentAttemptId String
+  paymentAttempt   PaymentAttempt    @relation(fields: [paymentAttemptId], references: [id], onDelete: Cascade)
+  type             TransactionType
   amount        Decimal
   currency      String            @default("USD")
   provider      String            @default("STRIPE")
@@ -1347,7 +1355,7 @@ model PaymentTransaction {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([orderId])
+  @@index([paymentAttemptId])
 }
 
 model Invoice {
@@ -1378,4 +1386,40 @@ model LedgerEntry {
 
   @@index([accountId])
   @@index([orderId])
+}
+
+model PaymentAttempt {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status    TransactionStatus @default(CREATED)
+  
+  transactions PaymentTransaction[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+}
+
+model PaymentWebhookEvent {
+  id                String   @id @default(cuid())
+  provider          String
+  providerEventId   String   @unique
+  status            String   // PENDING, PROCESSED, FAILED, IGNORED
+  payloadHash       String
+  signatureVerified Boolean  @default(false)
+  
+  receivedAt  DateTime @default(now())
+  processedAt DateTime?
+}
+
+model OutboxEvent {
+  id          String   @id @default(cuid())
+  eventType   String
+  payload     Json
+  status      String   @default("PENDING") // PENDING, PUBLISHED, FAILED
+  error       String?
+  createdAt   DateTime @default(now())
+  processedAt DateTime?
 }
