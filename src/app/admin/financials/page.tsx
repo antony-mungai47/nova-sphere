@@ -17,13 +17,13 @@ export default async function FinancialsDashboard() {
     prisma.paymentTransaction.findMany({
       orderBy: { createdAt: "desc" },
       take: 20,
-      include: { order: true }
+      include: { paymentAttempt: { include: { order: true } } }
     }),
     prisma.paymentTransaction.findMany({
       where: { type: "REFUND" },
       orderBy: { createdAt: "desc" },
       take: 5,
-      include: { order: true }
+      include: { paymentAttempt: { include: { order: true } } }
     })
   ]);
 
@@ -149,7 +149,7 @@ export default async function FinancialsDashboard() {
               recentRefunds.map(refund => (
                 <div key={refund.id} className="flex items-center justify-between border-b border-white/5 pb-4 last:border-0 last:pb-0">
                   <div>
-                    <h4 className="text-white font-medium text-sm">Order #{refund.orderId.slice(-8)}</h4>
+                    <h4 className="text-white font-medium text-sm">Order #{(refund as any).paymentAttempt?.order?.id?.slice(-8) || "UNKNOWN"}</h4>
                     <p className="text-nova-silver text-xs font-mono">{refund.providerId || "SIMULATED"}</p>
                   </div>
                   <span className="text-red-400 font-bold text-sm">

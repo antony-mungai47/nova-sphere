@@ -64,13 +64,18 @@ export class PaymentEngine {
     // Record the actual PaymentTransaction
     const tx = await prisma.paymentTransaction.create({
       data: {
-        orderId,
+        paymentAttempt: {
+          create: {
+            orderId,
+            status: "CAPTURED"
+          }
+        },
         type: "CHARGE",
         amount,
         currency,
         provider: this.provider.name,
         providerId: paymentIntentId,
-        status: "SUCCEEDED"
+        status: "CAPTURED"
       }
     });
 

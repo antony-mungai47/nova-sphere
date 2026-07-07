@@ -8,7 +8,7 @@ export class InvoiceEngine {
   static async generateInvoice(orderId: string) {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
-      include: { items: true, transactions: true, user: true }
+      include: { items: true, user: true }
     });
 
     if (!order) throw new Error("Order not found");
