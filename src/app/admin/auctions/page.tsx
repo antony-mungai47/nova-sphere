@@ -20,7 +20,7 @@ export default async function AdminAuctionsPage() {
   });
 
   const activeAuctions = auctions.filter(a => a.status === "LIVE" && new Date(a.endTime) > new Date());
-  const endedAuctions = auctions.filter(a => a.status === "ENDED" || new Date(a.endTime) <= new Date());
+  const endedAuctions = auctions.filter(a => a.status === "CLOSED" || a.status === "AWAITING_PAYMENT" || new Date(a.endTime) <= new Date());
   const totalVolume = endedAuctions.reduce((sum, a) => sum + (a.bids[0]?.amount?.toNumber() || 0), 0);
   
   async function cancelAuction(formData: FormData) {

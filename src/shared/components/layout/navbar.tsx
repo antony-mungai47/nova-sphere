@@ -169,7 +169,7 @@ export function Navbar({ liveNotificationsEnabled = false }: { liveNotifications
             >
               <ShoppingCart className="w-5 h-5" />
               {mounted && cartItemCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-nova-amber text-xs text-white font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                <span data-testid="cart-count" className="absolute -top-2 -right-2 bg-nova-amber text-xs text-white font-bold w-4 h-4 rounded-full flex items-center justify-center">
                   {cartItemCount}
                 </span>
               )}

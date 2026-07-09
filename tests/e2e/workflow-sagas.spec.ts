@@ -5,8 +5,8 @@ test.describe('Nova Sphere - Workflow Sagas & Compensation', () => {
     // 1. Simulate an order being placed
     const orderRes = await request.post('/api/checkout/simulate-webhook', {
       data: {
-        eventType: 'checkout.session.completed',
-        mockStatus: 'success', // We start with success for baseline
+        orderId: 'mock-order-id-123',
+        scenario: 'success', 
       }
     });
     expect(orderRes.ok()).toBeTruthy();
@@ -14,8 +14,8 @@ test.describe('Nova Sphere - Workflow Sagas & Compensation', () => {
     // 2. Simulate a payment failure mid-saga
     const failureRes = await request.post('/api/checkout/simulate-webhook', {
       data: {
-        eventType: 'payment_intent.payment_failed',
-        orderId: 'mock-order-id-123'
+        orderId: 'mock-order-id-123',
+        scenario: 'payment_intent.payment_failed'
       }
     });
     expect(failureRes.ok()).toBeTruthy();

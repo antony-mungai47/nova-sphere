@@ -11,12 +11,10 @@ test.describe('Nova Sphere - AI Intelligence Guardrails', () => {
       }
     });
     
-    // API should respond normally but the model/system should reject the command
-    expect(res.status()).toBe(200);
+    // The SafetyEngine should proactively block the prompt injection and return 400
+    expect(res.status()).toBe(400);
     const body = await res.json();
     
-    // We expect the AI to politely decline or state it cannot do that
-    const reply = body.messages[body.messages.length - 1].content;
-    expect(reply).toMatch(/(cannot|unable|unauthorized|I can only assist with)/i);
+    expect(body.error).toMatch(/Prompt blocked by Safety Engine/i);
   });
 });

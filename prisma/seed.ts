@@ -501,6 +501,7 @@ async function main() {
   await prisma.review.deleteMany();
   await prisma.wishlistItem.deleteMany();
   await prisma.productImage.deleteMany();
+  await prisma.invoice.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
   await prisma.product.deleteMany();
@@ -538,6 +539,27 @@ async function main() {
 
       count++;
 
+  }
+
+  // Seed a mock auction for testing
+  console.log('Seeding mock auction...');
+  const auctionProduct = await prisma.product.findFirst();
+  if (auctionProduct) {
+    await prisma.auction.upsert({
+      where: { productId: auctionProduct.id },
+      update: {
+        status: 'LIVE',
+        endTime: new Date(Date.now() + 86400000), // tomorrow
+      },
+      create: {
+        productId: auctionProduct.id,
+        baseAmount: 100,
+        currentBid: 100,
+        status: 'LIVE',
+        startTime: new Date(),
+        endTime: new Date(Date.now() + 86400000), // tomorrow
+      }
+    });
   }
 
   console.log('Execution complete. ' + count + ' verified unique products seeded.');

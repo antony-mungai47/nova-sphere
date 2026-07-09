@@ -39,18 +39,20 @@ export function AuctionLiveView({
     return () => clearInterval(interval);
   }, []);
 
-  const auction = useAuction(auctionId, {
-    highestBid: initialHighestBid,
+  const { auctionState: auction, placeOptimisticBid } = useAuction(auctionId, {
+    currentBid: initialHighestBid,
     highestBidderId: initialHighestBidderId,
     endTime: initialEndTime,
-    bidHistory: initialBidHistory.map(b => ({ bidderId: b.bidderId, amount: b.amount, timestamp: b.timestamp }))
+    status: status,
+    winnerId: null,
+    bidHistory: initialBidHistory.map(b => ({ amount: b.amount, timestamp: b.timestamp }))
   });
 
   const presence = usePresence(ChannelRegistry.presenceAuction(auctionId));
 
   const endTimeMs = new Date(auction.endTime).getTime();
   const isEndingSoon = endTimeMs - now < 86400000 && endTimeMs > now;
-  const hasEnded = now > endTimeMs || status !== "ACTIVE";
+  const hasEnded = now > endTimeMs || status !== "LIVE";
   
   // Format countdown
   const timeLeft = Math.max(0, endTimeMs - now);
@@ -60,16 +62,16 @@ export function AuctionLiveView({
   
   const formattedCountdown = hasEnded ? "Ended" : `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-  const currentBid = auction.highestBid > 0 ? auction.highestBid : startingBid;
+  const currentBid = auction.currentBid > 0 ? auction.currentBid : startingBid;
   const isWinning = userId && auction.highestBidderId === userId;
   const isOutbid = userId && initialBidHistory.some(b => b.bidderId === userId) && !isWinning;
 
   // Merge live history with initial history to get bidder names where possible
-  const combinedHistory = auction.bidHistory.map((liveBid, idx) => {
+  const combinedHistory = auction.bidHistory.map((liveBid: any, idx: number) => {
     const existing = initialBidHistory.find(b => b.amount === liveBid.amount);
     return {
       id: existing?.id || `live-${idx}`,
-      bidderName: existing?.bidderName || (liveBid.bidderId === userId ? "You" : "Anonymous User"),
+      bidderName: existing?.bidderName || "Anonymous User",
       amount: liveBid.amount,
       timestamp: liveBid.timestamp
     };
@@ -152,7 +154,7 @@ export function AuctionLiveView({
                 />
               </div>
             ) : (
-              <div className="mt-8 p-4 bg-white/5 border border-white/10 rounded-xl text-center relative z-10">
+              <div data-testid="login-to-bid-prompt" className="mt-8 p-4 bg-white/5 border border-white/10 rounded-xl text-center relative z-10">
                 <p className="text-white mb-2">You must be signed in to place a bid.</p>
                 <Link href="/sign-in" className="text-nova-blue hover:underline font-medium">Sign in to bid &rarr;</Link>
               </div>
@@ -178,7 +180,7 @@ export function AuctionLiveView({
         
         {combinedHistory.length > 0 ? (
           <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-            {combinedHistory.map((bid, index) => (
+            {combinedHistory.map((bid: any, index: number) => (
               <div 
                 key={bid.id || `bid-${index}`} 
                 className={`flex items-center justify-between p-4 rounded-xl border animate-in slide-in-from-top-2 fade-in ${

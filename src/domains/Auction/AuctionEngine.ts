@@ -13,8 +13,10 @@ export class AuctionEngine {
       data: { status: newState }
     });
 
-    await RealtimeEngine.broadcast(`auction-${auctionId}`, 'state-changed', {
-      status: newState
+    await RealtimeEngine.broadcast(`presence-auction-${auctionId}`, 'state-changed', {
+      auctionId,
+      status: newState,
+      timestamp: new Date().toISOString()
     });
 
     return updated;

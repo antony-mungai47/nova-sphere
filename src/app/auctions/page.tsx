@@ -12,6 +12,8 @@ export default async function AuctionsPage() {
     orderBy: { endTime: "asc" }
   });
 
+  console.log("AUCTIONS FETCHED:", auctions.length, auctions.map(a => ({ id: a.id, status: a.status, productId: a.productId })));
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-12">
@@ -37,7 +39,7 @@ export default async function AuctionsPage() {
             const isEndingSoon = new Date(auction.endTime).getTime() - new Date().getTime() < 86400000; // less than 24h
 
             return (
-              <Link key={auction.id} href={`/auctions/${auction.id}`} className="group h-full">
+              <Link key={auction.id} href={`/auctions/${auction.id}`} data-testid="auction-card-link" className="group h-full">
                 <div className="glass-panel glass-panel-glow h-full flex flex-col overflow-hidden transition-all duration-300 transform group-hover:-translate-y-1">
                   {/* Image Container */}
                   <div className="relative aspect-square bg-black/40 p-6 flex items-center justify-center">

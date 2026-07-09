@@ -104,6 +104,16 @@ export default async function SimulateCheckoutPage({
 
             <form action="/api/checkout/simulate-webhook" method="POST">
               <input type="hidden" name="orderId" value={order.id} />
+              <div className="mb-4">
+                <label className="text-nova-silver text-sm block mb-2">Simulate Scenario:</label>
+                <select name="scenario" className="w-full bg-black/50 border border-white/10 text-white rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-nova-blue">
+                  <option value="success">Success</option>
+                  <option value="payment_declined">Payment Declined</option>
+                  <option value="stripe_timeout">Stripe Timeout</option>
+                  <option value="database_deadlock">Database Deadlock</option>
+                  <option value="duplicate_webhook">Duplicate Webhook</option>
+                </select>
+              </div>
               <button 
                 type="submit"
                 className="w-full relative inline-flex items-center justify-center px-8 py-3 text-sm font-medium transition-colors rounded-full overflow-hidden focus:outline-none focus:ring-2 focus:ring-nova-blue focus:ring-offset-2 focus:ring-offset-background bg-nova-blue text-white hover:bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.5)]"

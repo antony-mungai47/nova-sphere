@@ -27,5 +27,5 @@ export interface IPaymentEngine {
    * Consumes webhook payloads, ensuring idempotency, double-entry bookkeeping,
    * and transactional outbox event publishing.
    */
-  processWebhook(payload: string | Buffer, signature: string): Promise<void>;
+  processWebhook(payload: string | Buffer, signature: string): Promise<boolean>;
 }

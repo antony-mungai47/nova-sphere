@@ -1,9 +1,12 @@
+export type HealthStatus = 'healthy' | 'degraded' | 'unavailable';
+
 export interface IHealthEngine {
-  checkDatabase(): Promise<boolean>;
-  checkEventBus(): Promise<boolean>;
-  checkSearchProvider(): Promise<boolean>;
-  checkStripe(): Promise<boolean>;
-  checkRedis(): Promise<boolean>;
+  checkDatabase(): Promise<HealthStatus>;
+  checkInngest(): Promise<HealthStatus>;
+  checkRedis(): Promise<HealthStatus>;
+  checkStripe(): Promise<HealthStatus>;
+  checkPusher(): Promise<HealthStatus>;
+  checkEmailProvider(): Promise<HealthStatus>;
   getSystemHealth(): Promise<SystemHealthReport>;
 }
 
@@ -11,10 +14,11 @@ export interface SystemHealthReport {
   status: 'healthy' | 'degraded' | 'down';
   timestamp: string;
   checks: {
-    database: boolean;
-    eventBus: boolean;
-    searchProvider: boolean;
-    stripe: boolean;
-    redis: boolean;
+    database: HealthStatus;
+    inngest: HealthStatus;
+    redis: HealthStatus;
+    stripe: HealthStatus;
+    pusher: HealthStatus;
+    emailProvider: HealthStatus;
   };
 }

@@ -16,18 +16,18 @@ export class WinnerSelectionEngine {
     });
 
     if (!auction) throw new Error('Auction not found');
-    if (auction.status === 'ENDED' || auction.status === 'COMPLETED') return;
+    if (auction.status === 'CLOSED' || auction.status === 'PAYMENT_COMPLETED') return;
 
     if (auction.bids.length === 0 || !auction.highestBidderId) {
       // No bids, auction ended
-      await AuctionEngine.transitionState(auctionId, AuctionStatus.ENDED);
+      await AuctionEngine.transitionState(auctionId, AuctionStatus.CLOSED);
       return;
     }
 
     const reserveMet = AuctionEngine.isReserveMet(auction.currentBid, auction.reservePrice);
     
     if (!reserveMet) {
-      await AuctionEngine.transitionState(auctionId, AuctionStatus.ENDED);
+      await AuctionEngine.transitionState(auctionId, AuctionStatus.RESERVE_NOT_MET);
       // Mark all bids as rejected because reserve wasn't met
       await prisma.bid.updateMany({
         where: { auctionId },
@@ -54,11 +54,25 @@ export class WinnerSelectionEngine {
       });
     });
 
-    await RealtimeEngine.broadcast(`auction-${auctionId}`, 'auction-ended-winner', {
+    await RealtimeEngine.broadcast(`presence-auction-${auctionId}`, 'auction-ended-winner', {
+      auctionId,
       winnerId: auction.highestBidderId,
-      winningAmount: auction.currentBid
+      winningAmount: auction.currentBid,
+      timestamp: new Date().toISOString()
     });
 
-    // TODO: Trigger Workflow Engine to start Payment Capture
+    // Write OutboxEvent for AuctionCloseSaga to orchestrate Order and Payment
+    await prisma.outboxEvent.create({
+      data: {
+        aggregateId: auctionId,
+        eventType: 'AuctionWon',
+        payload: {
+          auctionId,
+          winnerId: auction.highestBidderId,
+          winningAmount: auction.currentBid,
+          currency: auction.baseCurrency || 'USD'
+        }
+      }
+    });
   }
 }

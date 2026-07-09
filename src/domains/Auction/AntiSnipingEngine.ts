@@ -31,9 +31,11 @@ export class AntiSnipingEngine {
           }
         });
 
-        await RealtimeEngine.broadcast(`auction-${auctionId}`, 'time-extended', {
+        await RealtimeEngine.broadcast(`presence-auction-${auctionId}`, 'time-extended', {
+          auctionId,
           newEndTime: newEndTime.toISOString(),
-          extensionsRemaining: maxExtensions - (auction.extensionsUsed + 1)
+          extensionsRemaining: maxExtensions - (auction.extensionsUsed + 1),
+          timestamp: new Date().toISOString()
         });
       }
     }

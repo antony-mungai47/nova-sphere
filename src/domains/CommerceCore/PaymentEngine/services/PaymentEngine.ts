@@ -33,15 +33,14 @@ export class PaymentEngine implements IPaymentEngine {
     return intent.clientSecret;
   }
 
-  async processWebhook(payload: string | Buffer, signature: string): Promise<void> {
-    // 1. Validate signature via Provider
+  async processWebhook(payload: string | Buffer, signature: string): Promise<boolean> {
     const verification = await this.provider.verifyWebhookSignature(payload, signature);
-    
+
     if (!verification.isValid || !verification.providerEventId) {
-      throw new Error('Invalid Webhook Signature');
+      throw new Error('Invalid webhook signature');
     }
 
-    // 2. Idempotency Check
+    // 1. Idempotency Check & Lock
     const acquired = await this.repository.checkAndLockWebhook(
       verification.providerEventId,
       'STRIPE',
@@ -50,36 +49,38 @@ export class PaymentEngine implements IPaymentEngine {
 
     if (!acquired) {
       // Already processed, return 200 safely
-      return;
+      return false;
     }
 
     try {
-      if (verification.status === 'SUCCEEDED' && verification.orderId) {
-        // Need to find the active attempt. For MVP, we assume the latest attempt.
-        // In reality, you'd track attemptId via intent metadata.
-        const fakeAttemptId = 'attempt_123'; // Simulating lookup
+      if (verification.orderId) {
+        // Need to find the active attempt. In MVP, just create one if none exist or find the latest.
+        // We will just create a new attempt for this simulation, or let the repository create it.
+        // Let's create an attempt so it exists for the repository to update.
+        const attemptId = await this.repository.createPaymentAttempt(verification.orderId);
 
-        await this.repository.recordSuccessfulPayment(
-          fakeAttemptId,
-          verification.orderId,
-          verification.amount || 0,
-          verification.currency || 'USD',
-          verification.providerEventId, // Using event ID as provider transaction ID for now
-          verification.providerEventId
-        );
-      } else if (verification.status === 'FAILED' && verification.orderId) {
-        const fakeAttemptId = 'attempt_123';
-
-        await this.repository.recordFailedPayment(
-          fakeAttemptId,
-          verification.orderId,
-          'Payment Gateway Declined',
-          verification.providerEventId,
-          verification.providerEventId
-        );
+        if (verification.status === 'SUCCEEDED') {
+          await this.repository.recordSuccessfulPayment(
+            attemptId,
+            verification.orderId,
+            verification.amount || 0,
+            verification.currency || 'USD',
+            verification.providerEventId, // Using event ID as provider transaction ID for now
+            verification.providerEventId
+          );
+        } else if (verification.status === 'FAILED') {
+          await this.repository.recordFailedPayment(
+            attemptId,
+            verification.orderId,
+            verification.metadata?.reason || 'Payment Gateway Declined',
+            verification.providerEventId,
+            verification.providerEventId
+          );
+        }
       }
 
       await this.repository.markWebhookProcessed(verification.providerEventId, 'PROCESSED');
+      return true;
     } catch (err: any) {
       await this.repository.markWebhookProcessed(verification.providerEventId, 'FAILED');
       throw err;

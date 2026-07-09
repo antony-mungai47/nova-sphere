@@ -1,59 +1,117 @@
-import { useState, useCallback } from 'react';
-import { useRealtime } from './useRealtime';
-import { RealtimeEvents } from '../contracts/EventRegistry';
-import { ChannelRegistry } from '../contracts/ChannelRegistry';
-import { ConnectionState } from '../contracts/IRealtimeEngine';
+import { useState, useEffect, useCallback } from 'react';
+import Pusher from 'pusher-js';
 
 export interface AuctionRealtimeState {
-  highestBid: number;
+  currentBid: number;
   highestBidderId: string | null;
   endTime: string;
-  bidHistory: Array<{ bidderId: string; amount: number; timestamp: string }>;
-  connectionState: ConnectionState;
+  status: string;
+  viewers: number;
+  winnerId: string | null;
+  connectionState: 'Connecting' | 'Connected' | 'Disconnected' | 'Reconnecting';
+  bidHistory: Array<{ amount: number; timestamp: string; isOptimistic?: boolean }>;
 }
 
-export function useAuction(auctionId: string, initialState: Omit<AuctionRealtimeState, 'connectionState'>) {
+let pusherClient: Pusher | null = null;
+
+export function useAuction(auctionId: string, initialState: Omit<AuctionRealtimeState, 'connectionState' | 'viewers'>) {
   const [auctionState, setAuctionState] = useState<AuctionRealtimeState>({
     ...initialState,
+    viewers: 0,
     connectionState: 'Connecting',
   });
 
-  const handleBidPlaced = useCallback((data: any) => {
-    // If multiple bids come in buffer, process them or just take latest
-    const events = Array.isArray(data) ? data : [data];
-    
-    setAuctionState(prev => {
-      let newState = { ...prev };
-      for (const event of events) {
-        if (event.highestBid > newState.highestBid) {
-          newState.highestBid = event.highestBid;
-          newState.highestBidderId = event.bidderId;
-          newState.bidHistory = [
-            { bidderId: event.bidderId, amount: event.highestBid, timestamp: event.timestamp },
-            ...newState.bidHistory
-          ];
-          
-          // Anti-sniping: if auction was extended
-          if (event.newEndTime) {
-            newState.endTime = event.newEndTime;
-          }
-        }
-      }
-      return newState;
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_PUSHER_KEY) return;
+
+    if (!pusherClient) {
+      pusherClient = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+        cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER || 'us2',
+        authEndpoint: '/api/pusher/auth',
+      });
+    }
+
+    const channelName = `presence-auction-${auctionId}`;
+    const channel = pusherClient.subscribe(channelName);
+
+    channel.bind('pusher:subscription_succeeded', (members: any) => {
+      setAuctionState(prev => ({
+        ...prev,
+        connectionState: 'Connected',
+        viewers: members.count
+      }));
     });
+
+    channel.bind('pusher:member_added', () => {
+      setAuctionState(prev => ({ ...prev, viewers: prev.viewers + 1 }));
+    });
+
+    channel.bind('pusher:member_removed', () => {
+      setAuctionState(prev => ({ ...prev, viewers: Math.max(0, prev.viewers - 1) }));
+    });
+
+    channel.bind('bid-placed', (data: any) => {
+      setAuctionState(prev => {
+        // Remove optimistic bids that match or are lower than server truth
+        const filteredHistory = prev.bidHistory.filter(b => !b.isOptimistic || b.amount > data.currentBid);
+        return {
+          ...prev,
+          currentBid: data.currentBid,
+          highestBidderId: data.highestBidderId,
+          bidHistory: [
+            { amount: data.currentBid, timestamp: data.timestamp },
+            ...filteredHistory
+          ]
+        };
+      });
+    });
+
+    channel.bind('time-extended', (data: any) => {
+      setAuctionState(prev => ({
+        ...prev,
+        endTime: data.newEndTime
+      }));
+    });
+
+    channel.bind('state-changed', (data: any) => {
+      setAuctionState(prev => ({
+        ...prev,
+        status: data.status
+      }));
+    });
+
+    channel.bind('auction-ended-winner', (data: any) => {
+      setAuctionState(prev => ({
+        ...prev,
+        winnerId: data.winnerId,
+        currentBid: data.winningAmount,
+        status: 'AWAITING_PAYMENT'
+      }));
+    });
+
+    pusherClient.connection.bind('state_change', (states: any) => {
+      if (states.current === 'connecting') setAuctionState(p => ({ ...p, connectionState: 'Connecting' }));
+      else if (states.current === 'connected') setAuctionState(p => ({ ...p, connectionState: 'Connected' }));
+      else if (states.current === 'unavailable' || states.current === 'failed') setAuctionState(p => ({ ...p, connectionState: 'Disconnected' }));
+    });
+
+    return () => {
+      if (pusherClient) {
+        pusherClient.unsubscribe(channelName);
+      }
+    };
+  }, [auctionId]);
+
+  const placeOptimisticBid = useCallback((amount: number) => {
+    setAuctionState(prev => ({
+      ...prev,
+      currentBid: amount,
+      bidHistory: [
+        { amount, timestamp: new Date().toISOString(), isOptimistic: true },
+        ...prev.bidHistory
+      ]
+    }));
   }, []);
 
-  const { connectionState } = useRealtime({
-    channel: ChannelRegistry.publicAuction(auctionId),
-    event: RealtimeEvents.BID_PLACED,
-    onEvent: handleBidPlaced,
-    bufferSize: 3 // flush every 3 bids in high concurrency, or if flushBuffer is called
-  });
-
-  // Keep connection state synced
-  if (connectionState !== auctionState.connectionState) {
-    setAuctionState(prev => ({ ...prev, connectionState }));
-  }
-
-  return auctionState;
+  return { auctionState, placeOptimisticBid };
 }

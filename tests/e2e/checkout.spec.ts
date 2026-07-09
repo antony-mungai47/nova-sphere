@@ -19,18 +19,25 @@ test.describe('Nova Sphere - Checkout Flow', () => {
     await page.reload();
     console.log("CART STORAGE AFTER RELOAD:", await page.evaluate(() => window.localStorage.getItem('nova-sphere-cart')));
     await page.waitForTimeout(1000); // Wait for hydration
+    
+    // Accept Cookie Banner if present to prevent pointer interception
+    const cookieBanner = page.getByRole('button', { name: /Accept All/i });
+    if (await cookieBanner.isVisible()) {
+      await cookieBanner.click();
+    }
+    
     console.log("NAVBAR HTML:", await page.locator('nav').innerHTML());
     await expect(page.locator('[data-testid="cart-count"]')).toHaveText('1');
   });
 
   test('Unauthenticated checkout prompts for sign in', async ({ page }) => {
     // Open cart drawer by clicking cart icon
-    await page.locator('[data-testid="cart-count"]').locator('..').click({ force: true });
+    await page.locator('[data-testid="cart-count"]').locator('..').click();
     
     // Click Proceed to Checkout
     page.on('dialog', dialog => dialog.accept()); // Accept the alert("Please sign in to checkout!")
     const proceedBtn = page.getByRole('button', { name: /Proceed to Checkout/i });
-    await proceedBtn.click({ force: true });
+    await proceedBtn.click();
     
     // In V2, checkout requires authentication.
     // The alert is shown and the cart closes, or redirects to login.
@@ -48,10 +55,17 @@ test.describe('Nova Sphere - Checkout Flow', () => {
     await page.goto('/store');
     console.log("STORE HTML:", await page.content());
     const firstProductLnk = page.locator('a[href^="/product/"]').first();
-    await firstProductLnk.click({ force: true });
+    await firstProductLnk.click();
     
     // Wait for the product page to load
     await page.waitForURL(/\/product\/.*/);
+    
+    // Accept Cookie Banner if present
+    const cookieBanner = page.getByRole('button', { name: /Accept All/i });
+    if (await cookieBanner.isVisible()) {
+      await cookieBanner.click();
+    }
+    
     await page.waitForSelector('text="Add to Cart"');
     
     // Evaluate script to disable the button and change text to Sold Out to verify UI testing hooks are resilient

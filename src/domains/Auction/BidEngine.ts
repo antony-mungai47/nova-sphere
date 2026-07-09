@@ -87,10 +87,13 @@ export class BidEngine {
       return { newBid, updatedAuction };
     });
 
-    // 2. Broadcast via Realtime Engine
-    await RealtimeEngine.broadcast(`auction-${auctionId}`, 'bid-placed', {
-      amount: result.newBid.amount,
-      highestBidderId: result.newBid.userId
+    // 2. Broadcast via Realtime Engine using a clean DTO
+    await RealtimeEngine.broadcast(`presence-auction-${auctionId}`, 'bid-placed', {
+      auctionId: result.updatedAuction.id,
+      currentBid: result.updatedAuction.currentBid,
+      currency: result.newBid.currency,
+      highestBidderId: result.updatedAuction.highestBidderId, // Optionally mask this for anonymity later
+      timestamp: new Date().toISOString()
     });
 
     // 3. Evaluate Anti-Sniping

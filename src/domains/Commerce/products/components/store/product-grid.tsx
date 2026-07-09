@@ -332,6 +332,7 @@ export const ProductGrid = ({
                             )}
                           </div>
                           <button 
+                            data-testid="add-to-cart-btn"
                             onClick={(e) => handleAddToCart(product, e)}
                             className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-nova-blue hover:border-nova-blue shadow-none hover:shadow-glow-primary transition-all z-10"
                           >

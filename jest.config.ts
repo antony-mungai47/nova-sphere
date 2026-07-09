@@ -16,7 +16,8 @@ const config: Config = {
   ],
   testMatch: [
     '<rootDir>/src/domains/**/*.test.ts',
-    '<rootDir>/tests/domains/**/*.test.ts'
+    '<rootDir>/tests/domains/**/*.test.ts',
+    '<rootDir>/tests/api/**/*.test.ts'
   ]
 };
 

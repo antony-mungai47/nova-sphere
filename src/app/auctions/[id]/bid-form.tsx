@@ -74,6 +74,7 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
+              data-testid="bid-amount-input"
               className="w-full bg-black/50 border border-white/10 rounded-xl pl-8 pr-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors"
             />
           </div>
@@ -84,6 +85,7 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
         <button
           type="submit"
           disabled={isPending}
+          data-testid="place-bid-btn"
           className="bg-nova-blue hover:bg-nova-blue/80 text-white px-8 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 h-[50px] shadow-glow-primary disabled:opacity-50"
         >
           {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <TrendingUp className="w-5 h-5" />}
@@ -92,7 +94,7 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
       </div>
 
       {error && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-start gap-3">
+        <div data-testid="bid-error-msg" className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-start gap-3">
           <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
           <p className="text-sm">{error}</p>
         </div>

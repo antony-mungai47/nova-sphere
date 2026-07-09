@@ -54,3 +54,11 @@ A sprint is only complete if it satisfies the strict 15-point acceptance checkli
 
 ### 10. Observability First
 Every new capability must include monitoring (Error logging, Latency metrics, Provider health, etc.) from day one. If it cannot be observed, it cannot be shipped.
+
+## Engineering Rule #2: Architecture Freeze Policy
+
+The V2 architecture is now frozen as of Sprint 10.
+- Any architectural change must be documented through an Architecture Decision Record (ADR) and explicitly approved by the user before implementation.
+- Feature work may not introduce parallel implementations, duplicate services, or alternate architectural patterns.
+- No more new folders, new engines, new services, new repositories, or new patterns.
+- Only bug fixes, performance improvements, security updates, documentation, tests, and deployment automation are permitted.
