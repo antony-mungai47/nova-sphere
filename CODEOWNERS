@@ -1,0 +1,8 @@
+# Code Owners
+
+*                   @platform-team
+/src/domains/CommerceCore/  @commerce-team
+/src/domains/Platform/      @platform-team
+/src/domains/Realtime/      @realtime-team
+/docs/                      @devrel-team
+/.github/workflows/         @devops-team

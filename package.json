@@ -56,6 +56,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "jest": "^30.4.2",
+    "jest-mock-extended": "^4.0.1",
     "lighthouse": "^13.4.0",
     "prisma": "^6.19.3",
     "puppeteer": "^25.1.0",

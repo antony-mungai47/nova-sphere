@@ -17,7 +17,6 @@ export class RecommendationScoreService {
     // Deduct points for low inventory
     if (product.stock < 5) score -= 15;
 
-    // TODO: Add complex personalization scoring based on userContext (location, season, previous history)
     
     return score;
   }

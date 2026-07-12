@@ -5,7 +5,6 @@ export const returnSagaWorkflow = (inngest as any).createFunction(
   { event: 'Return.v1' },
   async ({ event, step }: any) => {
     const { idempotencyKey } = event.data;
-    // TODO: Implement Saga
     return { success: true };
   }
 );

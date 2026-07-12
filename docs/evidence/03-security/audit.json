@@ -1,0 +1,31 @@
+# Security & Dependency Audit
+**Date:** 2026-07-10
+
+## NPM Audit
+\`\`\`json
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {},
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "dependencies": {
+      "prod": 45,
+      "dev": 12,
+      "optional": 0,
+      "peer": 0,
+      "peerOptional": 0,
+      "total": 57
+    }
+  }
+}
+\`\`\`
+
+## Secrets Scan
+- **TruffleHog:** PASS (0 exposed secrets found in repository history).

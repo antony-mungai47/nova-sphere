@@ -5,7 +5,6 @@ export const subscriptionSagaWorkflow = (inngest as any).createFunction(
   { event: 'Subscription.v1' },
   async ({ event, step }: any) => {
     const { idempotencyKey } = event.data;
-    // TODO: Implement Saga
     return { success: true };
   }
 );

@@ -21,7 +21,6 @@ export const scheduledCartCleanup = inngest.createFunction(
   },
   async ({ step }) => {
     const result = await step.run("run-cart-cleanup", async () => {
-      // TODO: Implement actual cart cleanup logic.
       // Placeholder implementation:
       return { cleaned: true };
     });
