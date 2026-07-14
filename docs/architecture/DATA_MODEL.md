@@ -1,42 +1,43 @@
-# Nova Sphere V3 Data Model Architecture
+# Nova Sphere Data Architecture
 
-This document serves as the frozen data model architecture for Nova Sphere V3, governing the migration stages across Commerce, AI, and Operations domains.
+This document outlines the frozen data model for Nova Sphere V3.x. The platform transitions from in-memory prototypes to a fully persisted, relational architecture using PostgreSQL.
 
-## Overview
-Nova Sphere's architecture is moving from an in-memory mapped prototype to a robust Postgres-backed architecture (Prisma ORM). The data model is split into three core deployment stages to minimize migration risk.
+## Domain 1: Core Commerce
+These entities handle the fundamental e-commerce transactions, user identity, catalog, and order management.
+- **User / Address**: Core identity and shipping details.
+- **Product / ProductImage / Category**: The unified catalog representation.
+- **Order / OrderItem**: The transactional ledger of purchases.
+- **Review / WishlistItem / Coupon**: Engagement and promotional primitives.
+- **ShoppingMemory / PersonalizationProfile**: The persisted context of user behavior, replacing the in-memory Maps.
+- **SignalsLedger**: Telemetry events captured across the UI for downstream ML processes.
+- **Vendor / CommissionPolicy**: Multi-vendor marketplace management.
+- **Auction / Bid / AuctionWatchlist**: Support for the real-time auction marketplace.
 
-## Stage 1: Commerce Platform
-The Commerce schema extends the base capabilities with advanced routing, inventory logic, rules, and finance.
+## Domain 2: AI & Intelligence
+These entities govern the interactions with Large Language Models and AI-driven features.
+- **AIBudget**: Tracks token usage and spending per user/tenant to enforce financial constraints.
+- **PromptLog**: Immutable record of all requests sent to the AI Gateway, including latency and cost.
+- **AIEvaluation**: Automated grading of AI responses to detect degradation or hallucination.
+- **KnowledgeQuestion / KnowledgeAnswer**: The community-driven Q&A hub powered by AI curation.
 
-### Key Entities
-- **Tenant & TenantUser**: Foundation for multi-vendor marketplace routing.
-- **Warehouse, Inventory, InventoryMovement**: Hard persistence for stock tracking, reservations, and multi-location fulfillment.
-- **BusinessRule, RuleCondition, RuleAction**: Server-evaluated logic for promotions, taxes, and shipping overrides.
-- **OrderTimeline**: Immutable event sourcing for order state changes, explicitly tracking "actor" (System vs Admin vs User).
-- **PaymentTransaction & Invoice**: Phase 13 financial architecture tying Stripe metadata safely to Orders.
+## Domain 3: Operations & Platform
+These entities handle async workflows, distributed systems reliability, and platform configuration.
+- **WorkflowState**: The central state machine tracking async pipelines (e.g., Fraud Review, Vendor Onboarding).
+- **AuditTrail / AuditLog / AdminLog / SystemLog**: Immutable compliance records tracking system and administrative changes.
+- **OutboxEvent**: Implements the Transactional Outbox pattern for reliable message publishing.
+- **FeatureFlag / FeatureFlagHistory**: Controls incremental feature rollouts and targeting.
+- **StoreSettings / BusinessRule / RuleCondition**: Dynamic system configuration.
+- **WebhookSubscription / WebhookDeliveryLog**: Extensibility interfaces for external integrations.
 
-## Stage 2: AI & Personalization Platform
-The AI schema introduces the intelligence capabilities that separate Nova Sphere from traditional storefronts.
+## Retention Policies
+- **Core Commerce**: Retained indefinitely (7 years minimum for financial records: `Order`, `Invoice`, `LedgerEntry`).
+- **Signals & Telemetry**: Aggregated after 30 days, purged after 90 days.
+- **PromptLogs**: Sampled after 7 days for cost savings, unless flagged for manual review.
+- **OutboxEvents**: Hard deleted immediately upon successful message broker acknowledgment.
+- **WorkflowState**: Archived 30 days after terminal state (`COMPLETED` or `FAILED`).
 
-### Key Entities
-- **ShoppingMemory**: Short-lived semantic context tracking for individual user sessions (powers intelligent search).
-- **SignalsLedger**: Event stream for implicit and explicit user behaviors (hover, scroll, click, dwell time).
-- **PersonalizationProfile**: Aggregated, long-term embeddings representing user preferences and price-sensitivity.
-- **AIBudget**: Token-level accounting and rate limiting per tenant/user for language models.
-- **PromptLog & AIEvaluation**: Observability for LLM gateway, capturing prompts, responses, latency, and safety evaluations.
-- **KnowledgeQuestion & KnowledgeAnswer**: Core Q&A engine for community and AI-generated insights.
-
-## Stage 3: Operations & Platform Intelligence
-The Operations schema underpins the governance, security, and observability requirements of V3.
-
-### Key Entities
-- **Incident**: System-level degradation tracking, automating MTTR (Mean Time to Recovery) metrics.
-- **AuditTrail / AuditLog**: Immutable ledger for administrative actions (e.g., overriding a discount or banning a user).
-- **Deployment**: Linking GitHub commits to active platform versions for traceability.
-- **ApiKey, WebhookSubscription, WebhookDeliveryLog**: The foundational API Gateway data structures for headless operations.
-- **RiskEvaluation**: Automated ML scoring for fraud detection on checkout and login.
-
-## Data Governance Rules
-1. **Never mutate Audit Logs**: `createdAt` is the only timestamp on `AuditLog`—no `updatedAt`.
-2. **Soft Deletes**: Always prefer `isActive` or `status` flags over physical DELETEs for orders, inventory, and users.
-3. **No direct referential coupling between AI and Commerce models**: AI capabilities must reference core commerce entities purely via `userId` or `productId` foreign keys to ensure the AI subsystem can fail independently of the checkout flow.
+## Guiding Principles
+1. **Strict Normalization**: Core tables are normalized. JSONB is used strictly for unstructured metadata or polymorphic attributes.
+2. **Referential Integrity**: Managed strictly by foreign keys.
+3. **Immutability for Finance/Logs**: `Order`, `Bid`, `LedgerEntry`, and `AuditTrail` are strictly append-only.
+4. **Soft Deletes**: Deletions on major entities (User, Product) use `deletedAt` timestamps.
