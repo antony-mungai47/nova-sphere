@@ -1,68 +1,175 @@
 @import "tailwindcss";
 
 :root {
-  /* Core Background & Text */
-  --background: #0B1F3A; /* Deep Navy */
-  --foreground: #F8FAFC;
-  --surface: #1F2937; /* Charcoal / Dark Surface */
+  /* =========================================
+     Sprint V2.1A - Design System Tokens
+     (Strictly Light Theme, No Dark Mode)
+     ========================================= */
+
+  /* Base Colors */
+  --background: #F8FAFC; /* Soft White */
+  --surface: #FFFFFF;    /* White Cards */
+  --foreground: #1E293B; /* Charcoal */
+  --muted: #475569;      /* Slate */
+  --border: #E2E8F0;     /* Light Gray */
+
+  /* CTA Hierarchy */
+  --cta-primary: #F97316;   /* Orange (Buy/Cart) */
+  --cta-secondary: #2563EB; /* Blue (Learn More) */
+  --color-success: #22C55E; /* Green */
+  --color-warning: #F59E0B; /* Amber */
+  --color-danger: #EF4444;  /* Red */
+
+  /* Category Accents (Multi-Color System) */
+  --cat-electronics: #2563EB; /* Blue */
+  --cat-fashion: #EC4899;     /* Pink */
+  --cat-home: #10B981;        /* Emerald */
+  --cat-groceries: #22C55E;   /* Green */
+  --cat-beauty: #A855F7;      /* Purple */
+  --cat-auto: #F97316;        /* Orange */
+  --cat-sports: #EF4444;      /* Red */
+  --cat-books: #4F46E5;       /* Indigo */
+  --cat-toys: #FACC15;        /* Yellow */
+  --cat-health: #14B8A6;      /* Teal */
+
+  /* Typography Tokens */
+  --font-hero: var(--font-geist-sans);
+  --font-heading: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
   
-  /* Brand Tokens */
-  --color-primary: #3B82F6; /* Electric Blue CTA */
-  --color-secondary: #10B981; /* Emerald CTA/Success */
-  --color-accent: #D4AF37; /* Premium Gold */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
   
-  /* UI Tokens */
-  --color-primary-dark: #101820; /* Primary Dark */
-  --color-surface-light: #F8FAFC; /* Light Surface */
-  --color-text-main: #111827; /* Dark Text */
-  --color-muted: #94A3B8; /* Muted Text/Elements (Silver-ish) */
-  --color-slate: #475569; /* Darker Slate Gray */
+  --line-height-relaxed: 1.6;
+  --line-height-tight: 1.1;
+
+  /* Dashboard Theming */
+  --dash-vendor: var(--cat-home);
+  --dash-admin: var(--muted);
+  --dash-orders: var(--cta-secondary);
+  --dash-payments: var(--color-success);
+
+  /* Radius & Shadows (Elevation) */
+  --radius-card: 16px;
+  --radius-button: 8px;
+  --radius-full: 9999px;
   
-  /* Shadows / Elevations */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-glow-primary: 0 0 20px rgba(59, 130, 246, 0.4); /* Blue Glow */
-  --shadow-glow-secondary: 0 0 20px rgba(16, 185, 129, 0.3); /* Emerald Glow */
-  --shadow-glow-accent: 0 0 15px rgba(212, 175, 55, 0.4); /* Gold Glow */
+  --elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --elevation-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --elevation-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --elevation-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --elevation-5: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   
-  /* Backwards Compat mappings for existing components */
-  --nova-blue: var(--color-primary);
-  --nova-amber: var(--color-accent);
-  --nova-gold: var(--color-accent);
-  --nova-emerald: var(--color-secondary);
-  --nova-charcoal: var(--surface);
-  --nova-slate: var(--color-slate);
-  --nova-silver: var(--color-muted);
-  --nova-navy: var(--background);
+  --shadow-soft: var(--elevation-3);
+  --shadow-hover: var(--elevation-4);
+
+  /* Glass & Opacity Tokens */
+  --glass-opacity-light: 0.7;
+  --glass-opacity-medium: 0.5;
+  --glass-opacity-heavy: 0.3;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+
+  /* Motion Design Tokens (V2.2A) */
+  --motion-instant: 100ms;
+  --motion-fast: 180ms;
+  --motion-medium: 280ms;
+  --motion-slow: 450ms;
+  --motion-premium: 650ms;
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-Index Layers */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* =========================================
+   Seasonal Theme Engine Scaffolding
+   ========================================= */
+.theme-black-friday {
+  --background: #0A0A0A;
+  --foreground: #FACC15; /* Gold */
+  --cta-primary: #FACC15;
+  --cta-secondary: #FFFFFF;
+}
+
+.theme-christmas {
+  --background: #F8FAFC;
+  --cta-primary: #DC2626; /* Red */
+  --cta-secondary: #16A34A; /* Green */
+}
+
+.theme-valentines {
+  --background: #FFF1F2; /* Rose 50 */
+  --cta-primary: #E11D48; /* Rose 600 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
   
-  --color-primary: var(--color-primary);
-  --color-secondary: var(--color-secondary);
-  --color-accent: var(--color-accent);
-  --color-muted: var(--color-muted);
-  --color-slate: var(--color-slate);
+  --color-cta-primary: var(--cta-primary);
+  --color-cta-secondary: var(--cta-secondary);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
   
-  --color-nova-blue: var(--color-primary);
-  --color-nova-amber: var(--color-accent);
-  --color-nova-gold: var(--color-accent);
-  --color-nova-emerald: var(--color-secondary);
-  --color-nova-charcoal: var(--surface);
-  --color-nova-slate: var(--color-slate);
-  --color-nova-silver: var(--color-muted);
-  --color-nova-navy: var(--background);
+  --color-cat-electronics: var(--cat-electronics);
+  --color-cat-fashion: var(--cat-fashion);
+  --color-cat-home: var(--cat-home);
+  --color-cat-groceries: var(--cat-groceries);
+  --color-cat-beauty: var(--cat-beauty);
+  --color-cat-auto: var(--cat-auto);
+  --color-cat-sports: var(--cat-sports);
+  --color-cat-books: var(--cat-books);
+  --color-cat-toys: var(--cat-toys);
+  --color-cat-health: var(--cat-health);
 
-  --font-sans: var(--font-geist-sans), Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-hero: var(--font-hero);
+  --font-heading: var(--font-heading);
+
+  --shadow-1: var(--elevation-1);
+  --shadow-2: var(--elevation-2);
+  --shadow-3: var(--elevation-3);
+  --shadow-4: var(--elevation-4);
+  --shadow-5: var(--elevation-5);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-hover: var(--shadow-hover);
   
-  --shadow-glow-primary: var(--shadow-glow-primary);
-  --shadow-glow-secondary: var(--shadow-glow-secondary);
-  --shadow-glow-accent: var(--shadow-glow-accent);
+  --radius-card: var(--radius-card);
+  --radius-button: var(--radius-button);
+  --radius-full: var(--radius-full);
+
+  --ease-spring: var(--ease-spring);
+  --ease-out: var(--ease-out);
+  
+  --default-transition-duration: var(--motion-medium);
+  --default-transition-timing-function: var(--ease-out);
+  
+  --duration-motion-instant: var(--motion-instant);
+  --duration-motion-fast: var(--motion-fast);
+  --duration-motion-medium: var(--motion-medium);
+  --duration-motion-slow: var(--motion-slow);
+  --duration-motion-premium: var(--motion-premium);
+
+  --z-base: var(--z-base);
+  --z-dropdown: var(--z-dropdown);
+  --z-sticky: var(--z-sticky);
+  --z-overlay: var(--z-overlay);
+  --z-modal: var(--z-modal);
+  --z-toast: var(--z-toast);
 
   --animate-shimmer: shimmer 2s infinite;
 
@@ -74,7 +181,7 @@
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

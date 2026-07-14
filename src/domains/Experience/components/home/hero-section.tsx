@@ -1,98 +1,124 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Button } from "@/shared/components/ui/button";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Button } from "@/components/ui/Button";
+import { ShoppingBag, TrendingUp, Zap, Truck } from "lucide-react";
 
 export function HeroSection() {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background glowing orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-nova-blue/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-nova-amber/10 rounded-full blur-[100px] pointer-events-none" />
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, -150]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -250]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
-      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-20">
+      {/* Background Soft Glows (Light Theme) */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-cta-secondary/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cta-primary/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center h-full">
         
         {/* Left Content */}
         <motion.div 
           className="space-y-8 max-w-2xl"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }} // Motion token mapping
         >
           <motion.div 
-            className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-nova-blue/30 bg-nova-blue/10 text-nova-blue text-sm font-medium"
+            className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-cta-secondary/20 bg-cta-secondary/5 text-cta-secondary text-sm font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.4 }}
           >
-            <span className="w-2 h-2 rounded-full bg-nova-blue animate-pulse" />
-            <span>Next-Gen Commerce</span>
+            <span className="w-2 h-2 rounded-full bg-cta-secondary animate-pulse" />
+            <span>The 2026 Premium Marketplace</span>
           </motion.div>
 
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight">
-            Explore the <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-nova-blue to-cyan-300">
-              Future of Smart
-            </span> <br/>
-            Shopping
+          <h1 className="text-display md:text-7xl font-hero font-bold tracking-tight text-foreground leading-tight">
+            Shop Smarter. <br/>
+            Sell Faster.
           </h1>
 
-          <p className="text-lg text-nova-silver max-w-xl leading-relaxed">
-            NOVA SPHERE is an ultra-premium, AI-powered marketplace. Discover the most advanced gadgets, wearables, and lifestyle tech curated from around the globe.
-          </p>
+          <div className="flex items-center space-x-6 text-muted font-medium">
+            <div className="flex flex-col">
+              <span className="text-2xl text-foreground font-bold">20,000+</span>
+              <span className="text-sm">Products</span>
+            </div>
+            <div className="w-px h-10 bg-border"></div>
+            <div className="flex flex-col">
+              <span className="text-2xl text-foreground font-bold">1,200+</span>
+              <span className="text-sm">Vendors</span>
+            </div>
+            <div className="w-px h-10 bg-border"></div>
+            <div className="flex flex-col">
+              <span className="text-2xl text-success font-bold">98%</span>
+              <span className="text-sm">Satisfaction</span>
+            </div>
+          </div>
 
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 pt-4">
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 pt-6">
             <Link href="/store">
-              <Button >
+              <Button size="lg" variant="primary" rightIcon={<ShoppingBag size={18}/>}>
                 Shop Now
               </Button>
             </Link>
-            <Link href="/store?sort=trending">
-              <Button variant="outline">
-                Trending Products
+            <Link href="/vendor/apply">
+              <Button size="lg" variant="outline">
+                Become a Seller
               </Button>
             </Link>
           </div>
         </motion.div>
 
-        {/* Right Content - 3D Floating Product Image */}
+        {/* Right Content - Parallax Floating Cards */}
         <motion.div 
-          className="relative h-[500px] md:h-[600px] w-full flex items-center justify-center"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          className="relative h-[600px] w-full hidden lg:flex items-center justify-center"
+          style={{ opacity }}
         >
+          {/* Main central focal element */}
           <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-[80%] h-[80%] z-20"
-            style={{ filter: "drop-shadow(var(--shadow-glow-primary))" }}
+            style={{ y: y1 }}
+            className="absolute z-20 w-72 h-96 bg-surface rounded-card shadow-hover border border-border p-6 flex flex-col justify-end"
           >
-            <Image
-              src="/hero-product.png"
-              alt="Futuristic Headphone"
-              fill
-              className="object-contain"
-              priority
-            />
+            <div className="w-full h-48 bg-muted/10 rounded-lg mb-4 flex items-center justify-center">
+              <span className="text-muted text-sm">Product Image</span>
+            </div>
+            <h3 className="font-heading font-bold text-lg text-foreground">Premium Wireless Headphones</h3>
+            <p className="text-cta-primary font-bold mt-2">$299.00</p>
           </motion.div>
-          
-          {/* Decorative rings behind product */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <motion.div 
-              className="w-[300px] h-[300px] rounded-full border border-white/5"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
-            <motion.div 
-              className="absolute w-[450px] h-[450px] rounded-full border border-nova-blue/10 border-dashed"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            />
-          </div>
+
+          {/* Floating Badges */}
+          <motion.div 
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-10 left-10 z-30 bg-surface rounded-full px-4 py-2 shadow-soft border border-border flex items-center space-x-2"
+          >
+            <Zap className="text-warning w-5 h-5" />
+            <span className="font-medium text-sm text-foreground">Flash Deals</span>
+          </motion.div>
+
+          <motion.div 
+            animate={{ y: [0, 20, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-20 right-10 z-30 bg-surface rounded-full px-4 py-2 shadow-soft border border-border flex items-center space-x-2"
+          >
+            <Truck className="text-cta-secondary w-5 h-5" />
+            <span className="font-medium text-sm text-foreground">Free Delivery</span>
+          </motion.div>
+
+          {/* Background Parallax Cards */}
+          <motion.div
+            style={{ y: y2 }}
+            className="absolute top-20 right-0 z-10 w-48 h-64 bg-surface rounded-card shadow-soft border border-border/50 scale-90 blur-[1px] opacity-70"
+          />
+          <motion.div
+            style={{ y: y2 }}
+            className="absolute bottom-0 left-0 z-10 w-56 h-72 bg-surface rounded-card shadow-soft border border-border/50 scale-95 blur-[2px] opacity-60"
+          />
+
         </motion.div>
 
       </div>
