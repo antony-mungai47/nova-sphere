@@ -39,10 +39,10 @@ export function HeroContent({ campaign }: HeroContentProps) {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button size="xl" variant="primary" className="shadow-glow-primary">
-            {primaryCta}
+          <Button size="lg" className="rounded-full font-bold">
+            Explore Collection
           </Button>
-          <Button size="xl" variant="outline" className="bg-surface/50 backdrop-blur-md">
+          <Button variant="outline" size="lg" className="rounded-full bg-surface/10 backdrop-blur-md border-surface/20 hover:bg-surface/20">
             {secondaryCta}
           </Button>
         </div>

@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { FileText, Download, FileShield, Zap } from "lucide-react";
+import { FileText, Download, Zap } from "lucide-react";
 
 export function ProductManuals() {
   const documents = [
     { title: "User Manual", type: "PDF", size: "2.4 MB", icon: <FileText className="w-5 h-5 text-cta-primary" /> },
-    { title: "Warranty Guide", type: "PDF", size: "1.1 MB", icon: <FileShield className="w-5 h-5 text-emerald-500" /> },
+    { title: "Warranty Guide", type: "PDF", size: "1.1 MB", icon: <FileText className="w-5 h-5 text-emerald-500" /> },
     { title: "Quick Start Guide", type: "PDF", size: "3.8 MB", icon: <Zap className="w-5 h-5 text-warning" /> },
   ];
 

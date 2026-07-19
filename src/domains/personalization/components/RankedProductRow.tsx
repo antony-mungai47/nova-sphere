@@ -19,6 +19,7 @@ export function RankedProductRow({ title, rawProducts }: RankedProductRowProps) 
   useEffect(() => {
     if (context && rawProducts.length > 0) {
       const sorted = rankProducts(rawProducts);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRanked(sorted);
       trackExperienceEvent("recommendation.shown", { rowTitle: title, topItem: sorted[0]?.id });
     }

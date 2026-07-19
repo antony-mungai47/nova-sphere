@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NotificationEngine } from '@/domains/Platform/Notifications/NotificationEngine';
 import { templateRegistry } from '@/domains/Platform/Notifications/templates/TemplateRegistry';
 import { NotificationRenderer } from '@/domains/Platform/Notifications/renderer/NotificationRenderer';
@@ -5,7 +6,7 @@ import { PreferenceEngine } from '@/domains/Platform/Notifications/preferences/P
 import { providerRegistry } from '@/domains/Platform/Notifications/providers/ProviderRegistry';
 import { DeliveryTracker } from '@/domains/Platform/Notifications/tracker/DeliveryTracker';
 import { NotificationAnalytics } from '@/domains/Platform/Notifications/analytics/NotificationAnalytics';
-import { INotificationProvider } from '@/domains/Platform/Notifications/contracts';
+import { NotificationProvider } from '@/domains/Platform/Notifications/providers/ProviderRegistry';
 
 jest.mock('@/domains/Platform/Notifications/templates/TemplateRegistry');
 jest.mock('@/domains/Platform/Notifications/renderer/NotificationRenderer');

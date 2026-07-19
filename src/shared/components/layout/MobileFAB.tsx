@@ -17,6 +17,7 @@ export function MobileFAB() {
   const cartItemCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

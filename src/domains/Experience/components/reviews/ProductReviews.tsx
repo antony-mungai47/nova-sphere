@@ -50,8 +50,8 @@ const MOCK_REVIEWS: ProductReview[] = [
     variantPurchased: "256GB Midnight Black",
     isVerifiedPurchase: true,
     media: [
-      { type: "image", url: "/hero-product.png", reviewId: "r1" },
-      { type: "image", url: "/hero-product.png", reviewId: "r1" }
+      { type: "image", url: "/hero-product.png" },
+      { type: "image", url: "/hero-product.png" }
     ],
     helpfulVotes: 124,
     helpfulPercentage: 92,
@@ -80,7 +80,7 @@ const MOCK_REVIEWS: ProductReview[] = [
     variantPurchased: "512GB Titanium",
     isVerifiedPurchase: true,
     media: [
-      { type: "image", url: "/hero-product.png", reviewId: "r2" }
+      { type: "image", url: "/hero-product.png" }
     ],
     helpfulVotes: 45,
     helpfulPercentage: 85,
@@ -127,7 +127,7 @@ export function ProductReviews() {
         />
 
         {/* Global Media Gallery */}
-        <ReviewMediaGallery media={allMedia} />
+        <ReviewMediaGallery media={allMedia as any} />
 
         {/* Controls: Search, Chips, Filters */}
         <div className="bg-surface/50 border border-border rounded-2xl p-6 mb-8">

@@ -26,6 +26,7 @@ export function Navbar({ liveNotificationsEnabled = false }: { liveNotifications
   const cartItemCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);

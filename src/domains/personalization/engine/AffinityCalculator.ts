@@ -1,6 +1,6 @@
 import { AffinityProfile } from "./types";
-import { GlobalAIOrchestrator } from "../../ai/orchestrator/AIOrchestrator";
-import { AffinityPrompts } from "../../ai/prompts";
+import { GlobalAIOrchestrator } from "../../AI/orchestrator/AIOrchestrator";
+import { AffinityPrompts } from "../../AI/prompts";
 
 export class AffinityCalculator {
   private currentAffinities: AffinityProfile = {

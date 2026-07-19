@@ -27,9 +27,8 @@ export function DiscoveryTakeover() {
       Engine.getRecentSearches().then(setRecent);
     } else if (!isOpen) {
       setQuery("");
-      setSuggestions([]);
     }
-  }, [isOpen, setSuggestions]);
+  }, [isOpen]);
 
   // Handle escape to close
   useEffect(() => {

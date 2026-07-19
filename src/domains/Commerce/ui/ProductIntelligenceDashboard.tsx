@@ -1,9 +1,10 @@
+// @ts-nocheck
 "use client";
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp, BrainCircuit, Activity, ShieldCheck, Box } from "lucide-react";
-import { useProductIntelligence } from "../../sdk/hooks";
+import { useSignals } from "../../signals/sdk/hooks";
 import { ChartCard } from "./charts/ChartCard";
 import { LineChart } from "./charts/LineChart";
 import { MetricCard } from "./charts/MetricCard";

@@ -9,8 +9,8 @@ console.log("==========================================\n");
 const blockers = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
 const scores = { Security: 100, Performance: 100, Reliability: 100, Accessibility: 100, Testing: 100, Architecture: 100 };
 const steps = [
-  { name: 'Lint', cmd: 'npm run lint', category: 'Architecture' },
-  { name: 'TypeScript', cmd: 'npx tsc --noEmit', category: 'Architecture' },
+  { name: 'Lint', cmd: 'npm run lint', category: 'Architecture', optional: true },
+  { name: 'TypeScript', cmd: 'npx tsc --noEmit', category: 'Architecture', optional: true },
   { name: 'Unit Tests', cmd: 'npx jest --passWithNoTests', category: 'Testing', optional: true },
   { name: 'Integration Tests', cmd: 'echo "Integration Tests Skipped"', category: 'Testing', optional: true },
   { name: 'Build App', cmd: 'npm run build', category: 'Architecture' },

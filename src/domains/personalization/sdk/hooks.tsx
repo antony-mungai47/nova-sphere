@@ -20,13 +20,14 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const { track } = useSignals();
   const { userId, sessionId } = useAuth();
   
-  const identifier = userId || sessionId || "anon_" + Math.random().toString(36);
+  const randomId = React.useMemo(() => "anon_" + Math.random().toString(36), []);
+  const identifier = userId || sessionId || randomId;
 
   useEffect(() => {
     // In a real app we would pass actual recent signals from the store or DB
     Experience.resolve(identifier, []).then(resolved => {
       setContext(resolved);
-      track("segment.changed", "ai_training", { affinities: resolved.affinities }, false);
+      track("recommendation.viewed", "ai_training", { affinities: resolved.affinities }, false);
     });
   }, [identifier, track]);
 

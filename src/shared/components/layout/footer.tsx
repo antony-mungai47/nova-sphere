@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
-import { Video, Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Video, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 export async function Footer() {
@@ -48,17 +48,17 @@ export async function Footer() {
             </div>
             
             <div className="flex space-x-3">
-              <a href={settings?.twitterUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors">
-                <Twitter size={18} />
+              <a href={settings?.twitterUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors text-xs font-bold">
+                TW
               </a>
-              <a href={settings?.instagramUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors">
-                <Instagram size={18} />
+              <a href={settings?.instagramUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors text-xs font-bold">
+                IG
               </a>
-              <a href={settings?.facebookUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors">
-                <Facebook size={18} />
+              <a href={settings?.facebookUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors text-xs font-bold">
+                FB
               </a>
-              <a href={settings?.linkedinUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors">
-                <Linkedin size={18} />
+              <a href={settings?.linkedinUrl || "#"} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-cta-primary hover:border-cta-primary transition-colors text-xs font-bold">
+                IN
               </a>
             </div>
           </div>

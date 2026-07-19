@@ -1,7 +1,7 @@
 import React from "react";
 import { ProductCarousel } from "@/components/ui/ProductCarousel";
 import { CategoryCard } from "@/components/ui/CategoryCard";
-import { Card } from "@/components/ui/Card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/Button";
 import { ProductCard } from "@/components/ui/ProductCard";
 

@@ -1,7 +1,7 @@
 import { SearchQuery, SearchResultDTO } from "../types";
-import { GlobalAIOrchestrator } from "../../../ai/orchestrator/AIOrchestrator";
-import { GlobalEmbedding } from "../../../ai/embeddings/EmbeddingProvider";
-import { DiscoveryPrompts } from "../../../ai/prompts";
+import { GlobalAIOrchestrator } from "../../../AI/orchestrator/AIOrchestrator";
+import { GlobalEmbedding } from "../../../AI/embeddings/EmbeddingProvider";
+import { DiscoveryPrompts } from "../../../AI/prompts";
 
 export interface DiscoveryAdapter {
   name: string;
@@ -17,7 +17,7 @@ export class TextAdapter implements DiscoveryAdapter {
   }
 
   async execute(query: SearchQuery): Promise<SearchResultDTO[]> {
-    if (!query.rawInput) return [];
+    if (!query.rawInput || typeof query.rawInput !== "string") return [];
     const text = query.rawInput.toLowerCase();
 
     // 1. AI Intent Extraction

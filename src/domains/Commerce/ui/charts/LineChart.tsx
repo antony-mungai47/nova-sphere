@@ -39,8 +39,7 @@ export function LineChart({ data, xKey, yKey, color = "#3b82f6", valueFormatter 
               boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
             }}
             itemStyle={{ color: "hsl(var(--foreground))", fontWeight: "bold" }}
-            formatter={(value: number) => [valueFormatter ? valueFormatter(value) : value, ""]}
-            labelStyle={{ color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}
+            formatter={(value: any) => [valueFormatter ? valueFormatter(value as number) : value, undefined as any]}  labelStyle={{ color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}
           />
           <Line 
             type="monotone" 
