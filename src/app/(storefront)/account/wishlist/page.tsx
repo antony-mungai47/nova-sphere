@@ -3,13 +3,15 @@ import { prisma } from '@/lib/prisma';
 import { Heart, Trash2, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-// In a real app, we'd get the auth session here
-const MOCK_USER_ID = "mock-user-1"; 
+import { auth } from '@clerk/nextjs/server';
+import { redirect } from 'next/navigation';
 
 export default async function WishlistPage() {
+  const { userId } = await auth();
+  if (!userId) redirect('/sign-in');
+
   const items = await prisma.wishlistItem.findMany({
-    where: { userId: MOCK_USER_ID },
+    where: { userId },
     include: { product: { include: { images: true } } },
     orderBy: { createdAt: 'desc' }
   });

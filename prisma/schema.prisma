@@ -151,12 +151,12 @@ enum FeatureFlagType {
 }
 
 model User {
-  tenantUsers    TenantUser[]
-  id             String          @id @default(cuid())
-  clerkId        String          @unique
-  email          String          @unique
-  name           String?
-  role           UserRole        @default(CUSTOMER)
+  tenantUsers TenantUser[]
+  id          String       @id @default(cuid())
+  clerkId     String       @unique
+  email       String       @unique
+  name        String?
+  role        UserRole     @default(CUSTOMER)
 
   orders         Order[]
   addresses      Address[]
@@ -324,7 +324,7 @@ model Order {
   stripeSessionId       String?     @unique
   stripePaymentIntentId String?     @unique
 
-  auction               Auction?
+  auction Auction?
 
   currency     String  @default("USD")
   exchangeRate Decimal @default(1.0)
@@ -508,8 +508,8 @@ model Auction {
   startTime DateTime?
   endTime   DateTime
 
-  orderId   String? @unique
-  order     Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @unique
+  order   Order?  @relation(fields: [orderId], references: [id])
 
   antiSnipingWindowSeconds    Int?
   antiSnipingExtensionSeconds Int?
@@ -734,14 +734,14 @@ model Inventory {
 model InventoryMovement {
   id             String    @id @default(cuid())
   inventoryId    String
-  type           String    // Purchase, Sale, Restock, Damage, Transfer, Reservation
+  type           String // Purchase, Sale, Restock, Damage, Transfer, Reservation
   quantity       Int
   beforeQuantity Int       @default(0)
   afterQuantity  Int       @default(0)
   reason         String?
-  referenceId    String?   // e.g. orderId
-  performedBy    String?   // User ID or System
-  source         String?   // 'API', 'ADMIN', 'SYSTEM'
+  referenceId    String? // e.g. orderId
+  performedBy    String? // User ID or System
+  source         String? // 'API', 'ADMIN', 'SYSTEM'
   notes          String?
   createdAt      DateTime  @default(now())
   inventory      Inventory @relation(fields: [inventoryId], references: [id])
@@ -761,7 +761,7 @@ model Reservation {
 model OrderTimeline {
   id            String   @id @default(cuid())
   orderId       String
-  status        String   // Status snapshot
+  status        String // Status snapshot
   previousState String?
   newState      String?
   actor         String   @default("SYSTEM") // System, Customer, Admin, Webhook
@@ -1010,13 +1010,13 @@ model ExperimentAllocation {
 // ==========================================
 
 model Tenant {
-  vendorOrders VendorOrder[]
-  kycProfile   KYCProfile?
+  vendorOrders     VendorOrder[]
+  kycProfile       KYCProfile?
   commissionPolicy CommissionPolicy?
-  id           String        @id @default(cuid())
-  name         String // Business or Entity Name
-  plan         String        @default("BASIC") // "BASIC", "PREMIUM", "ENTERPRISE"
-  status       String        @default("PENDING") // "PENDING", "APPROVED", "SUSPENDED"
+  id               String            @id @default(cuid())
+  name             String // Business or Entity Name
+  plan             String            @default("BASIC") // "BASIC", "PREMIUM", "ENTERPRISE"
+  status           String            @default("PENDING") // "PENDING", "APPROVED", "SUSPENDED"
 
   // A Tenant has exactly one Store representation for storefronts
   store Store?
@@ -1117,19 +1117,19 @@ model KYCProfile {
 // ==========================================
 
 model CommissionPolicy {
-  id              String   @id @default(cuid())
-  tenantId        String?  @unique // If null, applies globally
-  tenant          Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  percentage      Decimal  @default(10.0) // 10%
-  fixedFee        Decimal  @default(0.0)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id         String   @id @default(cuid())
+  tenantId   String?  @unique // If null, applies globally
+  tenant     Tenant?  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  percentage Decimal  @default(10.0) // 10%
+  fixedFee   Decimal  @default(0.0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model VendorOrder {
-  id              String        @id @default(cuid())
-  orderId         String
-  order           Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   tenantId String
   tenant   Tenant @relation(fields: [tenantId], references: [id])
@@ -1147,7 +1147,7 @@ model VendorOrder {
   tax      Decimal @default(0)
   shipping Decimal @default(0)
 
-  status String @default("PENDING") // PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
+  status           String           @default("PENDING") // PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED
   settlementStatus SettlementStatus @default(PENDING)
 
   items     VendorOrderItem[]
@@ -1172,8 +1172,8 @@ model VendorOrderItem {
   warehouse         String?
   carrier           String?
   estimatedDelivery DateTime?
-  returnedQuantity  Int      @default(0)
-  refundedQuantity  Int      @default(0)
+  returnedQuantity  Int       @default(0)
+  refundedQuantity  Int       @default(0)
 }
 
 model Shipment {
@@ -1378,13 +1378,13 @@ model PaymentTransaction {
   paymentAttemptId String
   paymentAttempt   PaymentAttempt    @relation(fields: [paymentAttemptId], references: [id], onDelete: Cascade)
   type             TransactionType
-  amount        Decimal
-  currency      String            @default("USD")
-  provider      String            @default("STRIPE")
-  providerId    String? // Stripe Charge ID or Refund ID
-  paymentMethod PaymentMethod     @default(CARD)
-  status        TransactionStatus
-  metadata      Json?
+  amount           Decimal
+  currency         String            @default("USD")
+  provider         String            @default("STRIPE")
+  providerId       String? // Stripe Charge ID or Refund ID
+  paymentMethod    PaymentMethod     @default(CARD)
+  status           TransactionStatus
+  metadata         Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1423,13 +1423,13 @@ model LedgerEntry {
 }
 
 model PaymentAttempt {
-  id        String   @id @default(cuid())
-  orderId   String
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  status    TransactionStatus @default(CREATED)
-  
+  id      String            @id @default(cuid())
+  orderId String
+  order   Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status  TransactionStatus @default(CREATED)
+
   transactions PaymentTransaction[]
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -1437,14 +1437,14 @@ model PaymentAttempt {
 }
 
 model PaymentWebhookEvent {
-  id                String   @id @default(cuid())
+  id                String  @id @default(cuid())
   provider          String
-  providerEventId   String   @unique
-  status            String   // PENDING, PROCESSED, FAILED, IGNORED
+  providerEventId   String  @unique
+  status            String // PENDING, PROCESSED, FAILED, IGNORED
   payloadHash       String
-  signatureVerified Boolean  @default(false)
-  
-  receivedAt  DateTime @default(now())
+  signatureVerified Boolean @default(false)
+
+  receivedAt  DateTime  @default(now())
   processedAt DateTime?
 }
 
@@ -1472,4 +1472,151 @@ model OutboxEvent {
 
   @@index([status, lockedAt, nextRetryAt])
   @@index([eventType])
+}
+
+// ----------------------------------------
+// V3.1.1 STAGE 1: CORE COMMERCE MODELS
+// ----------------------------------------
+
+model ShoppingMemory {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  contextVectors  Json? // Serialized semantic intent
+  recentItems     Json? // Array of recently viewed product IDs
+  lastInteraction DateTime @default(now())
+  expiresAt       DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([expiresAt])
+}
+
+model SignalsLedger {
+  id        String   @id @default(cuid())
+  userId    String?
+  sessionId String
+  eventType String // e.g. "IMPRESSION", "CLICK", "DWELL"
+  payload   Json // Contextual data
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([sessionId])
+}
+
+model PersonalizationProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  brandAffinities Json? // e.g. {"Nike": 0.8, "Adidas": 0.2}
+  categoryScores  Json? // e.g. {"Electronics": 0.9}
+  priceTier       String   @default("STANDARD") // BUDGET, STANDARD, PREMIUM
+  updatedAt       DateTime @updatedAt
+
+  @@index([priceTier])
+}
+
+// ----------------------------------------
+// V3.1.1 STAGE 2: AI PLATFORM MODELS
+// ----------------------------------------
+
+model AIBudget {
+  id             String @id @default(cuid())
+  tenantId       String @unique
+  monthlyLimit   Int
+  currentUsage   Int    @default(0)
+  alertThreshold Int
+  status         String @default("ACTIVE") // ACTIVE, THROTTLED, SUSPENDED
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tenantId])
+}
+
+model PromptLog {
+  id               String @id @default(cuid())
+  provider         String
+  model            String
+  promptTokens     Int
+  completionTokens Int
+  latencyMs        Int
+
+  evaluations AIEvaluation[]
+
+  createdAt DateTime @default(now())
+
+  @@index([provider, model])
+}
+
+model AIEvaluation {
+  id             String    @id @default(cuid())
+  promptLogId    String
+  promptLog      PromptLog @relation(fields: [promptLogId], references: [id], onDelete: Cascade)
+  score          Float
+  reasoning      String?
+  evaluatorModel String
+
+  createdAt DateTime @default(now())
+
+  @@index([promptLogId])
+}
+
+// ----------------------------------------
+// V3.1.1 STAGE 3: OPERATIONS & WORKFLOW
+// ----------------------------------------
+
+model WorkflowState {
+  id            String @id @default(cuid())
+  workflowType  String
+  correlationId String @unique
+  currentState  String
+  payload       Json?
+  status        String @default("PENDING") // PENDING, COMPLETED, FAILED
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([correlationId])
+  @@index([status])
+}
+
+model AuditTrail {
+  id         String  @id @default(cuid())
+  workflowId String
+  fromState  String
+  toState    String
+  actorId    String?
+  reason     String?
+
+  createdAt DateTime @default(now())
+
+  @@index([workflowId])
+}
+
+model KnowledgeQuestion {
+  id        String @id @default(cuid())
+  productId String
+  authorId  String
+  content   String
+  status    String @default("PUBLISHED") // PUBLISHED, ARCHIVED, FLAG
+
+  answers KnowledgeAnswer[]
+
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+model KnowledgeAnswer {
+  id         String            @id @default(cuid())
+  questionId String
+  question   KnowledgeQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  authorId   String
+  content    String
+  isOfficial Boolean           @default(false)
+  upvotes    Int               @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([questionId])
 }

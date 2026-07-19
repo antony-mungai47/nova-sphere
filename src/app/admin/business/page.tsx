@@ -10,9 +10,9 @@ export default async function BusinessDashboardPage() {
   const gmv = successfulOrders.reduce((acc, order) => acc + Number(order.totalAmount), 0);
   const aov = successfulOrders.length > 0 ? gmv / successfulOrders.length : 0;
   
-  const activeVendors = 12; // Mocked until Tenant table has isVerified
+  const activeVendors = await prisma.tenant.count({ where: { status: "APPROVED" } });
   
-  const openIncidents = 0; // Mocked until Incident table exists
+  const openIncidents = await prisma.incident.count({ where: { status: "OPEN" } });
 
   return (
     <div className="p-8">

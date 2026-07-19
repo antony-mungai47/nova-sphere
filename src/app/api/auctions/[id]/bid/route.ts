@@ -17,20 +17,17 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Rate Limiting (20 bids / 30 seconds per user)
-    const now = Date.now();
-    const rateLimitWindow = 30000;
-    const maxBids = 20;
-    
-    let userRate = rateLimitMap.get(userId);
-    if (!userRate || now > userRate.resetAt) {
-      userRate = { count: 1, resetAt: now + rateLimitWindow };
-      rateLimitMap.set(userId, userRate);
-    } else {
-      userRate.count++;
-      if (userRate.count > maxBids) {
-        return NextResponse.json({ error: 'Too Many Requests' }, { status: 429 });
+    // Rate Limiting (20 bids / 30 seconds per user) using V3 SignalsLedger
+    const recentBids = await prisma.signalsLedger.count({
+      where: {
+        userId,
+        eventType: 'AUCTION_BID',
+        createdAt: { gte: new Date(Date.now() - 30000) }
       }
+    });
+
+    if (recentBids >= 20) {
+      return NextResponse.json({ error: 'Too Many Requests' }, { status: 429 });
     }
 
     const body = await req.json();
@@ -41,16 +38,27 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       return NextResponse.json({ error: 'Idempotency-Key header required' }, { status: 400 });
     }
 
-    if (idempotencyMap.has(idempotencyKey)) {
-      const cached = idempotencyMap.get(idempotencyKey);
-      if (cached === 'PROCESSING') {
+    // Idempotency using V3 WorkflowState
+    const existingWorkflow = await prisma.workflowState.findUnique({
+      where: { correlationId: idempotencyKey }
+    });
+
+    if (existingWorkflow) {
+      if (existingWorkflow.status === 'PENDING') {
         return NextResponse.json({ error: 'Concurrent request processing' }, { status: 409 });
       }
-      return NextResponse.json(cached, { status: 200 });
+      return NextResponse.json(existingWorkflow.payload as any, { status: 200 });
     }
     
-    // Mark as processing to prevent race conditions
-    idempotencyMap.set(idempotencyKey, 'PROCESSING');
+    // Mark as processing
+    await prisma.workflowState.create({
+      data: {
+        correlationId: idempotencyKey,
+        workflowType: 'AUCTION_BID',
+        status: 'PENDING',
+        currentState: 'RECEIVED'
+      }
+    });
 
     // Convert amounts to Decimal
     const decimalAmount = new Prisma.Decimal(amount);
@@ -65,15 +73,28 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       maximumBid: decimalMax
     });
 
+    // Record the signal for rate limiting
+    await prisma.signalsLedger.create({
+      data: {
+        userId,
+        eventType: 'AUCTION_BID',
+        payload: { auctionId: id, amount }
+      }
+    });
+
     const responsePayload = { success: true, bid: result.newBid };
-    idempotencyMap.set(idempotencyKey, responsePayload);
+    
+    await prisma.workflowState.update({
+      where: { correlationId: idempotencyKey },
+      data: { status: 'COMPLETED', currentState: 'PLACED', payload: responsePayload as any }
+    });
 
     return NextResponse.json(responsePayload, { status: 201 });
 
   } catch (error: any) {
     console.error('[Bid API Error]', error);
     if (idempotencyKey) {
-      idempotencyMap.delete(idempotencyKey);
+      await prisma.workflowState.delete({ where: { correlationId: idempotencyKey } }).catch(() => {});
     }
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 400 });
   }

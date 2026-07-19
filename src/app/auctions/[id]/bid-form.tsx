@@ -5,6 +5,7 @@ import { placeBid } from "@/domains/Marketplace/auctions/actions";
 import { Loader2, TrendingUp, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRealtime } from "@/domains/Realtime/hooks/useRealtime";
+import { useAuth } from "@clerk/nextjs";
 import { RealtimeEvents } from "@/domains/Realtime/contracts/EventRegistry";
 import { ChannelRegistry } from "@/domains/Realtime/contracts/ChannelRegistry";
 
@@ -15,6 +16,7 @@ interface BidFormProps {
 }
 
 export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
+  const { userId } = useAuth();
   const router = useRouter();
   const minBid = Math.max(startingBid, currentBid + 1);
   const [amount, setAmount] = useState<string>(minBid.toFixed(2));
@@ -40,11 +42,11 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
       
       const newBidResult = await placeBid(auctionId, bidAmount);
       
-      // Optimistic realtime broadcast for mock environment
+      // Optimistic realtime broadcast
       await publish({
         auctionId,
         highestBid: bidAmount,
-        bidderId: 'mock-user',
+        bidderId: userId || 'anonymous',
         timestamp: new Date().toISOString(),
         newEndTime: newBidResult?.newEndTime || undefined
       });
