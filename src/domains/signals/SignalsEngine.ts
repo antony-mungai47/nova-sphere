@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+
 import { BaseSignal, EventName, SignalCategory, SignalPayload } from "./types";
 import { DestinationRouter, ConsoleDestination, PostHogDestination } from "./DestinationRouter";
 import { PrivacyLayer } from "./PrivacyLayer";
@@ -37,12 +37,12 @@ export class SignalsEngine {
   }
 
   private getOrCreateCookie(name: string, longLived = false): string {
-    if (typeof window === "undefined") return uuidv4();
+    if (typeof window === "undefined") return crypto.randomUUID();
     
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     if (match) return match[2];
     
-    const id = uuidv4();
+    const id = crypto.randomUUID();
     const expiry = longLived ? "max-age=31536000" : "Session"; // 1 year vs session
     document.cookie = `${name}=${id}; path=/; ${expiry}; SameSite=Strict`;
     return id;
@@ -60,7 +60,7 @@ export class SignalsEngine {
     isImmediate: boolean = false
   ) {
     let signal: BaseSignal = {
-      id: uuidv4(),
+      id: crypto.randomUUID(),
       eventName,
       category,
       payload,
