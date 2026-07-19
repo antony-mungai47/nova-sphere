@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useEffect } from "react";
@@ -39,8 +38,9 @@ const MOCK_UPSELLS = [
 ];
 
 export function UpsellDrawer({ isOpen, onClose }: UpsellDrawerProps) {
-  const { items, cartState } = useCartStore();
-  const currentTotal = (cartState as any).subtotal || 0;
+  const storeState = useCartStore() as any;
+  const items = storeState.items || [];
+  const currentTotal = storeState.subtotal || 0;
 
   useEffect(() => {
     if (isOpen) {
@@ -90,7 +90,7 @@ export function UpsellDrawer({ isOpen, onClose }: UpsellDrawerProps) {
               
               {/* Added Items Preview (just top 2 to save space) */}
               <div className="flex flex-col gap-4 mb-6">
-                {items.slice(0, 2).map((item) => (
+                {items.slice(0, 2).map((item: any) => (
                   <div key={item.id} className="flex gap-4 p-4 bg-surface border border-border rounded-xl">
                     <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-muted/20 border border-border">
                        <Image src={item.image} alt={item.name} fill className="object-cover mix-blend-multiply" />

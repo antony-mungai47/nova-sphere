@@ -18,7 +18,7 @@ export function MotionProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mediaQuery.matches);
+    setTimeout(() => { setReducedMotion(mediaQuery.matches); }, 0);
 
     const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mediaQuery.addEventListener("change", listener);

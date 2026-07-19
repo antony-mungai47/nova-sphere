@@ -20,7 +20,7 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const { track } = useSignals();
   const { userId, sessionId } = useAuth();
   
-  const randomId = React.useMemo(() => "anon_" + Math.random().toString(36), []);
+  const randomId = React.useMemo(() => "anon_" + "temp_", []);
   const identifier = userId || sessionId || randomId;
 
   useEffect(() => {

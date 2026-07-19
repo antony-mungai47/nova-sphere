@@ -16,7 +16,7 @@ export function MetricCard({ title, value, subtitle, trend, isLoading }: MetricC
 
   useEffect(() => {
     if (isLoading) {
-      setShow(false);
+      setTimeout(() => { setShow(false); }, 0);
       return;
     }
     const t = setTimeout(() => setShow(true), 200); // Slight delay for staged feel

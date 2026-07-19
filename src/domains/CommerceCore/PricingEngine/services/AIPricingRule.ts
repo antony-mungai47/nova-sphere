@@ -1,8 +1,7 @@
-// @ts-nocheck
 import { Money } from '../../Financial/Money';
 import { PricingRule, CartItemContext } from '../contracts/IPricingEngine';
-import { GlobalAIOrchestrator } from '../../../../AI/orchestrator/AIOrchestrator';
-import { PricingPrompts } from '../../../../AI/prompts';
+import { GlobalAIOrchestrator } from '@/domains/AI/orchestrator/AIOrchestrator';
+import { PricingPrompts } from '@/domains/AI/prompts';
 
 export class AIPricingRule implements PricingRule {
   private readonly MIN_MARGIN_THRESHOLD = 0.15; // 15% margin minimum business rule

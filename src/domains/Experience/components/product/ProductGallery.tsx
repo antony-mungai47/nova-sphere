@@ -19,6 +19,15 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Close fullscreen on Escape
+  
+  const nextImage = useCallback(() => {
+    setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
+
+  const prevImage = useCallback(() => {
+    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
+  
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isFullscreen) setIsFullscreen(false);
@@ -31,13 +40,9 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFullscreen]);
 
-  const nextImage = useCallback(() => {
-    setActiveIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
+  
 
-  const prevImage = useCallback(() => {
-    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
+  
 
   // Handle Desktop Hover Pan Zoom
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {

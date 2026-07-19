@@ -1,11 +1,10 @@
-// @ts-nocheck
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, HTMLMotionProps } from "framer-motion";
 import { useMotionContext } from "./MotionProvider";
 
-interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface MagneticButtonProps extends HTMLMotionProps<"button"> {
   children: React.ReactNode;
   className?: string;
   strength?: number;

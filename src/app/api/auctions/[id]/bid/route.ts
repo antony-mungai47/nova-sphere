@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { Prisma } from '@prisma/client';
@@ -77,8 +78,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     await prisma.signalsLedger.create({
       data: {
         userId,
-        eventType: 'AUCTION_BID',
-        payload: { auctionId: id, amount }
+        eventType: 'AUCTION_BID', sessionId: 'none', payload: { auctionId: id, amount }
       }
     });
 

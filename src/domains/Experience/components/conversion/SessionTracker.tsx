@@ -34,7 +34,7 @@ export function SessionTracker({ children }: { children: React.ReactNode }) {
     try {
       const stored = localStorage.getItem(SESSION_KEY);
       if (stored) {
-        setState(JSON.parse(stored));
+        setTimeout(() => { setState(JSON.parse(stored)); }, 0);
       }
     } catch (e) {
       console.error("Failed to load session intelligence");

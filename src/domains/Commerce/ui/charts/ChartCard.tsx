@@ -20,12 +20,12 @@ export function ChartCard({ title, subtitle, insight, isLoading, children, foote
 
   useEffect(() => {
     if (isLoading) {
-      setStage(0);
+      setTimeout(() => { setStage(0); }, 0);
       return;
     }
 
     // Stage 1: Structure & Numbers (Immediate)
-    setStage(1);
+    setTimeout(() => setStage(1), 0);
     
     // Stage 2: Chart renders (300ms)
     const t1 = setTimeout(() => setStage(2), 300);

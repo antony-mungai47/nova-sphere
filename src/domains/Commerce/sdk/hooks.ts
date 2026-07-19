@@ -10,7 +10,7 @@ export function useProductIntelligence(productId: string) {
 
   useEffect(() => {
     let isMounted = true;
-    setIsLoading(true);
+    setTimeout(() => { setIsLoading(true); }, 0);
 
     IntelligenceFacade.getFullProductInsight(productId)
       .then((data) => {

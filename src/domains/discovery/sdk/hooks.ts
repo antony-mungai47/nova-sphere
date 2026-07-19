@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useState, useCallback } from "react";
@@ -13,7 +12,7 @@ export function useDiscovery() {
 
   const search = useCallback(async (query: SearchQuery) => {
     setIsSearching(true);
-    track("search.started", "search", { modality: query.modality, rawInput: query.rawInput as string }, true);
+    track("search.executed", "search", { modality: query.modality, rawInput: query.rawInput as string }, true);
 
     const start = performance.now();
     const data = await Engine.executeSearch(query);
@@ -25,7 +24,7 @@ export function useDiscovery() {
     if (data.length === 0) {
       track("search.executed", "search", { query: query.rawInput as string }, true);
     } else {
-      Engine.trackEvent("search.executed", { query: query.rawInput as string, resultCount: data.length, latency });
+      (Engine as any).track("search.executed", { query: query.rawInput as string, resultCount: data.length, latency });
     }
   }, [track]);
 

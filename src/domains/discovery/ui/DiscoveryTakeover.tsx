@@ -26,7 +26,7 @@ export function DiscoveryTakeover() {
       Engine.getTrendingSearches().then(setTrending);
       Engine.getRecentSearches().then(setRecent);
     } else if (!isOpen) {
-      setQuery("");
+      setTimeout(() => { setQuery(""); }, 0);
     }
   }, [isOpen]);
 

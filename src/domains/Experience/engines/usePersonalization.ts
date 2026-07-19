@@ -19,11 +19,11 @@ export function usePersonalization() {
     if (isSignedIn) {
       // In a real app, we'd fetch the user's first name here.
       // For now, we simulate personalization.
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setGreeting(`Welcome Back • ${timeGreeting}`);
+      
+      setTimeout(() => setGreeting(`Welcome Back • ${timeGreeting}`), 0);
     } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setGreeting(timeGreeting);
+      
+      setTimeout(() => setGreeting(timeGreeting), 0);
     }
   }, [isSignedIn, userId]);
 

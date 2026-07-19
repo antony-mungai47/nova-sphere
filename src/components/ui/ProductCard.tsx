@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useState } from "react";
@@ -50,7 +49,7 @@ export function ProductCard({
         setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
       }, 1500);
     } else {
-      setCurrentImageIndex(0);
+      setTimeout(() => { setCurrentImageIndex(0); }, 0);
     }
     return () => clearInterval(interval);
   }, [isHovered, displayImages.length]);
@@ -137,10 +136,10 @@ export function ProductCard({
             initial={{ y: 20 }}
             animate={{ y: isHovered ? 0 : 20 }}
           >
-            <Button variant="surface" size="sm" className="bg-surface/90 backdrop-blur border-border text-foreground hover:bg-surface shadow-soft" onClick={(e) => { e.preventDefault(); }}>
+            <Button variant="outline" size="sm" className="bg-surface/90 backdrop-blur border-border text-foreground hover:bg-surface shadow-soft" onClick={(e) => { e.preventDefault(); }}>
               <Eye size={16} className="mr-2" /> Quick View
             </Button>
-            <Button variant="surface" size="icon" className="bg-surface/90 backdrop-blur border-border text-foreground hover:bg-surface shadow-soft w-8 h-8" onClick={(e) => { e.preventDefault(); }}>
+            <Button variant="outline" size="icon" className="bg-surface/90 backdrop-blur border-border text-foreground hover:bg-surface shadow-soft w-8 h-8" onClick={(e) => { e.preventDefault(); }}>
               <BarChart2 size={16} />
             </Button>
           </motion.div>
