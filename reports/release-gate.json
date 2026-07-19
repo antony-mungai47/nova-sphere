@@ -1,8 +1,8 @@
 {
   "status": "FAIL",
-  "score": 96.66666666666667,
+  "score": 86.66666666666667,
   "blockers": {
-    "CRITICAL": 1,
+    "CRITICAL": 4,
     "HIGH": 0,
     "MEDIUM": 0,
     "LOW": 0
@@ -13,7 +13,7 @@
     "Reliability": 100,
     "Accessibility": 100,
     "Testing": 80,
-    "Architecture": 100
+    "Architecture": 40
   },
-  "timestamp": "2026-07-09T15:16:53.132Z"
+  "timestamp": "2026-07-19T14:16:44.136Z"
 }

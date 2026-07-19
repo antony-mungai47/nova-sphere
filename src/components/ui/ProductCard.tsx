@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, ShoppingCart, Eye, BarChart2 } from "lucide-react";
-import { Card } from "./Card";
+import { Card } from "./card";
 import { Button } from "./Button";
 import { useFlyToCart } from "@/components/motion/FlyToCartEngine";
 

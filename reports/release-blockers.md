@@ -2,7 +2,7 @@
 
 | Severity | Count |
 |----------|-------|
-| Critical | 1 |
+| Critical | 4 |
 | High     | 0 |
 | Medium   | 0 |
 | Low      | 0 |

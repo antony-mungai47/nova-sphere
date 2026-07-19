@@ -7,7 +7,7 @@
 | Reliability   | 100% |
 | Accessibility | 100% |
 | Testing       | 80% |
-| Architecture  | 100% |
+| Architecture  | 40% |
 
-## Overall Release Score: 96.7%
+## Overall Release Score: 86.7%
 **FAIL**

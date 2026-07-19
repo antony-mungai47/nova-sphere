@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, Star, StarHalf } from "lucide-react";
@@ -15,7 +15,7 @@ import { ProductReviews } from "@/domains/Experience/components/reviews/ProductR
 import { CommunityQA } from "@/domains/Experience/components/qa/CommunityQA";
 import { UpsellDrawer } from "@/domains/Experience/components/conversion/UpsellDrawer";
 import { SmartBundle } from "@/domains/Experience/components/conversion/SmartBundle";
-import { ProductIntelligenceDashboard } from "@/domains/commerce/ui/ProductIntelligenceDashboard";
+import { ProductIntelligenceDashboard } from "@/domains/Commerce/ui/ProductIntelligenceDashboard";
 import { ScrollDepthTracker } from "@/domains/signals/observers/ScrollDepthTracker";
 import { useSignals } from "@/domains/signals/sdk/hooks";
 
