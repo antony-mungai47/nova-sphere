@@ -50,11 +50,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </Link>
           <Link href="/admin/customers" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
             <Users className="w-5 h-5" />
-            <span className="font-medium">Customers</span>
+            <span className="font-medium">Users</span>
           </Link>
           <Link href="/admin/analytics" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
             <BarChart3 className="w-5 h-5" />
             <span className="font-medium">Analytics</span>
+          </Link>
+          <Link href="/admin/financials" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+            <BarChart3 className="w-5 h-5" />
+            <span className="font-medium">Financials</span>
           </Link>
           <Link href="/admin/marketing" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
             <BarChart3 className="w-5 h-5" />
