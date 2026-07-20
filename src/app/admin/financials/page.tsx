@@ -79,9 +79,9 @@ export default async function FinancialsDashboard() {
         </div>
 
         <div className="glass-panel p-6 rounded-2xl border border-white/10 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-[40px] -mr-10 -mt-10 group-hover:bg-purple-500/20 transition-all" />
+          <div className="absolute top-0 right-0 w-32 h-32 bg-nova-amber/10 rounded-full blur-[40px] -mr-10 -mt-10 group-hover:bg-nova-amber/20 transition-all" />
           <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 mb-4 relative z-10">
-            <Landmark className="w-5 h-5 text-purple-400" />
+            <Landmark className="w-5 h-5 text-nova-amber" />
           </div>
           <h3 className="text-nova-silver mb-1 text-sm relative z-10">Taxes Collected</h3>
           <p className="text-2xl font-bold text-white relative z-10">${totalTax.toFixed(2)}</p>

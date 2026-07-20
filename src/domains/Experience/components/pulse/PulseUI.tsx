@@ -33,7 +33,7 @@ function PulseToast({ event, onRemove }: { event: PulseEvent; onRemove: () => vo
     "flash-deal": { icon: <Zap size={14} />, color: "text-cta-primary", bg: "bg-cta-primary/10", border: "border-cta-primary/20" },
     "review": { icon: <Star size={14} />, color: "text-warning", bg: "bg-warning/10", border: "border-warning/20" },
     "stock": { icon: <AlertTriangle size={14} />, color: "text-danger", bg: "bg-danger/10", border: "border-danger/20" },
-    "coupon": { icon: <Tag size={14} />, color: "text-cat-beauty", bg: "bg-cat-beauty/10", border: "border-cat-beauty/20" }
+    "coupon": { icon: <Tag size={14} />, color: "text-nova-amber", bg: "bg-nova-amber/10", border: "border-nova-amber/20" }
   }[event.type];
 
   return (
