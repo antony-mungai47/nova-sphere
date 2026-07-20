@@ -75,7 +75,7 @@ export const MegaMenu = () => {
               </div>
               
               <div className="mt-8 pt-6 border-t border-white/10">
-                <Link href="/store?trending=true" className="flex items-center gap-3 group/trend">
+                <Link href="/store?trending=true" className="flex items-center gap-3 group/trend mb-4">
                   <div className="w-10 h-10 rounded-full bg-nova-amber/10 flex items-center justify-center border border-nova-amber/20 group-hover/trend:bg-nova-amber/20 transition-colors">
                     <span className="text-nova-amber text-lg leading-none">🔥</span>
                   </div>
@@ -84,6 +84,22 @@ export const MegaMenu = () => {
                     <p className="text-nova-silver text-xs group-hover/trend:text-white transition-colors">See what's popular</p>
                   </div>
                 </Link>
+
+                <h3 className="text-nova-silver font-bold text-xs uppercase tracking-widest mb-3 mt-4">Portals</h3>
+                <div className="flex flex-col gap-3">
+                  <Link href="/auctions" className="text-white/70 text-sm hover:text-white transition-colors flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-cta-secondary/50" />
+                    Live Auctions
+                  </Link>
+                  <Link href="/seller" className="text-white/70 text-sm hover:text-white transition-colors flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-cta-secondary/50" />
+                    Vendor Portal
+                  </Link>
+                  <Link href="/admin" className="text-white/70 text-sm hover:text-success transition-colors flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-success/50" />
+                    Admin Portal
+                  </Link>
+                </div>
               </div>
             </div>
           </motion.div>

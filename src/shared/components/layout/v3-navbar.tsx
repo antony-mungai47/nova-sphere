@@ -12,6 +12,7 @@ import { Show, UserButton, useAuth } from "@clerk/nextjs";
 import { NotificationCenter } from "@/domains/Engagement/Notifications/components/NotificationCenter";
 import { Omnibar } from "@/domains/discovery/ui/Omnibar";
 import { Button } from "@/components/ui/Button";
+import { MegaMenu } from "@/shared/components/layout/mega-menu";
 
 type V3NavbarProps = {
   liveNotificationsEnabled?: boolean;
@@ -75,11 +76,13 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
               <Link href="/store" className="text-sm font-medium text-muted hover:text-foreground transition-colors flex items-center gap-1">
                 <Store className="w-4 h-4" /> Store
               </Link>
+              <MegaMenu />
               
+              <Link href="/auctions" className="text-sm font-medium text-muted hover:text-foreground transition-colors flex items-center gap-1">
+                <Gavel className="w-4 h-4" /> Auctions
+              </Link>
+
               <Show when="signed-in">
-                <Link href="/auctions" className="text-sm font-medium text-muted hover:text-foreground transition-colors flex items-center gap-1">
-                  <Gavel className="w-4 h-4" /> Auctions
-                </Link>
                 {isVendor && (
                   <Link href="/seller" className="text-sm font-medium text-cta-secondary hover:text-foreground transition-colors flex items-center gap-1">
                     <LayoutDashboard className="w-4 h-4" /> Vendor
@@ -146,11 +149,11 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
                 <Link href="/store" className="text-muted font-medium hover:text-foreground transition-colors flex items-center gap-2">
                   <Store className="w-4 h-4" /> Store
                 </Link>
+                <Link href="/auctions" className="text-muted font-medium hover:text-foreground transition-colors flex items-center gap-2">
+                  <Gavel className="w-4 h-4" /> Auctions
+                </Link>
                 
                 <Show when="signed-in">
-                  <Link href="/auctions" className="text-muted font-medium hover:text-foreground transition-colors flex items-center gap-2">
-                    <Gavel className="w-4 h-4" /> Auctions
-                  </Link>
                   <Link href="/account" className="text-cta-primary font-medium hover:text-foreground transition-colors">
                     Account
                   </Link>
