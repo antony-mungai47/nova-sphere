@@ -13,12 +13,12 @@ const PRODUCT_TEMPLATES = [
     specs: JSON.stringify({ "Material": "Premium", "Weight": "Lightweight", "Color": "Standard" })
   },
   {
-    name: "Sony Noise Cancelling Earbuds",
+    name: "Sony Noise Cancelling Headphones",
     category: "Electronics",
     brand: "Sony",
     price: 133.99,
     imageUrls: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800"],
-    description: "Premium Sony Noise Cancelling Earbuds designed to elevate your electronics experience. Carefully crafted with precision materials.",
+    description: "Premium Sony Noise Cancelling Over-Ear Headphones designed to elevate your electronics experience. Carefully crafted with precision materials.",
     features: JSON.stringify(["Premium Build Quality", "Industry Leading Performance", "1 Year Warranty"]),
     specs: JSON.stringify({ "Material": "Premium", "Weight": "Lightweight", "Color": "Standard" })
   },

@@ -228,7 +228,7 @@ export function SupportClient({ initialConversations }: { initialConversations: 
                 <button 
                   onClick={handleGenerateSummary}
                   disabled={isAiLoading}
-                  className="px-4 py-2 bg-nova-purple/20 text-nova-purple hover:bg-nova-purple hover:text-white transition-colors rounded-lg font-bold text-xs flex items-center gap-2 border border-nova-purple/30"
+                  className="px-4 py-2 bg-nova-amber/20 text-nova-amber hover:bg-nova-amber hover:text-white transition-colors rounded-lg font-bold text-xs flex items-center gap-2 border border-nova-amber/30"
                 >
                   <Sparkles className="w-4 h-4" /> Summary
                 </button>
@@ -244,10 +244,10 @@ export function SupportClient({ initialConversations }: { initialConversations: 
 
             {/* AI Summary Banner */}
             {aiSummary && (
-              <div className="p-4 bg-nova-purple/10 border-b border-nova-purple/20 flex gap-3 items-start relative">
-                <Sparkles className="w-5 h-5 text-nova-purple flex-shrink-0 mt-0.5" />
+              <div className="p-4 bg-nova-amber/10 border-b border-nova-amber/20 flex gap-3 items-start relative">
+                <Sparkles className="w-5 h-5 text-nova-amber flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-nova-purple font-bold text-sm mb-1">Nova AI Summary</h4>
+                  <h4 className="text-nova-amber font-bold text-sm mb-1">Nova AI Summary</h4>
                   <p className="text-sm text-nova-silver">{aiSummary}</p>
                 </div>
                 <button onClick={() => setAiSummary(null)} className="absolute top-4 right-4 text-nova-silver hover:text-white">✕</button>
@@ -301,7 +301,7 @@ export function SupportClient({ initialConversations }: { initialConversations: 
                       isAdmin 
                         ? "bg-nova-blue text-white rounded-tr-none" 
                         : isAi 
-                          ? "bg-nova-purple text-white rounded-tl-none" 
+                          ? "bg-nova-amber text-white rounded-tl-none" 
                           : "glass-panel border border-white/10 bg-white/5 text-nova-silver rounded-tl-none"
                     }`}>
                       <div className="flex items-center gap-2 mb-2 opacity-70">

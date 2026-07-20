@@ -3,12 +3,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const products = [
-  // Electronics
   {
-    name: 'Nova Sound Pro Wireless Earbuds',
-    description: 'Experience studio-quality audio with active noise cancellation and a 30-hour battery life. Designed for audiophiles on the go, these earbuds feature custom-tuned 11mm dynamic drivers, water resistance, and a premium charging case. The ergonomic fit ensures comfort during long listening sessions.',
+    name: 'Nova Sound Pro Over-Ear Headphones',
+    description: 'Experience studio-quality audio with active noise cancellation and a 30-hour battery life. Designed for audiophiles on the go, these over-ear headphones feature custom-tuned 40mm dynamic drivers and premium memory foam cups.',
     price: 149.99, salePrice: 129.99, sku: 'NS-ELEC-001', category: 'Electronics', brand: 'NovaAudio', stock: 120, isTrending: true, rating: 4.8, reviewCount: 1245,
-    specs: JSON.stringify({ Driver: '11mm Dynamic', Battery: '30h total', Connectivity: 'Bluetooth 5.3', ANC: 'Hybrid' }),
+    specs: JSON.stringify({ Driver: '40mm Dynamic', Battery: '30h total', Connectivity: 'Bluetooth 5.3', ANC: 'Hybrid' }),
     features: JSON.stringify(['Active Noise Cancellation', 'Transparency Mode', 'Multipoint Connection']),
     images: [{ url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80', isPrimary: true }]
   },
@@ -18,7 +17,7 @@ const products = [
     price: 89.99, salePrice: null, sku: 'NS-ELEC-002', category: 'Electronics', brand: 'EchoBeat', stock: 85, isTrending: false, rating: 4.5, reviewCount: 840,
     specs: JSON.stringify({ Driver: '9mm', Battery: '15h', Waterproof: 'IPX7', Fit: 'Ear Hook' }),
     features: JSON.stringify(['Sweat and Water Resistant', 'Secure Fit', 'Deep Bass Tuning']),
-    images: [{ url: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&q=80', isPrimary: true }]
+    images: [{ url: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&q=80', isPrimary: true }]
   },
   {
     name: 'AeroClass Over-Ear Headphones',
@@ -37,11 +36,11 @@ const products = [
     images: [{ url: 'https://images.unsplash.com/photo-1546868871-af0de0ae72be?w=800&q=80', isPrimary: true }]
   },
   {
-    name: 'Vanguard Titanium Smartwatch',
-    description: 'A rugged smartwatch crafted from aerospace-grade titanium. Built for outdoor adventurers with advanced GPS tracking, altimeter, barometer, and a sapphire glass screen that resists scratches in extreme conditions.',
-    price: 499.99, salePrice: 449.99, sku: 'NS-ELEC-005', category: 'Electronics', brand: 'Vanguard', stock: 30, isTrending: false, rating: 4.8, reviewCount: 420,
-    specs: JSON.stringify({ Case: 'Titanium', Glass: 'Sapphire', GPS: 'Dual-Band', Battery: '14 Days' }),
-    features: JSON.stringify(['Military-grade Durability', 'Offline Maps', 'Altimeter & Barometer']),
+    name: 'Vanguard Luxury Mechanical Watch',
+    description: 'A rugged mechanical watch crafted from aerospace-grade titanium. Built for everyday adventurers with precision automatic movement, sweeping second hand, and a sapphire glass screen that resists scratches in extreme conditions.',
+    price: 499.99, salePrice: 449.99, sku: 'NS-ELEC-005', category: 'Fashion', brand: 'Vanguard', stock: 30, isTrending: false, rating: 4.8, reviewCount: 420,
+    specs: JSON.stringify({ Case: 'Titanium', Glass: 'Sapphire', Movement: 'Automatic', PowerReserve: '48 Hours' }),
+    features: JSON.stringify(['Mechanical Excellence', 'Luxury Finish', 'Sweeping Second Hand']),
     images: [{ url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80', isPrimary: true }]
   },
   {

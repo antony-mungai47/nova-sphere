@@ -87,8 +87,7 @@ export function FlyToCartProvider({ children }: { children: React.ReactNode }) {
                 duration: 0.8,
                 ease: [0.32, 0.72, 0, 1], // Custom bezier curve for "fly" arc
               }}
-              className="absolute w-20 h-20 bg-surface rounded-xl shadow-glow-primary flex items-center justify-center p-2"
-              style={{ x: item.startX, y: item.startY }}
+              className="absolute w-20 h-20 bg-surface rounded-xl shadow-glow-primary flex items-center justify-center p-2 pointer-events-none"
             >
               <Image src={item.image} alt="Flying item" fill className="object-contain p-2 mix-blend-multiply" />
             </motion.div>

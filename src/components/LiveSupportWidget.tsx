@@ -136,10 +136,10 @@ export function LiveSupportWidget() {
       {isOpen && (
         <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl w-80 sm:w-96 h-[500px] max-h-[80vh] flex flex-col mb-4 shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5 fade-in duration-200">
           {/* Header */}
-          <div className="p-4 bg-gradient-to-r from-nova-blue/20 to-nova-purple/20 border-b border-white/10 flex items-center justify-between">
+          <div className="p-4 bg-gradient-to-r from-nova-blue/20 to-nova-amber/20 border-b border-white/10 flex items-center justify-between">
             <div>
               <h3 className="text-white font-bold flex items-center gap-2">
-                Nova Support <Sparkles className="w-4 h-4 text-nova-purple" />
+                Nova Support <Sparkles className="w-4 h-4 text-nova-amber" />
               </h3>
               <p className="text-xs text-nova-silver">We typically reply in minutes</p>
             </div>
@@ -186,7 +186,7 @@ export function LiveSupportWidget() {
                     isMe 
                       ? "bg-nova-blue text-white rounded-tr-none" 
                       : isAi
-                        ? "bg-nova-purple/80 text-white rounded-tl-none border border-nova-purple"
+                        ? "bg-nova-amber/80 text-white rounded-tl-none border border-nova-amber"
                         : "bg-white/10 text-white rounded-tl-none border border-white/5"
                   }`}>
                     {!isMe && (
@@ -256,7 +256,7 @@ export function LiveSupportWidget() {
           if (!isOpen) setUnreadCount(0);
           setIsOpen(!isOpen);
         }}
-        className="w-14 h-14 bg-gradient-to-tr from-nova-blue to-nova-purple rounded-full shadow-lg shadow-nova-blue/20 flex items-center justify-center text-white hover:scale-105 transition-transform relative"
+        className="w-14 h-14 bg-gradient-to-tr from-nova-blue to-nova-amber rounded-full shadow-lg shadow-nova-blue/20 flex items-center justify-center text-white hover:scale-105 transition-transform relative"
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
         {!isOpen && unreadCount > 0 && (

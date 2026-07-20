@@ -46,7 +46,7 @@ export function CookieConsent() {
           className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:w-[450px] z-50"
         >
           <div className="glass-panel p-6 rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-black/80 backdrop-blur-xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-nova-blue via-nova-purple to-nova-blue"></div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-nova-blue via-nova-amber to-nova-blue"></div>
             
             <button 
               onClick={declineCookies}

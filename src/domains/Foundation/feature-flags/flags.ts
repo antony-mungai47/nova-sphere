@@ -27,6 +27,12 @@ export enum FeatureFlags {
   LIVE_CART = "LIVE_CART",
   LIVE_NOTIFICATIONS = "LIVE_NOTIFICATIONS",
   REALTIME_ADMIN = "REALTIME_ADMIN",
+
+  // V3 Integration Recovery Flags
+  NAVIGATION_V3 = "NAVIGATION_V3",
+  PDP_V3 = "PDP_V3",
+  THEME_V3 = "THEME_V3",
+  MOTION_V3 = "MOTION_V3",
 }
 
 export enum FlagCategory {

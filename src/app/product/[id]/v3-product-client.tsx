@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, Star, StarHalf } from "lucide-react";
+import { ChevronRight, Star } from "lucide-react";
 import { useCartStore } from "@/store/useCartStore";
 import { useInventory } from "@/domains/Realtime/hooks/useInventory";
 import { ProductGallery } from "@/domains/Experience/components/product/ProductGallery";
@@ -47,16 +48,19 @@ type RelatedProduct = {
   rating: number;
 };
 
-export function ProductClient({ product, relatedProducts, liveInventoryEnabled = false }: { product: ProductProps; relatedProducts?: RelatedProduct[]; liveInventoryEnabled?: boolean }) {
+export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled = false }: { product: ProductProps; relatedProducts?: RelatedProduct[]; liveInventoryEnabled?: boolean }) {
   const { addItem } = useCartStore();
   const { stock, connectionState, publish } = useInventory(product.id, product.stock);
   const currentStock = liveInventoryEnabled ? stock : product.stock;
   
   const [isAdding, setIsAdding] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { track } = useSignals();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
     track("product.viewed", "commerce", { productId: product.id, productName: product.name, price: product.price }, true);
   }, [track, product.id, product.name, product.price]);
 
@@ -86,13 +90,7 @@ export function ProductClient({ product, relatedProducts, liveInventoryEnabled =
     }, 500);
   };
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  if (!mounted) return null; // Prevent hydration mismatch
 
   return (
     <main className="min-h-screen pt-28 pb-32 relative bg-background selection:bg-accent selection:text-primary">
@@ -102,7 +100,7 @@ export function ProductClient({ product, relatedProducts, liveInventoryEnabled =
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+        <div className="flex items-center gap-2 text-sm text-muted mb-8">
           <span className="hover:text-foreground cursor-pointer transition-colors">Home</span>
           <ChevronRight className="w-4 h-4" />
           <span className="hover:text-foreground cursor-pointer transition-colors">{product.category}</span>
@@ -123,9 +121,9 @@ export function ProductClient({ product, relatedProducts, liveInventoryEnabled =
 
             {/* Title & Reviews above the fold for mobile */}
             <div className="mb-6 lg:hidden">
-               <p className="text-muted-foreground font-semibold tracking-wider uppercase text-sm mb-2">{product.brand}</p>
+               <p className="text-muted font-semibold tracking-wider uppercase text-sm mb-2">{product.brand}</p>
                <h1 className="text-3xl font-bold text-foreground mb-4 leading-tight">{product.name}</h1>
-               <div className="flex items-center gap-2 text-sm text-muted-foreground">
+               <div className="flex items-center gap-2 text-sm text-muted">
                  <span className="flex items-center gap-1 text-warning font-medium">
                    <Star className="w-4 h-4 fill-warning text-warning" /> {product.rating}
                  </span>
@@ -136,6 +134,11 @@ export function ProductClient({ product, relatedProducts, liveInventoryEnabled =
 
             {/* Highlights */}
             <ProductHighlights />
+
+            {/* Intelligence Dashboard inserted here for V3 */}
+            <div className="mt-8 mb-8">
+              <ProductIntelligenceDashboard productId={product.id} />
+            </div>
 
             {/* Accordion (Specs, Description, etc.) */}
             <ProductAccordion 
@@ -150,7 +153,7 @@ export function ProductClient({ product, relatedProducts, liveInventoryEnabled =
           <div className="lg:col-span-5 hidden lg:block">
             {/* Title is shown in the sticky column for desktop */}
             <div className="mb-6">
-              <p className="text-muted-foreground font-semibold tracking-wider uppercase text-sm mb-2">{product.brand}</p>
+              <p className="text-muted font-semibold tracking-wider uppercase text-sm mb-2">{product.brand}</p>
               <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 leading-tight">{product.name}</h1>
               <InteractiveActions />
             </div>
@@ -201,25 +204,25 @@ export function ProductClient({ product, relatedProducts, liveInventoryEnabled =
             <h2 className="text-2xl font-bold text-foreground mb-8">Frequently Bought Together</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {relatedProducts.map((rp) => (
-                <a key={rp.id} href={`/product/${rp.id}`} className="group block">
+                <Link key={rp.id} href={`/product/${rp.id}`} className="group block">
                   <div className="bg-surface p-4 rounded-2xl border border-border h-full transition-all hover:border-cta-primary/50 hover:-translate-y-1 hover:shadow-soft">
                     <div className="relative aspect-square w-full rounded-xl overflow-hidden mb-4 bg-muted/20">
-                      <Image src={rp.image} alt={rp.name} fill className="object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
+                      <Image src={rp.image} alt={rp.name} fill className="object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-motion-standard" />
                     </div>
                     <div className="flex flex-col gap-1">
-                      <p className="text-muted-foreground text-xs uppercase tracking-wider">{rp.category}</p>
+                      <p className="text-muted text-xs uppercase tracking-wider">{rp.category}</p>
                       <h3 className="text-foreground font-bold truncate">{rp.name}</h3>
                       <div className="flex items-center justify-between mt-2">
                         <span className="text-danger font-medium">
                           ${rp.salePrice ? rp.salePrice.toFixed(2) : rp.price.toFixed(2)}
                         </span>
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1 text-xs text-muted">
                           <Star className="w-3 h-3 text-warning fill-warning" /> {rp.rating}
                         </div>
                       </div>
                     </div>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>

@@ -21,16 +21,15 @@
   --color-danger: #EF4444;  /* Red */
 
   /* Category Accents (Multi-Color System) */
-  --cat-electronics: #2563EB; /* Blue */
-  --cat-fashion: #EC4899;     /* Pink */
-  --cat-home: #10B981;        /* Emerald */
-  --cat-groceries: #22C55E;   /* Green */
-  --cat-beauty: #A855F7;      /* Purple */
-  --cat-auto: #F97316;        /* Orange */
-  --cat-sports: #EF4444;      /* Red */
-  --cat-books: #4F46E5;       /* Indigo */
-  --cat-toys: #FACC15;        /* Yellow */
-  --cat-health: #14B8A6;      /* Teal */
+  --cat-electronics: var(--cta-secondary);
+  --cat-fashion: var(--cta-primary);
+  --cat-home: var(--color-success);
+  --cat-groceries: var(--color-success);
+  --cat-auto: var(--cta-primary);
+  --cat-sports: var(--color-danger);
+  --cat-books: var(--cta-secondary);
+  --cat-toys: var(--color-warning);
+  --cat-health: var(--color-success);
 
   /* Typography Tokens */
   --font-hero: var(--font-geist-sans);
@@ -128,7 +127,6 @@
   --color-cat-fashion: var(--cat-fashion);
   --color-cat-home: var(--cat-home);
   --color-cat-groceries: var(--cat-groceries);
-  --color-cat-beauty: var(--cat-beauty);
   --color-cat-auto: var(--cat-auto);
   --color-cat-sports: var(--cat-sports);
   --color-cat-books: var(--cat-books);

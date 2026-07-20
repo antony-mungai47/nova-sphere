@@ -45,6 +45,15 @@ export function AccountClient({ user, orders, wishlist, addresses }: AccountProp
     { id: "settings", label: "Settings", icon: Settings },
   ] as const;
 
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <main className="min-h-screen pt-32 pb-24 relative overflow-hidden">
       <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-nova-blue/10 rounded-full blur-[120px] -z-10 pointer-events-none" />
