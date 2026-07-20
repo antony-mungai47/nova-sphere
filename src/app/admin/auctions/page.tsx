@@ -2,6 +2,7 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import { Gavel, AlertCircle, Ban, Search } from "lucide-react";
 import { revalidatePath } from "next/cache";
+import { AuctionClientActions } from "./components/AuctionClientActions";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +20,12 @@ export default async function AdminAuctionsPage() {
     orderBy: { createdAt: "desc" }
   });
 
+  const products = await prisma.product.findMany({
+    select: { id: true, name: true, sku: true }
+  });
+
   const activeAuctions = auctions.filter(a => a.status === "LIVE" && new Date(a.endTime) > new Date());
-  const endedAuctions = auctions.filter(a => a.status === "CLOSED" || a.status === "AWAITING_PAYMENT" || new Date(a.endTime) <= new Date());
+  const endedAuctions = auctions.filter(a => a.status === "CLOSED_NO_SALE" || a.status === "ENDED" || a.status === "AWAITING_PAYMENT" || new Date(a.endTime) <= new Date());
   const totalVolume = endedAuctions.reduce((sum, a) => sum + (a.bids[0]?.amount?.toNumber() || 0), 0);
   
   async function cancelAuction(formData: FormData) {
@@ -36,9 +41,12 @@ export default async function AdminAuctionsPage() {
 
   return (
     <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Auction Moderation</h1>
-        <p className="text-nova-silver">Monitor live bids and manage marketplace integrity.</p>
+      <div className="mb-8 flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">Auction Moderation</h1>
+          <p className="text-nova-silver">Monitor live bids and manage marketplace integrity.</p>
+        </div>
+        <AuctionClientActions products={products} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -80,7 +88,11 @@ export default async function AdminAuctionsPage() {
           <tbody className="divide-y divide-white/5">
             {auctions.map((auction) => {
               const isEnded = new Date(auction.endTime) <= new Date();
-              const displayStatus = auction.status === "CANCELLED" ? "CANCELLED" : isEnded ? "ENDED" : "ACTIVE";
+              const displayStatus = auction.status === "CANCELLED" ? "CANCELLED" : 
+                                    auction.status === "CLOSED_NO_SALE" ? "NO SALE" : 
+                                    auction.status === "AWAITING_PAYMENT" ? "AWAITING PAYMENT" : 
+                                    isEnded ? "ENDED" : 
+                                    auction.status === "SCHEDULED" ? "SCHEDULED" : "ACTIVE";
               
               return (
                 <tr key={auction.id} className="hover:bg-white/5 transition-colors group">

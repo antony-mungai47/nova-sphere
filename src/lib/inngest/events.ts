@@ -10,9 +10,16 @@ export type Events = {
   'ProductDeleted': { data: { productId: string; } };
 
   // Auction Domain
+  'AuctionCreated': { data: { auctionId: string; } };
   'AuctionStarted': { data: { auctionId: string; } };
   'AuctionEnded': { data: { auctionId: string; winnerId?: string; winningBid?: number; } };
-  'BidPlaced': { data: { auctionId: string; userId: string; amount: number; } };
+  'AuctionBidPlaced': { data: { auctionId: string; userId: string; amount: number; } };
+  'AuctionOutbid': { data: { auctionId: string; userId: string; previousBidAmount: number; newBidAmount: number; } };
+  'AuctionExtended': { data: { auctionId: string; newEndTime: string; } };
+  'AuctionBuyNow': { data: { auctionId: string; userId: string; amount: number; } };
+  'AuctionReserveFailed': { data: { auctionId: string; highestBidAmount?: number; } };
+  'AuctionWon': { data: { auctionId: string; winnerId: string; amount: number; } };
+  'AuctionCancelled': { data: { auctionId: string; reason?: string; } };
 
   // User & Interaction Domain
   'UserCreated': { data: { userId: string; email: string; } };

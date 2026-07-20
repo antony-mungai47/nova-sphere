@@ -48,7 +48,7 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
         highestBid: bidAmount,
         bidderId: userId || 'anonymous',
         timestamp: new Date().toISOString(),
-        newEndTime: newBidResult?.newEndTime || undefined
+        newEndTime: newBidResult?.updatedAuction?.endTime || undefined
       });
 
       setAmount((bidAmount + 1).toFixed(2)); // suggest next bid

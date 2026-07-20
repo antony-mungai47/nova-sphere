@@ -1,0 +1,3 @@
+[2026-07-20T12:05:10Z] Connection established to Pusher channel: inventory-updates
+[2026-07-20T12:05:12Z] Event received: stock_updated {"productId":"prod_abc","newStock":42}
+[2026-07-20T12:05:45Z] Event received: flash_sale_started {"discount":20}

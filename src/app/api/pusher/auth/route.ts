@@ -1,14 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth, currentUser } from '@clerk/nextjs/server';
-import Pusher from 'pusher';
-
-const pusher = new Pusher({
-  appId: process.env.PUSHER_APP_ID || '',
-  key: process.env.NEXT_PUBLIC_PUSHER_KEY || '',
-  secret: process.env.PUSHER_SECRET || '',
-  cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER || 'us2',
-  useTLS: true,
-});
+import { pusherServer } from '@/lib/pusherServer';
 
 export async function POST(req: Request) {
   try {
@@ -39,7 +31,7 @@ export async function POST(req: Request) {
       }
     };
 
-    const authResponse = pusher.authorizeChannel(socketId, channelName, presenceData);
+    const authResponse = pusherServer.authorizeChannel(socketId, channelName, presenceData);
     
     return NextResponse.json(authResponse);
   } catch (error) {

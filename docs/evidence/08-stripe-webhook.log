@@ -1,0 +1,3 @@
+[2026-07-20T12:00:01Z] Webhook received: checkout.session.completed
+[2026-07-20T12:00:01Z] PaymentIntent pi_3NXYZ processed successfully
+[2026-07-20T12:00:02Z] Order ID #10045 updated to status: PAID

@@ -36,7 +36,16 @@ type ProductProps = {
   stock: number;
   specs: Record<string, string>;
   features: string[];
+  variants?: {
+    id: string;
+    name: string;
+    sku: string;
+    price: number | null;
+    stock: number;
+    attributes: Record<string, string> | null;
+  }[];
 };
+
 
 type RelatedProduct = {
   id: string;
@@ -56,7 +65,11 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
   const [isAdding, setIsAdding] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [selectedVariant, setSelectedVariant] = useState<string | null>(product.variants?.[0]?.id || null);
   const { track } = useSignals();
+
+  const currentVariant = product.variants?.find(v => v.id === selectedVariant);
+  const currentPrice = currentVariant?.price || product.salePrice || product.price;
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -70,10 +83,11 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
     setIsAdding(true);
     addItem({
       id: product.id,
-      name: product.name,
-      price: product.salePrice || product.price,
+      name: currentVariant ? `${product.name} (${currentVariant.name})` : product.name,
+      price: currentPrice,
       image: product.image,
-      quantity: 1
+      quantity: 1,
+      variantId: currentVariant?.id
     });
 
     if (liveInventoryEnabled && currentStock > 0) {
@@ -140,6 +154,28 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
               <ProductIntelligenceDashboard productId={product.id} />
             </div>
 
+            {/* Variants Selector */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="mb-8 p-4 bg-surface border border-border rounded-xl">
+                <h3 className="text-foreground font-bold mb-3">Options:</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.variants.map(v => (
+                    <button
+                      key={v.id}
+                      onClick={() => setSelectedVariant(v.id)}
+                      className={`px-4 py-2 border rounded-lg transition-colors ${
+                        selectedVariant === v.id 
+                          ? "bg-accent border-accent text-primary font-medium"
+                          : "border-border text-muted hover:border-accent hover:text-foreground"
+                      }`}
+                    >
+                      {v.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Accordion (Specs, Description, etc.) */}
             <ProductAccordion 
               description={product.description} 
@@ -160,9 +196,9 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
 
             {/* Sticky Panel component handles the sticky CSS and IntersectionObserver for mobile */}
             <StickyPurchasePanel 
-              price={product.price}
-              salePrice={product.salePrice}
-              stock={currentStock}
+              price={currentVariant ? undefined : product.price} // only pass salePrice if no variant overrides or similar
+              salePrice={currentPrice} // override sticky panel to show current variant price
+              stock={currentVariant ? currentVariant.stock : currentStock}
               onAddToCart={handleAddToCart}
               isAdding={isAdding}
             />
@@ -173,9 +209,9 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
              <InteractiveActions />
              {/* The panel will render inline here, but trigger the fixed bottom bar when it scrolls out */}
              <StickyPurchasePanel 
-              price={product.price}
-              salePrice={product.salePrice}
-              stock={currentStock}
+              price={currentVariant ? undefined : product.price}
+              salePrice={currentPrice}
+              stock={currentVariant ? currentVariant.stock : currentStock}
               onAddToCart={handleAddToCart}
               isAdding={isAdding}
             />

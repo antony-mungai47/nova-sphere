@@ -46,7 +46,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   
   const product = await prisma.product.findUnique({
     where: { id: resolvedParams.id },
-    include: { images: true }
+    include: { images: true, variants: true }
   });
 
   if (!product) {
@@ -89,6 +89,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     stock: product.stock,
     specs,
     features,
+    variants: product.variants.map(v => ({
+      id: v.id,
+      name: v.name,
+      sku: v.sku,
+      price: v.price ? v.price.toNumber() : null,
+      stock: v.stock,
+      attributes: v.attributes ? (typeof v.attributes === 'string' ? JSON.parse(v.attributes) : v.attributes) : null,
+    }))
   };
 
   const relatedProducts = relatedProductsData.map(rp => ({

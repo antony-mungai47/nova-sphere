@@ -1,0 +1,8 @@
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "neondb", schema "public" at "ep-jolly-frog-ajrzk93h.c-3.us-east-2.aws.neon.tech"
+
+Your database is now in sync with your Prisma schema. Done in 80.98s
+
+Running generate... (Use --skip-generate to skip the generators)
+Running generate... - Prisma Client
+✔ Generated Prisma Client (v6.19.3) to .\node_modules\@prisma\client in 1.14s

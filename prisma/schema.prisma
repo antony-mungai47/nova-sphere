@@ -72,7 +72,9 @@ enum AuctionStatus {
   PAYMENT_COMPLETED
   FAILED_PAYMENT
   CANCELLED
+  ENDED
   CLOSED
+  CLOSED_NO_SALE
 }
 
 enum BidStatus {
@@ -173,6 +175,7 @@ model User {
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
   auctionWatchlists AuctionWatchlist[]
+  carts             Cart[]
 }
 
 model Address {
@@ -227,6 +230,8 @@ model Product {
   wishlistedBy   WishlistItem[]
   recentlyViewed RecentlyViewed[]
 
+  variants       ProductVariant[]
+
   version Int @default(1)
 
   createdBy    String?
@@ -238,7 +243,8 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  auctions Auction[]
+  auctions  Auction[]
+  cartItems CartItem[]
 
   @@index([category])
   @@index([isTrending])
@@ -507,6 +513,12 @@ model Auction {
 
   startTime DateTime?
   endTime   DateTime
+  
+  // Configurable Anti-Sniping
+  antiSnipingEnabled Boolean @default(true)
+  extensionMinutes   Int     @default(5)
+  extensionThreshold Int     @default(5) // Minutes remaining to trigger extension
+
 
   orderId String? @unique
   order   Order?  @relation(fields: [orderId], references: [id])
@@ -1619,4 +1631,92 @@ model KnowledgeAnswer {
   createdAt DateTime @default(now())
 
   @@index([questionId])
+}
+
+enum CartStatus {
+  ACTIVE
+  COMPLETED
+  ABANDONED
+  ARCHIVED
+}
+
+enum CartType {
+  SHOPPING
+  AUCTION
+  QUOTE
+}
+
+model Cart {
+  id     String      @id @default(cuid())
+  userId String
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status CartStatus  @default(ACTIVE)
+  type   CartType    @default(SHOPPING)
+  items  CartItem[]
+  events CartEvent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, status])
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cartId    String
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  variantId String?
+  sellerId  String?
+
+  quantity Int @default(1)
+
+  unitPrice            Decimal
+  currency             String   @default("USD")
+  productNameSnapshot  String
+  productSlugSnapshot  String?
+  productImageSnapshot String?
+  variantSnapshot      Json?
+  vendorSnapshot       Json?
+  taxSnapshot          Decimal?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId, variantId, sellerId])
+}
+
+enum CartEventType {
+  ADD
+  REMOVE
+  MERGE
+  CLEAR
+  CHECKOUT
+  ABANDON
+}
+
+model CartEvent {
+  id        String        @id @default(cuid())
+  cartId    String
+  cart      Cart          @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  eventType CartEventType
+  payload   Json?
+  createdAt DateTime      @default(now())
+}
+
+model ProductVariant {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  sku         String   @unique
+  name        String   // e.g. "Large", "Red"
+  price       Decimal? // override price, if null use product price
+  stock       Int      @default(0)
+  attributes  Json?    // e.g. {"color": "red", "size": "L"}
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

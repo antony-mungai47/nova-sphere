@@ -43,6 +43,10 @@ export class AIOrchestrator {
         costEstimate: (response.tokensUsed / 1000) * 0.01
       });
 
+      // Track AI Budget Usage
+      const { GlobalBudgetMonitor } = await import("../safety/BudgetMonitor");
+      GlobalBudgetMonitor.trackUsage("general-ai", response.tokensUsed);
+
       return output;
 
     } catch (error: any) {

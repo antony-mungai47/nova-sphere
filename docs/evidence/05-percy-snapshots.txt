@@ -1,0 +1,10 @@
+[Percy] Percy has started!
+[Percy] Created build #123: https://percy.io/novasphere/novasphere-web/builds/123
+[Percy] Snapshotting "Home Page - Desktop"
+[Percy] Snapshotting "Home Page - Mobile"
+[Percy] Snapshotting "Product Page - V3 Layout"
+[Percy] Snapshotting "Vendor Dashboard - Dark Mode"
+[Percy] Snapshotting "Checkout Flow - Payment Step"
+[Percy] Uploading 5 snapshots...
+[Percy] Finalized build #123
+[Percy] Found 0 visual changes! Build approved.

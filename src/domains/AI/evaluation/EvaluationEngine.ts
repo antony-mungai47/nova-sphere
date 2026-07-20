@@ -15,9 +15,23 @@ export interface AIEvaluationMetric {
  */
 export class EvaluationEngine {
   
-  public recordMetrics(metric: AIEvaluationMetric): void {
-    // In production, this would fire to the Analytics Database or Feature Store
-    console.log(`[EvaluationEngine] AI Request completed: ${metric.provider}/${metric.model} - ${metric.latencyMs}ms - $${metric.costEstimate}`);
+  public async recordMetrics(metric: AIEvaluationMetric): Promise<void> {
+    // Write to actual AILog
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      await prisma.promptLog.create({
+        data: {
+          prompt: metric.promptName,
+          model: metric.model,
+          cost: metric.costEstimate,
+          tokens: 0, // Need to add tokens used
+          status: "SUCCESS",
+        }
+      });
+      console.log(`[EvaluationEngine] AI Log recorded to DB for ${metric.provider}/${metric.model}`);
+    } catch (e) {
+      console.error(`[EvaluationEngine] Failed to write AILog to DB`, e);
+    }
     
     // Example: Triggering a signal event for analytics (using the global console/logger for now as it's a backend engine)
     if (metric.latencyMs > 5000) {

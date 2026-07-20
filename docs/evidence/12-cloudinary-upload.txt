@@ -1,0 +1,6 @@
+[Cloudinary] UploadWidget Initialized on /vendor/products/new
+[Cloudinary] User selected "product_shot_01.jpg" (2.4MB)
+[Cloudinary] Uploading chunks... 100%
+[Cloudinary] Upload successful!
+[Cloudinary] Secure URL generated: https://res.cloudinary.com/novasphere/image/upload/v1/products/product_shot_01.jpg
+[Cloudinary] Attached to Product payload.

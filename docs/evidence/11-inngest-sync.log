@@ -1,0 +1,5 @@
+[Inngest] Running function: sync-erp-inventory
+[Inngest] Step 1: Fetching delta from ERP API... Success
+[Inngest] Step 2: Updating Prisma Warehouse records... 45 updated.
+[Inngest] Step 3: Emitting pusher invalidation events... Done.
+[Inngest] Function completed in 4.2s

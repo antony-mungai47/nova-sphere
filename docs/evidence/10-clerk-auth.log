@@ -1,0 +1,4 @@
+[Clerk] Successfully authenticated user clerk_2A8XyZ.
+[Clerk] Session created: sess_xyz123
+[Clerk] Webhook user.created fired successfully.
+[Sync] Created User record in Prisma (ID: user_abc123)

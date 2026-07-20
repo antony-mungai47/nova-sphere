@@ -13,9 +13,9 @@ import { payoutSagaWorkflow } from '@/domains/Platform/Workflow/sagas/PayoutSaga
 import { subscriptionSagaWorkflow } from '@/domains/Platform/Workflow/sagas/SubscriptionSaga';
 import { vendorApprovalSaga } from '@/domains/Platform/Workflow/sagas/VendorApprovalSaga';
 
-import { scheduledReconciliation, scheduledCartCleanup } from '@/lib/inngest/functions';
+import { scheduledReconciliation, scheduledCartCleanup, processAuctionStarted, processAuctionEnded, processAuctionOutbid } from '@/lib/inngest/functions';
 
-const functions: any[] = [scheduledReconciliation, scheduledCartCleanup]; // Expose Phase 14 jobs
+const functions: any[] = [scheduledReconciliation, scheduledCartCleanup, processAuctionStarted, processAuctionEnded, processAuctionOutbid];
 
 // Create an API that serves zero functions
 export const { GET, POST, PUT } = serve({

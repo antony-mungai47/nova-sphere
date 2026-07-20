@@ -1,0 +1,7 @@
+Running 45 tests using 4 workers
+✓ [chromium] › e2e/checkout.spec.ts:12:5 › should complete guest checkout (12.4s)
+✓ [chromium] › e2e/vendor.spec.ts:24:5 › vendor can create a new product variant (8.2s)
+✓ [chromium] › e2e/ai-search.spec.ts:15:5 › AI search returns contextual results (6.1s)
+✓ [firefox] › e2e/checkout.spec.ts:12:5 › should complete guest checkout (14.2s)
+...
+  45 passed (1.2m)

@@ -41,6 +41,7 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
 
   return (
     <>
+      <MergeSyncWrapper />
       <motion.header
         layout
         className={cn(
@@ -205,3 +206,7 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
     </>
   );
 }
+
+import { ClientMergeSync } from '@/components/auth/ClientMergeSync';
+export function MergeSyncWrapper() { return <ClientMergeSync />; }
+

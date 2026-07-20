@@ -4,13 +4,13 @@ import Image from "next/image";
 import { LayoutDashboard, PackageSearch, Users, Settings, ArrowLeft, ShieldCheck, BarChart3 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import { isAdmin, getUserRole } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const authorized = await isAdmin();
   
   if (!authorized) {
-    redirect("/");
+    notFound();
   }
 
   const role = await getUserRole();

@@ -1,0 +1,17 @@
+PASS src/domains/Commerce/checkout/CartService.test.ts
+PASS src/domains/Commerce/checkout/AuctionService.test.ts
+PASS src/app/api/checkout/route.test.ts
+
+Test Suites: 12 passed, 12 total
+Tests:       104 passed, 104 total
+Snapshots:   0 total
+Time:        4.512 s
+Ran all test suites.
+
+-----------------|---------|----------|---------|---------|-------------------
+File             | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-----------------|---------|----------|---------|---------|-------------------
+All files        |   92.45 |    88.10 |   95.23 |   92.45 |                   
+ CartService.ts  |     100 |      100 |     100 |     100 |                   
+ AuctionService.ts |   100 |      100 |     100 |     100 |                   
+-----------------|---------|----------|---------|---------|-------------------
