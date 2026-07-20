@@ -12,7 +12,7 @@ export default async function AdminLogsPage() {
 
   const getIcon = (action: string, entity: string) => {
     if (entity === "PRODUCT") return <Package className="w-4 h-4 text-nova-blue" />;
-    if (entity === "USER") return <User className="w-4 h-4 text-purple-400" />;
+    if (entity === "USER") return <User className="w-4 h-4 text-nova-silver" />;
     if (entity === "THEME" || entity === "SETTINGS") return <Settings className="w-4 h-4 text-nova-amber" />;
     return <LayoutDashboard className="w-4 h-4 text-nova-silver" />;
   };

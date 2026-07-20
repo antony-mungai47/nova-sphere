@@ -21,7 +21,7 @@ export default async function AuditLogsPage() {
       case "INFO": return <Info className="w-4 h-4 text-nova-blue" />;
       case "WARN": return <AlertTriangle className="w-4 h-4 text-nova-amber" />;
       case "ERROR": return <XCircle className="w-4 h-4 text-red-500" />;
-      case "FATAL": return <Bug className="w-4 h-4 text-purple-500" />;
+      case "FATAL": return <Bug className="w-4 h-4 text-danger" />;
       default: return <Info className="w-4 h-4 text-nova-silver" />;
     }
   };

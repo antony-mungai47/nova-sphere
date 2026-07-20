@@ -129,7 +129,7 @@ export default async function AdminAnalyticsPage() {
 
         {/* Customers Section */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Users className="w-5 h-5 text-purple-400" /> Customers</h2>
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Users className="w-5 h-5 text-nova-silver" /> Customers</h2>
           <div className="space-y-4">
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
               <span className="text-nova-silver">Total Customers</span>

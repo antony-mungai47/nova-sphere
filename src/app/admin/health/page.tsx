@@ -86,7 +86,7 @@ export default async function AdminHealthPage() {
         {/* Vercel Edge Cache */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <div className="flex items-center gap-3 mb-4">
-            <Server className="w-6 h-6 text-purple-400" />
+            <Server className="w-6 h-6 text-nova-silver" />
             <h3 className="text-white font-bold text-lg">Edge Cache</h3>
           </div>
           <div className="space-y-2">
