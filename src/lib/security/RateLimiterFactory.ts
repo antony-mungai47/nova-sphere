@@ -7,8 +7,8 @@ let defaultLimiter: IRateLimiter | null = null;
 export function getRateLimiter(): IRateLimiter {
   if (!defaultLimiter) {
     if (process.env.NODE_ENV === "production" && !process.env.UPSTASH_REDIS_REST_URL) {
-      console.warn("WARNING: Production rate limiting requires a distributed backend. Returning unconfigured RedisRateLimiter.");
-      defaultLimiter = new RedisRateLimiter(100, 60000);
+      console.warn("WARNING: Production rate limiting requires a distributed backend. Falling back to local MemoryRateLimiter which will not sync across edge nodes.");
+      defaultLimiter = new MemoryRateLimiter(100, 60000);
       return defaultLimiter;
     }
     
