@@ -1,0 +1,216 @@
+# Repository Architecture Audit
+
+## 1. Routing & Middleware
+### Routes (53)
+- app/(storefront)/account/wishlist/page.tsx
+- app/(vendor)/vendor/dashboard/page.tsx
+- app/(vendor)/vendor/orders/page.tsx
+- app/(vendor)/vendor/products/new/page.tsx
+- app/(vendor)/vendor/products/page.tsx
+- app/account/notifications/page.tsx
+- app/account/page.tsx
+- app/admin/analytics/page.tsx
+- app/admin/auctions/page.tsx
+- app/admin/audit-logs/page.tsx
+- app/admin/business/page.tsx
+- app/admin/categories/page.tsx
+- app/admin/customers/page.tsx
+- app/admin/financials/page.tsx
+- app/admin/health/page.tsx
+- app/admin/inventory/page.tsx
+- app/admin/logs/page.tsx
+- app/admin/marketing/page.tsx
+- app/admin/orders/page.tsx
+- app/admin/page.tsx
+- app/admin/performance/page.tsx
+- app/admin/products/page.tsx
+- app/admin/products/upload/page.tsx
+- app/admin/reports/page.tsx
+- app/admin/settings/page.tsx
+- app/admin/support/page.tsx
+- app/auctions/page.tsx
+- app/auctions/[id]/page.tsx
+- app/careers/page.tsx
+- app/checkout/simulate/page.tsx
+- app/checkout/success/page.tsx
+- app/compare/page.tsx
+- app/contact/page.tsx
+- app/faq/page.tsx
+- app/help/page.tsx
+- app/investors/page.tsx
+- app/login/[[...login]]/page.tsx
+- app/order/[id]/invoice/page.tsx
+- app/orders/page.tsx
+- app/page.tsx
+- app/policies/privacy/page.tsx
+- app/policies/refund/page.tsx
+- app/policies/terms/page.tsx
+- app/press/page.tsx
+- app/product/[id]/page.tsx
+- app/recommended/page.tsx
+- app/register/[[...register]]/page.tsx
+- app/seller/page.tsx
+- app/sign-in/[[...sign-in]]/page.tsx
+- app/sign-up/[[...sign-up]]/page.tsx
+- app/store/page.tsx
+- app/test-admin/page.tsx
+- app/welcome/page.tsx
+
+### Layouts (3)
+- app/(vendor)/vendor/layout.tsx
+- app/admin/layout.tsx
+- app/layout.tsx
+
+### API Routes (17)
+- app/api/auctions/[id]/bid/route.ts
+- app/api/chat/route.ts
+- app/api/checkout/route.ts
+- app/api/cloudinary/sign/route.ts
+- app/api/coupons/route.ts
+- app/api/cron/cleanup/route.ts
+- app/api/health/deep/route.ts
+- app/api/health/live/route.ts
+- app/api/health/ready/route.ts
+- app/api/health/route.ts
+- app/api/inngest/route.ts
+- app/api/pusher/auth/route.ts
+- app/api/search/route.ts
+- app/api/support/route.ts
+- app/api/tests/seed-order/route.ts
+- app/api/user/role/route.ts
+- app/api/webhook/stripe/route.ts
+
+### Middleware
+- middleware.ts
+
+## 2. State & Providers
+### Providers & Contexts
+- components/motion/FlyToCartEngine.tsx
+- components/motion/MotionProvider.tsx
+- components/providers/PostHogProvider.tsx
+- components/providers/RealTimeProvider.tsx
+- domains/Experience/components/conversion/SessionTracker.tsx
+- domains/Experience/components/pulse/PulseEngine.tsx
+- domains/personalization/sdk/hooks.tsx
+- domains/signals/sdk/hooks.tsx
+
+### Zustand Stores
+
+
+## 3. Potential Duplicate Components & Services
+### AIProvider
+- app/admin/health/providers/AIProvider.ts
+- domains/Intelligence/AIEngine/AIProvider.ts
+### types
+- app/admin/health/providers/types.ts
+- domains/Commerce/types.ts
+- domains/discovery/engine/types.ts
+- domains/Experience/components/conversion/types.ts
+- domains/Experience/components/qa/types.ts
+- domains/Experience/components/reviews/types.ts
+- domains/personalization/engine/types.ts
+- domains/signals/types.ts
+### migrate_tokens
+- app/admin/migrate_tokens.py
+- app/product/migrate_tokens.py
+- domains/Commerce/checkout/migrate_tokens.py
+- domains/Commerce/products/components/store/migrate_tokens.py
+- domains/Experience/components/home/migrate_tokens.py
+### globals
+- app/globals.css
+- domains/Experience/themes/globals.css
+### card
+- components/ui/card.tsx
+- shared/components/ui/card.tsx
+### jobs
+- domains/Audit/jobs.ts
+- domains/CommerceCore/BroadcastEngine/services/jobs.ts
+- domains/Engagement/Notifications/jobs.ts
+### InventoryEngine
+- domains/Commerce/inventory/InventoryEngine.ts
+- domains/CommerceCore/InventoryEngine/services/InventoryEngine.ts
+### PricingEngine
+- domains/Commerce/pricing/PricingEngine.ts
+- domains/CommerceCore/PricingEngine/services/PricingEngine.ts
+### hooks
+- domains/Commerce/sdk/hooks.ts
+- domains/discovery/sdk/hooks.ts
+- domains/personalization/sdk/hooks.tsx
+- domains/signals/sdk/hooks.tsx
+- lib/design-system/motion/hooks.ts
+### CurrencyEngine
+- domains/CommerceCore/CurrencyEngine/services/CurrencyEngine.ts
+- domains/Finance/CurrencyEngine/CurrencyEngine.ts
+### HealthEngine
+- domains/CommerceCore/HealthEngine/services/HealthEngine.ts
+- domains/Platform/Operations/HealthEngine.ts
+### StripeProvider
+- domains/CommerceCore/PaymentEngine/providers/StripeProvider.ts
+- domains/Finance/PaymentEngine/StripeProvider.ts
+### PaymentEngine
+- domains/CommerceCore/PaymentEngine/services/PaymentEngine.ts
+- domains/Finance/PaymentEngine/PaymentEngine.ts
+### IWorkflowEngine
+- domains/CommerceCore/WorkflowEngine/contracts/IWorkflowEngine.ts
+- domains/Platform/Workflow/contracts/IWorkflowEngine.ts
+### usePresence
+- domains/Engagement/Presence/usePresence.ts
+- domains/Realtime/hooks/usePresence.ts
+### RecommendationEngine
+- domains/Experience/components/conversion/RecommendationEngine.tsx
+- domains/Intelligence/RecommendationEngine/RecommendationEngine.ts
+- domains/Recommendations/RecommendationEngine.ts
+### CampaignEngine
+- domains/Experience/engines/CampaignEngine.ts
+- domains/Merchandising/CampaignEngine.ts
+### PersonalizationEngine
+- domains/Intelligence/PersonalizationEngine/PersonalizationEngine.ts
+- domains/Platform/Intelligence/Ranking/PersonalizationEngine.ts
+### CommissionEngine
+- domains/Marketplace/Engines/CommissionEngine.ts
+- domains/Marketplace/sellers/services/CommissionEngine.ts
+### analytics
+- domains/Operations/components/analytics.tsx
+- inngest/functions/analytics.ts
+- lib/analytics.ts
+### ExperimentEngine
+- domains/personalization/engine/ExperimentEngine.ts
+- domains/Platform/Experiments/ExperimentEngine.ts
+### RankingEngine
+- domains/personalization/engine/RankingEngine.ts
+- domains/Platform/Intelligence/Ranking/RankingEngine.ts
+### AuditEngine
+- domains/Platform/Audit/AuditEngine.ts
+- domains/Platform/Operations/AuditEngine.ts
+### ConfigurationEngine
+- domains/Platform/Configuration/ConfigurationEngine.ts
+- domains/Platform/Operations/ConfigurationEngine.ts
+### DeploymentEngine
+- domains/Platform/DeploymentEngine/DeploymentEngine.ts
+- domains/Platform/Operations/DeploymentEngine.ts
+### IncidentEngine
+- domains/Platform/IncidentEngine/IncidentEngine.ts
+- domains/Platform/Operations/IncidentEngine.ts
+### MetricsEngine
+- domains/Platform/Intelligence/Analytics/MetricsEngine.ts
+- domains/Platform/Operations/MetricsEngine.ts
+### ObservabilityEngine
+- domains/Platform/Observability/ObservabilityEngine.ts
+- domains/Platform/Operations/ObservabilityEngine.ts
+### live-support-widget
+- domains/Support/components/live-support-widget.tsx
+- shared/components/support/live-support-widget.tsx
+### logger
+- lib/logger.ts
+- lib/observability/logger.ts
+
+## 4. Hardcoded Environment Variables (process.env.NODE_ENV)
+- app/admin/health/providers/DeploymentProvider.ts
+- domains/CommerceCore/HealthEngine/services/HealthEngine.ts
+- domains/Experience/components/conversion/CartAnalytics.ts
+- domains/signals/DestinationRouter.ts
+- lib/observability/logger.ts
+- lib/prisma.ts
+- lib/pusherServer.ts
+- lib/security/RateLimiterFactory.ts
+

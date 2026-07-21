@@ -2,10 +2,10 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function updateSettings(id: string, formData: FormData) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) {
     throw new Error("Unauthorized");
   }

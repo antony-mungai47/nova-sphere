@@ -6,24 +6,31 @@ import {
 import EmergencyControls from "./components/EmergencyControls";
 import LiveRefresh from "./components/LiveRefresh";
 import ServiceCard from "./components/ServiceCard";
-import { 
-  getDatabaseProvider, 
-  getDeploymentProvider, 
-  getQueueProvider, 
-  getAIProvider, 
-  getMetricsProvider, 
-  IOperationsProvider 
-} from "./providers";
+import { HealthService } from "@/modules/operations/services/HealthService";
+
+export interface IOperationsProvider {
+  state: "CONNECTED" | "UNAVAILABLE" | "NOT_CONFIGURED";
+  lastChecked?: Date | null;
+  latencyMs?: number | null;
+  source?: string;
+  data?: any;
+}
 
 export const dynamic = "force-dynamic";
 
 export default async function OperationsConsole() {
-  // Fetch Providers
-  const dbProvider = await getDatabaseProvider();
-  const deployProvider = await getDeploymentProvider();
-  const queueProvider = await getQueueProvider();
-  const aiProvider = await getAIProvider();
-  const metricsProvider = await getMetricsProvider();
+  // Fetch unified health via Application Service layer
+  const healthData = await HealthService.checkPlatformHealth();
+  
+  const dbProvider = {
+    state: healthData.Database?.status === 'Healthy' ? 'CONNECTED' : 'UNAVAILABLE',
+    latencyMs: healthData.Database?.latencyMs,
+    data: healthData.Database?.data
+  };
+  const deployProvider = { data: null }; // Will be migrated to DeploymentService
+  const queueProvider = { state: healthData.Inngest?.status === 'Healthy' ? 'CONNECTED' : 'UNAVAILABLE' };
+  const aiProvider = { state: 'NOT_CONFIGURED' };
+  const metricsProvider = { state: 'NOT_CONFIGURED' };
 
   // Stub missing providers as NOT_CONFIGURED
   const stubProvider = (source: string): IOperationsProvider => ({

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { isSuperAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function GET() {
-  const admin = await isSuperAdmin();
+  const admin = await IdentityService.isSuperAdmin();
   return NextResponse.json({ isSuperAdmin: admin });
 }

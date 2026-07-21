@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import { SupportClient } from "./support-client";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminSupportPage() {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   
   if (!authorized) {
     redirect("/");

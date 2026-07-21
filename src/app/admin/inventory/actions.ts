@@ -2,10 +2,10 @@
 import { ProductRepository } from "@/domains/Commerce/products/repositories/product.repository";
 
 import { revalidatePath } from "next/cache";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function updateProductStock(productId: string, newStock: number) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   if (newStock < 0) {

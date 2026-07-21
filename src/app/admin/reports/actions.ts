@@ -2,10 +2,10 @@
 import { OrderRepository } from "@/domains/Customer/orders/repositories/order.repository";
 import { ProductRepository } from "@/domains/Commerce/products/repositories/product.repository";
 
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function generateOrdersCSV() {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   const orders = await OrderRepository.findMany({
@@ -32,7 +32,7 @@ export async function generateOrdersCSV() {
 }
 
 export async function generateInventoryCSV() {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   const products = await ProductRepository.findMany({

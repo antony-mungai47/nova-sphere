@@ -1,18 +1,18 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 import { AISupportService } from "./AISupportService";
 
 export async function generateSummaryAction(conversationId: string) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   return await AISupportService.generateSummary(conversationId);
 }
 
 export async function generateSuggestedRepliesAction(conversationId: string) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   return await AISupportService.generateSuggestedReplies(conversationId);

@@ -2,10 +2,10 @@
 import { CouponRepository } from "@/domains/Commerce/pricing/repositories/coupon.repository";
 
 import { revalidatePath } from "next/cache";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function createCoupon(code: string, discountPercent: number) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   if (!code || discountPercent <= 0 || discountPercent > 100) {
@@ -25,7 +25,7 @@ export async function createCoupon(code: string, discountPercent: number) {
 }
 
 export async function toggleCouponActive(id: string, isActive: boolean) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   await CouponRepository.update({

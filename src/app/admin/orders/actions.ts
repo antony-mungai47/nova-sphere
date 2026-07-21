@@ -2,10 +2,10 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function updateOrderStatus(orderId: string, status: string) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   await prisma.order.update({
@@ -17,7 +17,7 @@ export async function updateOrderStatus(orderId: string, status: string) {
 }
 
 export async function processRefund(orderId: string) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   // In a real app, you would call Stripe/payment provider API here
