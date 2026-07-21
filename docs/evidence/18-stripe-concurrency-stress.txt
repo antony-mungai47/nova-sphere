@@ -1,0 +1,13 @@
+1. Setting up mock environment...
+Created Order cmruq84ml0002txzwrw8kijhc for Product cmruq848u0000txzwsvhj70tj
+
+--- SCENARIO 1: First Webhook ---
+✓ SCENARIO 1 PASS: Order captured successfully on first webhook.
+
+--- SCENARIO 2: 50 Concurrent Webhooks (Stress Test) ---
+✓ SCENARIO 2 PASS: 50 Concurrent webhooks resulted in exactly 1 successful attempt, 1 outbox event, and 2 ledger entries.
+
+--- SCENARIO 3: Outbox Rollback ---
+✓ SCENARIO 3 PASS: Outbox failure perfectly rolled back Order, Attempt, and Ledgers.
+
+Writing evidence to docs/evidence/18-stripe-concurrency-stress.txt

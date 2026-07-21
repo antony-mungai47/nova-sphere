@@ -3,8 +3,10 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+import { isAdmin } from "@/lib/auth";
 
 export async function createProduct(formData: FormData) {
+  if (!(await isAdmin())) throw new Error("Unauthorized");
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const price = parseFloat(formData.get("price") as string);
@@ -49,6 +51,7 @@ export async function createProduct(formData: FormData) {
 }
 
 export async function updateProduct(id: string, formData: FormData) {
+  if (!(await isAdmin())) throw new Error("Unauthorized");
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
   const price = parseFloat(formData.get("price") as string);
@@ -95,6 +98,7 @@ export async function updateProduct(id: string, formData: FormData) {
 }
 
 export async function deleteProduct(id: string) {
+  if (!(await isAdmin())) throw new Error("Unauthorized");
   await prisma.orderItem.deleteMany({
     where: { productId: id }
   });

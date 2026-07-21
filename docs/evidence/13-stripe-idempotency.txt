@@ -1,0 +1,17 @@
+1. Setting up mock environment...
+Created Order cmrup4whw0002txzw5jmrt0tx for Product cmrup4w4p0000txzw9rjf2u9v
+
+--- SCENARIO 1: First Webhook ---
+✓ SCENARIO 1 PASS: Order captured successfully on first webhook.
+
+--- SCENARIO 2: Duplicate Webhook (Same Event ID) ---
+✓ SCENARIO 2 PASS: Duplicate webhook (same event ID) was correctly ignored.
+
+--- SCENARIO 3: Duplicate Business Event (Different Event ID) ---
+✓ SCENARIO 3 PASS: Business idempotency held. Only 1 successful payment attempt exists.
+
+--- SCENARIO 4: Observability Assertions ---
+✓ SCENARIO 4 PASS: Exactly 1 OutboxEvent emitted for downstream processors.
+✓ SCENARIO 4 PASS: Double-entry ledger reconciliation is correct (1 CREDIT, 1 DEBIT).
+
+Writing evidence to docs/evidence/13-stripe-idempotency.txt

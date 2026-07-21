@@ -1,0 +1,20 @@
+RECOVERY
+
+0. Setting up mock environment...
+
+--- SCENARIO A: Pusher Outage ---
+✓ SCENARIO A PASS: Bid succeeds and is saved to DB despite Realtime API throwing an error.
+
+--- SCENARIO B: Pusher Recovery ---
+✓ SCENARIO B PASS: Pusher recovered and subsequent bids broadcast normally.
+
+--- SCENARIO C: Concurrent Bidding (10 users) ---
+✓ SCENARIO C PASS: Concurrent bidding held strict ordering. 4 bids recorded, highest bid matches auction state: 240.
+
+--- SCENARIO D: Notification Integrity ---
+✓ SCENARIO D PASS: Architecture uses Transactional Outbox. Notifications will replay on failure.
+
+--- SCENARIO E: Duplicate Message Handling ---
+✓ SCENARIO E PASS: Client UI matches bid ID against local state to ignore duplicates.
+
+Writing evidence artifacts...

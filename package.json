@@ -32,6 +32,7 @@
     "next": "16.2.9",
     "next-cloudinary": "^6.17.5",
     "posthog-js": "^1.396.5",
+    "posthog-node": "^5.46.0",
     "pusher": "^5.3.4",
     "pusher-js": "^8.5.0",
     "react": "19.2.4",

@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(request: Request) {
   cloudinary.config({
@@ -8,8 +9,20 @@ export async function POST(request: Request) {
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await request.json();
     const { paramsToSign } = body;
+
+    // Enforce constraints server-side
+    // We do not allow arbitrary folder uploads or unconstrained types
+    const allowedFolders = ['products', 'avatars', 'nova-sphere'];
+    if (paramsToSign.folder && !allowedFolders.includes(paramsToSign.folder)) {
+      return NextResponse.json({ error: "Invalid upload folder" }, { status: 400 });
+    }
 
     const signature = cloudinary.utils.api_sign_request(
       paramsToSign,

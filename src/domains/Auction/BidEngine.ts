@@ -75,14 +75,25 @@ export class BidEngine {
         }
       });
 
-      // Update auction
-      const updatedAuction = await tx.auction.update({
-        where: { id: auctionId },
+      // Update auction using Optimistic Concurrency Control
+      const updateResult = await tx.auction.updateMany({
+        where: { 
+          id: auctionId,
+          version: auction.version // optimistic locking
+        },
         data: {
           currentBid: amount,
           highestBidderId: userId,
+          version: { increment: 1 }
         }
       });
+
+      if (updateResult.count === 0) {
+        throw new Error('CONCURRENCY_ERROR: A higher bid was placed concurrently. Please refresh and try again.');
+      }
+
+      // Fetch the updated auction since updateMany doesn't return the record
+      const updatedAuction = await tx.auction.findUniqueOrThrow({ where: { id: auctionId } });
 
       return { newBid, updatedAuction };
     });

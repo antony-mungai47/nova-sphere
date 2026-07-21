@@ -196,7 +196,7 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
 
             {/* Sticky Panel component handles the sticky CSS and IntersectionObserver for mobile */}
             <StickyPurchasePanel 
-              price={currentVariant ? undefined : product.price} // only pass salePrice if no variant overrides or similar
+              price={product.price} // only pass salePrice if no variant overrides or similar
               salePrice={currentPrice} // override sticky panel to show current variant price
               stock={currentVariant ? currentVariant.stock : currentStock}
               onAddToCart={handleAddToCart}
@@ -209,7 +209,7 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
              <InteractiveActions />
              {/* The panel will render inline here, but trigger the fixed bottom bar when it scrolls out */}
              <StickyPurchasePanel 
-              price={currentVariant ? undefined : product.price}
+              price={product.price}
               salePrice={currentPrice}
               stock={currentVariant ? currentVariant.stock : currentStock}
               onAddToCart={handleAddToCart}

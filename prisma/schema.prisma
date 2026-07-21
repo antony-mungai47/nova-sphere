@@ -230,7 +230,7 @@ model Product {
   wishlistedBy   WishlistItem[]
   recentlyViewed RecentlyViewed[]
 
-  variants       ProductVariant[]
+  variants ProductVariant[]
 
   version Int @default(1)
 
@@ -513,12 +513,11 @@ model Auction {
 
   startTime DateTime?
   endTime   DateTime
-  
+
   // Configurable Anti-Sniping
   antiSnipingEnabled Boolean @default(true)
   extensionMinutes   Int     @default(5)
   extensionThreshold Int     @default(5) // Minutes remaining to trigger extension
-
 
   orderId String? @unique
   order   Order?  @relation(fields: [orderId], references: [id])
@@ -1707,16 +1706,113 @@ model CartEvent {
 }
 
 model ProductVariant {
-  id          String   @id @default(cuid())
-  productId   String
-  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  
-  sku         String   @unique
-  name        String   // e.g. "Large", "Red"
-  price       Decimal? // override price, if null use product price
-  stock       Int      @default(0)
-  attributes  Json?    // e.g. {"color": "red", "size": "L"}
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  sku        String   @unique
+  name       String // e.g. "Large", "Red"
+  price      Decimal? // override price, if null use product price
+  stock      Int      @default(0)
+  attributes Json? // e.g. {"color": "red", "size": "L"}
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ----------------------------------------
+// V3.2.0 STAGE 1: BUSINESS INTELLIGENCE
+// ----------------------------------------
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  eventId    String   @unique // e.g. idempotency or client ID
+  eventName  String // e.g. 'commerce.product.viewed'
+  eventVersion String @default("v1")
+  occurredAt DateTime @default(now())
+
+  userId    String?
+  sessionId String?
+  tenantId  String?
+  vendorId  String?
+
+  device   String?
+  country  String?
+  currency String?
+  source   String? // UTM source
+
+  metadata Json?
+
+  // Outbox specific
+  status      OutboxStatus @default(PENDING)
+  retryCount  Int          @default(0)
+  processedAt DateTime?
+
+  @@index([eventName, eventVersion, occurredAt])
+  @@index([status])
+  @@index([userId])
+}
+
+model DailyMetrics {
+  id   String   @id @default(cuid())
+  date DateTime @unique
+
+  revenue   Decimal @default(0)
+  orders    Int     @default(0)
+  visitors  Int     @default(0)
+  pageviews Int     @default(0)
+  aov       Decimal @default(0) // Average Order Value
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VendorMetrics {
+  id       String @id @default(cuid())
+  vendorId String @unique
+
+  gmv        Decimal @default(0)
+  orders     Int     @default(0)
+  refunds    Int     @default(0)
+  refundRate Float   @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CategoryMetrics {
+  id       String @id @default(cuid())
+  category String @unique
+
+  revenue   Decimal @default(0)
+  views     Int     @default(0)
+  purchases Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuctionMetrics {
+  id   String   @id @default(cuid())
+  date DateTime @unique
+
+  totalBids   Int   @default(0)
+  auctionsWon Int   @default(0)
+  winRate     Float @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CustomerMetrics {
+  id   String   @id @default(cuid())
+  date DateTime @unique
+
+  newUsers       Int   @default(0)
+  returningUsers Int   @default(0)
+  vipUsers       Int   @default(0)
+  retentionRate  Float @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

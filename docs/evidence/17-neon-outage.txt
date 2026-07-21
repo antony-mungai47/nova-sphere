@@ -1,0 +1,10 @@
+NEON OUTAGE
+
+--- SCENARIO 1: Checkout DB Outage ---
+✓ SCENARIO 1 PASS: Database error cleanly aborted checkout. 0 orders created.
+
+--- SCENARIO 2: State Transition DB Outage ---
+Created draft order cmruqid9f0001txu0id9wm78x
+✓ SCENARIO 2 PASS: Order state mutation cleanly aborted and rolled back. Status remains CREATED.
+
+Writing evidence artifacts...

@@ -21,11 +21,11 @@ export class EvaluationEngine {
       const { prisma } = await import("@/lib/prisma");
       await prisma.promptLog.create({
         data: {
-          prompt: metric.promptName,
+          provider: metric.provider || "unknown",
           model: metric.model,
-          cost: metric.costEstimate,
-          tokens: 0, // Need to add tokens used
-          status: "SUCCESS",
+          promptTokens: 0,
+          completionTokens: 0,
+          latencyMs: metric.latencyMs,
         }
       });
       console.log(`[EvaluationEngine] AI Log recorded to DB for ${metric.provider}/${metric.model}`);

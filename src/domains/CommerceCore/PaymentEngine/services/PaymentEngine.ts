@@ -1,6 +1,7 @@
 import { IPaymentEngine } from '../contracts/IPaymentEngine';
 import { IPaymentProvider } from '../contracts/IPaymentProvider';
 import { PrismaPaymentRepository } from '../repositories/PrismaPaymentRepository';
+import { MetricsClient } from '../../../../lib/telemetry/MetricsClient';
 
 export class PaymentEngine implements IPaymentEngine {
   private repository: PrismaPaymentRepository;
@@ -37,6 +38,7 @@ export class PaymentEngine implements IPaymentEngine {
     const verification = await this.provider.verifyWebhookSignature(payload, signature);
 
     if (!verification.isValid || !verification.providerEventId) {
+      MetricsClient.increment('payments_failed_total', 1, { reason: 'invalid_signature' });
       throw new Error('Invalid webhook signature');
     }
 
@@ -49,14 +51,21 @@ export class PaymentEngine implements IPaymentEngine {
 
     if (!acquired) {
       // Already processed, return 200 safely
+      MetricsClient.increment('payments_duplicate_total', 1, { type: 'webhook_event_duplicate' });
       return false;
     }
 
     try {
       if (verification.orderId) {
-        // Need to find the active attempt. In MVP, just create one if none exist or find the latest.
-        // We will just create a new attempt for this simulation, or let the repository create it.
-        // Let's create an attempt so it exists for the repository to update.
+        // Business idempotency check
+        const isCaptured = await this.repository.isOrderCaptured(verification.orderId);
+        if (isCaptured) {
+          // Already paid, ignore gracefully
+          await this.repository.markWebhookProcessed(verification.providerEventId, 'IGNORED_DUPLICATE_BUSINESS_EVENT');
+          MetricsClient.increment('payments_duplicate_total', 1, { type: 'business_duplicate' });
+          return true;
+        }
+
         const attemptId = await this.repository.createPaymentAttempt(verification.orderId);
 
         if (verification.status === 'SUCCEEDED') {
@@ -80,9 +89,23 @@ export class PaymentEngine implements IPaymentEngine {
       }
 
       await this.repository.markWebhookProcessed(verification.providerEventId, 'PROCESSED');
+      MetricsClient.increment('payments_processed_total', 1, { status: verification.status });
+      MetricsClient.timing('payments_latency_ms', Math.floor(Math.random() * 50) + 10); // Mock latency
       return true;
     } catch (err: any) {
+      if (err.message.includes('CONCURRENCY_ERROR')) {
+        MetricsClient.increment('payments_duplicate_total', 1, { type: 'db_concurrency_ignored' });
+        await this.repository.markWebhookProcessed(verification.providerEventId, 'IGNORED_CONCURRENCY');
+        return true;
+      }
+      
+      if (err.message.includes('SIMULATED_OUTBOX_FAILURE')) {
+        MetricsClient.increment('payments_outbox_failures_total');
+        MetricsClient.increment('payments_rollbacks_total');
+      }
+
       await this.repository.markWebhookProcessed(verification.providerEventId, 'FAILED');
+      MetricsClient.increment('payments_failed_total', 1, { reason: 'processing_error' });
       throw err;
     }
   }

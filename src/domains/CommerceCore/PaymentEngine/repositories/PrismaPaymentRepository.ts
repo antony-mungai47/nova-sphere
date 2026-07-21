@@ -43,6 +43,13 @@ export class PrismaPaymentRepository {
     return attempt.id;
   }
 
+  async isOrderCaptured(orderId: string): Promise<boolean> {
+    const attempt = await this.prisma.paymentAttempt.findFirst({
+      where: { orderId, status: 'CAPTURED' }
+    });
+    return !!attempt;
+  }
+
   /**
    * Records successful payment using double-entry ledger bookkeeping and Transactional Outbox.
    */
@@ -52,9 +59,21 @@ export class PrismaPaymentRepository {
     amount: number,
     currency: string,
     providerId: string,
-    providerEventId: string
+    providerEventId: string,
+    simulateOutboxFailure: boolean = false
   ): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
+      // 0. Deterministic DB-Level Lock (Optimistic Concurrency on Order state)
+      // This guarantees that even with 50 concurrent webhooks, only 1 transaction can successfully transition the order.
+      const orderUpdate = await tx.order.updateMany({
+        where: { id: orderId, status: 'PENDING' },
+        data: { status: 'CAPTURED', stripePaymentIntentId: providerId }
+      });
+      
+      if (orderUpdate.count === 0) {
+         // Another transaction already captured it. Rollback this transaction!
+         throw new Error('CONCURRENCY_ERROR: Order already processed');
+      }
       // 1. Update attempt
       await tx.paymentAttempt.update({
         where: { id: paymentAttemptId },
@@ -101,6 +120,10 @@ export class PrismaPaymentRepository {
       });
 
       // 4. Transactional Outbox
+      if (simulateOutboxFailure) {
+        throw new Error('SIMULATED_OUTBOX_FAILURE');
+      }
+
       await tx.outboxEvent.create({
         data: {
           eventType: 'PaymentCaptured',

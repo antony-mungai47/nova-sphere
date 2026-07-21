@@ -1,12 +1,18 @@
 import { IRateLimiter } from "./IRateLimiter";
 import { MemoryRateLimiter } from "./MemoryRateLimiter";
+import { RedisRateLimiter } from "./RedisRateLimiter";
 
 let defaultLimiter: IRateLimiter | null = null;
 
 export function getRateLimiter(): IRateLimiter {
   if (!defaultLimiter) {
-    // We can swap this for UpstashRateLimiter later when Redis credentials are provided.
-    // 500 requests per minute to avoid blocking Playwright automated tests locally.
+    if (process.env.NODE_ENV === "production" && !process.env.UPSTASH_REDIS_REST_URL) {
+      console.warn("WARNING: Production rate limiting requires a distributed backend. Returning unconfigured RedisRateLimiter.");
+      defaultLimiter = new RedisRateLimiter(100, 60000);
+      return defaultLimiter;
+    }
+    
+    // Fallback to memory for local development / testing
     const isTest = process.env.PLAYWRIGHT_TEST === '1';
     defaultLimiter = new MemoryRateLimiter(isTest ? 500 : 100, 60000); 
   }

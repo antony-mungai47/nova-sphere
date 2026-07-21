@@ -49,7 +49,7 @@ export default async function VendorProductsPage() {
                   <td className="px-4 py-3">${Number(p.price).toFixed(2)}</td>
                   <td className="px-4 py-3">{p.stock}</td>
                   <td className="px-4 py-3">
-                    <span className={`px-2 py-1 rounded text-xs font-semibold ${p.status === 'PUBLISHED' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${p.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
                       {p.status}
                     </span>
                   </td>
