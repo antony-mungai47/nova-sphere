@@ -11,7 +11,7 @@ export async function createProduct(formData: FormData) {
   const description = formData.get("description") as string;
   const price = parseFloat(formData.get("price") as string);
   const category = formData.get("category") as string;
-  const imageUrl = formData.get("imageUrl") as string || "/hero-product.png";
+  const imageUrl = formData.get("imageUrl") as string;
   const stock = parseInt(formData.get("stock") as string) || 0;
   const isTrending = formData.get("isTrending") === "on";
 
@@ -19,7 +19,7 @@ export async function createProduct(formData: FormData) {
   if (price <= 0) throw new Error("Price must be greater than 0");
   if (name.length < 3) throw new Error("Product title must be at least 3 characters");
   if (description.length < 10) throw new Error("Description must be at least 10 characters");
-  if (!imageUrl.startsWith("http") && !imageUrl.startsWith("/")) throw new Error("Invalid image URL");
+  if (imageUrl && !imageUrl.startsWith("http") && !imageUrl.startsWith("/")) throw new Error("Invalid image URL");
   if (stock < 0) throw new Error("Stock cannot be negative");
 
   // Provide defaults for the new Phase 5 schema fields if they are missing from the old form
@@ -36,12 +36,11 @@ export async function createProduct(formData: FormData) {
       sku,
       stock,
       isTrending,
-      images: {
-        create: {
-          url: imageUrl,
-          isPrimary: true
+      ...(imageUrl ? {
+        images: {
+          create: { url: imageUrl, isPrimary: true }
         }
-      }
+      } : {})
     },
   });
 
@@ -64,7 +63,7 @@ export async function updateProduct(id: string, formData: FormData) {
   if (price <= 0) throw new Error("Price must be greater than 0");
   if (name.length < 3) throw new Error("Product title must be at least 3 characters");
   if (description.length < 10) throw new Error("Description must be at least 10 characters");
-  if (!imageUrl.startsWith("http") && !imageUrl.startsWith("/")) throw new Error("Invalid image URL");
+  if (imageUrl && !imageUrl.startsWith("http") && !imageUrl.startsWith("/")) throw new Error("Invalid image URL");
   if (stock < 0) throw new Error("Stock cannot be negative");
 
   const brand = (formData.get("brand") as string) || "Nova";
@@ -81,13 +80,12 @@ export async function updateProduct(id: string, formData: FormData) {
       sku,
       stock,
       isTrending,
-      images: {
-        deleteMany: {},
-        create: {
-          url: imageUrl,
-          isPrimary: true
+      ...(imageUrl ? {
+        images: {
+          deleteMany: {},
+          create: { url: imageUrl, isPrimary: true }
         }
-      }
+      } : {})
     },
   });
 

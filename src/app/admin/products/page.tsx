@@ -1,6 +1,7 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
 import { ProductsClient } from "./products-client";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 
 export default async function AdminProducts() {
@@ -14,7 +15,7 @@ export default async function AdminProducts() {
     name: p.name,
     price: p.price.toNumber(),
     category: p.category,
-    imageUrl: p.images[0]?.url || "/hero-product.png",
+    imageUrl: ProductImageService.getThumbnailUrl(p),
     stock: p.stock,
     isTrending: p.isTrending,
     description: p.description

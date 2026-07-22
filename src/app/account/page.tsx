@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { AccountClient } from "./account-client";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export default async function AccountPage() {
   const user = await currentUser();
@@ -72,7 +73,7 @@ export default async function AccountPage() {
       product: {
         id: i.product.id,
         name: i.product.name,
-        image: i.product.images?.[0]?.url || "/hero-product.png"
+        image: ProductImageService.getThumbnailUrl(i.product)
       }
     }))
   }));
@@ -81,7 +82,7 @@ export default async function AccountPage() {
     id: w.product.id,
     name: w.product.name,
     price: w.product.salePrice || w.product.price,
-    image: w.product.images?.[0]?.url || "/hero-product.png",
+    image: ProductImageService.getThumbnailUrl(w.product),
     brand: w.product.brand,
     category: w.product.category
   }));

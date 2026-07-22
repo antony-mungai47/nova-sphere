@@ -1,5 +1,3 @@
-import { prisma } from "@/lib/prisma";
+import { OrderRepository as NewOrderRepository } from "@/modules/commerce/infrastructure/repositories/OrderRepository";
 
-export const OrderRepository = {
-  ...prisma.order,
-};
+export const OrderRepository = NewOrderRepository;

@@ -16,7 +16,7 @@ export class WinnerSelectionEngine {
     });
 
     if (!auction) throw new Error('Auction not found');
-    if (auction.status === 'CLOSED' || auction.status === 'PAYMENT_COMPLETED') return;
+    if (auction.status === 'CLOSED' || auction.status === 'SETTLED') return;
 
     if (auction.bids.length === 0 || !auction.highestBidderId) {
       // No bids, auction ended
@@ -27,7 +27,7 @@ export class WinnerSelectionEngine {
     const reserveMet = AuctionEngine.isReserveMet(auction.currentBid, auction.reservePrice);
     
     if (!reserveMet) {
-      await AuctionEngine.transitionState(auctionId, AuctionStatus.RESERVE_NOT_MET);
+      await AuctionEngine.transitionState(auctionId, AuctionStatus.CLOSED);
       // Mark all bids as rejected because reserve wasn't met
       await prisma.bid.updateMany({
         where: { auctionId },
@@ -50,7 +50,7 @@ export class WinnerSelectionEngine {
       // State is AWAITING_PAYMENT until capture succeeds
       await tx.auction.update({
         where: { id: auctionId },
-        data: { status: AuctionStatus.AWAITING_PAYMENT }
+        data: { status: AuctionStatus.SETTLED }
       });
     });
 

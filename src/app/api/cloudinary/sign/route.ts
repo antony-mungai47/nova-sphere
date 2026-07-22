@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function POST(request: Request) {
   cloudinary.config({
@@ -9,8 +9,8 @@ export async function POST(request: Request) {
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
   try {
-    const { userId } = await auth();
-    if (!userId) {
+    const authorized = await IdentityService.isAuthenticated();
+    if (!authorized) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

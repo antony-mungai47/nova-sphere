@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma, CartStatus, CartEventType, CartType } from "@prisma/client";
-import { InventoryService } from "../inventory/InventoryService";
+import { InventoryService } from "@/modules/commerce/application/InventoryService";
 import { EventEmitter } from "events";
 
 export const CartEventBus = new EventEmitter();

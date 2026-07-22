@@ -25,7 +25,7 @@ export default async function AdminAuctionsPage() {
   });
 
   const activeAuctions = auctions.filter(a => a.status === "LIVE" && new Date(a.endTime) > new Date());
-  const endedAuctions = auctions.filter(a => a.status === "CLOSED_NO_SALE" || a.status === "ENDED" || a.status === "AWAITING_PAYMENT" || new Date(a.endTime) <= new Date());
+  const endedAuctions = auctions.filter(a => a.status === "CLOSED" || a.status === "SETTLED" || new Date(a.endTime) <= new Date());
   const totalVolume = endedAuctions.reduce((sum, a) => sum + (a.bids[0]?.amount?.toNumber() || 0), 0);
   
   async function cancelAuction(formData: FormData) {
@@ -89,8 +89,8 @@ export default async function AdminAuctionsPage() {
             {auctions.map((auction) => {
               const isEnded = new Date(auction.endTime) <= new Date();
               const displayStatus = auction.status === "CANCELLED" ? "CANCELLED" : 
-                                    auction.status === "CLOSED_NO_SALE" ? "NO SALE" : 
-                                    auction.status === "AWAITING_PAYMENT" ? "AWAITING PAYMENT" : 
+                                    auction.status === "SETTLED" ? "SETTLED" : 
+                                    auction.status === "CLOSED" ? "CLOSED" : 
                                     isEnded ? "ENDED" : 
                                     auction.status === "SCHEDULED" ? "SCHEDULED" : "ACTIVE";
               

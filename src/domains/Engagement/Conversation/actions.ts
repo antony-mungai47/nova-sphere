@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 import { ConversationService, CreateConversationDto } from "./ConversationService";
 import { MessageDeliveryState, ParticipantRole } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -21,7 +21,7 @@ export async function createConversationAction(title?: string, initialMessage?: 
 }
 
 export async function addParticipantAction(conversationId: string, targetUserId: string, role: ParticipantRole) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   const participant = await ConversationService.addParticipant(conversationId, targetUserId, role);

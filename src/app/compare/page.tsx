@@ -5,6 +5,7 @@ import { Footer } from "@/shared/components/layout/footer";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Check, Minus } from "lucide-react";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export const dynamic = "force-dynamic";
 
@@ -78,7 +79,7 @@ export default async function ComparePage({
               {products.map(p => (
                 <div key={p.id} className="flex-1 min-w-[250px] p-4 border-b border-l border-white/10 flex flex-col items-center text-center">
                   <div className="relative w-40 h-40 rounded-xl bg-white/5 border border-white/10 p-4 mb-4">
-                    <Image src={p.images[0]?.url || "/hero-product.png"} alt={p.name} fill className="object-contain" />
+                    <Image src={ProductImageService.getThumbnailUrl(p)} alt={p.name} fill className="object-contain" />
                   </div>
                   <p className="text-xs text-nova-silver uppercase tracking-wider mb-1">{p.brand}</p>
                   <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">{p.name}</h3>

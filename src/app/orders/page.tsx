@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { Package, Clock, CheckCircle } from "lucide-react";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export default async function OrdersPage() {
   const { userId } = await auth();
@@ -91,7 +92,7 @@ export default async function OrdersPage() {
                       {order.items.map((item) => (
                         <div key={item.id} className="flex gap-6 items-center">
                           <div className="relative w-24 h-24 bg-white/5 rounded-xl border border-white/10 overflow-hidden flex items-center justify-center flex-shrink-0">
-                            <img src={item.product.images?.[0]?.url || "/hero-product.png"} alt={item.product.name} className="w-16 h-16 object-contain" />
+                            <img src={ProductImageService.getThumbnailUrl(item.product as any)} alt={item.product.name} className="w-16 h-16 object-contain" />
                           </div>
                           <div className="flex-1">
                             <h3 className="text-lg font-bold text-white mb-1 hover:text-nova-blue transition-colors cursor-pointer">

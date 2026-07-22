@@ -1,12 +1,11 @@
-import { ProductRepository } from "@/domains/Commerce/products/repositories/product.repository";
+import { prisma } from "@/lib/prisma";
 import { MetadataRoute } from 'next';
-import { prisma } from '@/lib/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://nova-sphere.com';
 
   // Get all products
-  const products = await ProductRepository.findMany({
+  const products = await prisma.product.findMany({
     select: { id: true, updatedAt: true },
   });
 

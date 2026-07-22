@@ -6,6 +6,7 @@ import { ProductGrid } from "@/domains/Commerce/products/components/store/produc
 import { ProductGridV3 } from "@/domains/Commerce/products/components/store/v3-product-grid";
 import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
 import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export const revalidate = 3600; // ISR revalidate every hour
 export default async function StorePage({
@@ -65,7 +66,7 @@ export default async function StorePage({
     price: p.price.toNumber(),
     category: p.category,
     brand: p.brand,
-    image: p.images[0]?.url || "/hero-product.png",
+    image: ProductImageService.getThumbnailUrl(p),
     description: p.description,
     salePrice: p.salePrice ? p.salePrice.toNumber() : null,
     rating: p.rating,

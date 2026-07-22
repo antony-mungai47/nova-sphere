@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { ProductImageService } from '@/modules/commerce/services/ProductImageService';
 
 export default async function WishlistPage() {
   const { userId } = await auth();
@@ -38,7 +39,7 @@ export default async function WishlistPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {items.map((item) => {
-            const primaryImage = item.product.images.find(img => img.isPrimary)?.url || item.product.images[0]?.url || '/placeholder.png';
+            const primaryImage = ProductImageService.getPrimaryImageUrl(item.product);
             
             return (
               <div key={item.id} className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all flex flex-col relative">

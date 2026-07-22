@@ -1,7 +1,6 @@
 "use server";
 import { OrderRepository } from "@/domains/Customer/orders/repositories/order.repository";
-import { ProductRepository } from "@/domains/Commerce/products/repositories/product.repository";
-
+import { prisma } from "@/lib/prisma";
 import { IdentityService } from "@/modules/identity/services/IdentityService";
 
 export async function generateOrdersCSV() {
@@ -14,7 +13,7 @@ export async function generateOrdersCSV() {
   });
 
   const headers = ["Order ID", "Date", "Customer Email", "Customer Name", "Total Amount", "Status"];
-  const rows = orders.map(o => [
+  const rows = (orders as any[]).map(o => [
     o.id,
     o.createdAt.toISOString(),
     o.user?.email || "Unknown",
@@ -35,7 +34,7 @@ export async function generateInventoryCSV() {
   const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
-  const products = await ProductRepository.findMany({
+  const products = await prisma.product.findMany({
     orderBy: { stock: 'asc' }
   });
 

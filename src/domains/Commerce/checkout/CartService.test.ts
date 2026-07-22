@@ -1,5 +1,5 @@
 import { CartService } from "./CartService";
-import { InventoryService } from "../inventory/InventoryService";
+import { InventoryService } from "@/modules/commerce/application/InventoryService";
 import { prisma } from "@/lib/prisma";
 
 // Mock prisma and InventoryService
@@ -30,7 +30,7 @@ jest.mock("@/lib/prisma", () => ({
   }
 }));
 
-jest.mock("../inventory/InventoryService", () => ({
+jest.mock("@/modules/commerce/application/InventoryService", () => ({
   InventoryService: {
     validateAvailability: jest.fn()
   }

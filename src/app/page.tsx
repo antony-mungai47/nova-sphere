@@ -17,6 +17,7 @@ import { Footer } from "@/shared/components/layout/footer";
 import { prisma } from "@/lib/prisma";
 import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
 import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export default async function Home() {
   const products = await prisma.product.findMany({
@@ -31,7 +32,7 @@ export default async function Home() {
     price: p.price.toNumber(),
     category: p.category,
     brand: p.brand,
-    image: p.images[0]?.url || "/hero-product.png",
+    image: ProductImageService.getThumbnailUrl(p),
     description: p.description,
     salePrice: p.salePrice ? p.salePrice.toNumber() : null,
     rating: p.rating,

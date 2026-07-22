@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 
 export async function getUpsellProducts(excludeIds: string[] = []) {
@@ -20,7 +21,7 @@ export async function getUpsellProducts(excludeIds: string[] = []) {
     name: p.name,
     price: p.price,
     salePrice: p.salePrice,
-    image: p.images?.[0]?.url || "/hero-product.png",
+    image: ProductImageService.getThumbnailUrl(p),
     brand: p.brand
   }));
 }

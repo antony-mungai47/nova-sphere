@@ -7,6 +7,7 @@ import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
 import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     return { title: "Product Not Found" };
   }
 
-  const primaryImage = product.images?.[0]?.url || "/hero-product.png";
+  const primaryImage = ProductImageService.getGalleryImageUrl(product);
   const title = `${product.name} | Nova Sphere`;
 
   return {
@@ -80,8 +81,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     salePrice: product.salePrice ? product.salePrice.toNumber() : null,
     category: product.category,
     brand: product.brand,
-    images: product.images.map(img => img.url),
-    image: product.images?.[0]?.url || "/hero-product.png",
+    images: ProductImageService.getAllImageUrls(product),
+    image: ProductImageService.getGalleryImageUrl(product),
     description: product.description,
     rating: product.rating,
     reviewCount: product.reviewCount,
@@ -105,7 +106,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     price: rp.price.toNumber(),
     salePrice: rp.salePrice ? rp.salePrice.toNumber() : null,
     category: rp.category,
-    image: rp.images?.[0]?.url || "/hero-product.png",
+    image: ProductImageService.getThumbnailUrl(rp),
     rating: rp.rating,
   }));
 

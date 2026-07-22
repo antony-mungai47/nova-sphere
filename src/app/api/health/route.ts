@@ -1,19 +1,20 @@
 import { NextResponse } from 'next/server';
-import { HealthEngine } from '@/domains/CommerceCore/HealthEngine/services/HealthEngine';
+import { HealthService } from '@/modules/operations/services/HealthService';
 import { logger } from '@/lib/observability/logger';
 
-const healthEngine = new HealthEngine();
+
 
 export async function GET() {
   try {
-    const report = await healthEngine.getSystemHealth();
+    const report = await HealthService.checkPlatformHealth();
+    const isHealthy = Object.values(report).every(comp => comp.status === 'Healthy');
     
-    if (report.status === 'healthy') {
+    if (isHealthy) {
       logger.info('Health check passed', { report });
-      return NextResponse.json(report, { status: 200 });
+      return NextResponse.json({ status: 'healthy', components: report }, { status: 200 });
     } else {
       logger.warn('Health check degraded', { report });
-      return NextResponse.json(report, { status: 503 }); // 503 Service Unavailable for load balancers
+      return NextResponse.json({ status: 'degraded', components: report }, { status: 503 }); // 503 Service Unavailable for load balancers
     }
   } catch (error: any) {
     logger.error('Health check failed catastrophically', error);

@@ -1,15 +1,15 @@
 import React from "react";
-import { IOperationsProvider } from "../providers";
+import { ComponentHealth } from "@/modules/operations/services/HealthService";
 
 interface ServiceCardProps {
   title: string;
-  provider: IOperationsProvider<any>;
+  provider: ComponentHealth;
 }
 
 export default function ServiceCard({ title, provider }: ServiceCardProps) {
-  const isConnected = provider.state === "CONNECTED";
-  const isUnavailable = provider.state === "UNAVAILABLE";
-  const isNotConfigured = provider.state === "NOT_CONFIGURED";
+  const isConnected = provider.status === "Healthy";
+  const isUnavailable = provider.status === "Unavailable";
+  const isNotConfigured = provider.status === "Degraded";
 
   let statusColor = "text-nova-silver";
   let dotColor = "bg-nova-silver shadow-[0_0_8px_rgba(156,163,175,0.4)]";
@@ -24,9 +24,9 @@ export default function ServiceCard({ title, provider }: ServiceCardProps) {
     dotColor = "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)] animate-pulse";
     borderColor = "border-red-500/50";
   } else if (isNotConfigured) {
-    statusColor = "text-nova-silver";
-    dotColor = "bg-nova-silver/50";
-    borderColor = "border-white/10 opacity-70";
+    statusColor = "text-nova-amber";
+    dotColor = "bg-nova-amber/50";
+    borderColor = "border-nova-amber/30";
   }
 
   const formatDate = (d: Date | null) => {
@@ -44,24 +44,20 @@ export default function ServiceCard({ title, provider }: ServiceCardProps) {
         <div className="flex justify-between">
           <span className="text-nova-silver">Status</span>
           <span className={`font-bold uppercase text-[10px] sm:text-xs ${statusColor}`}>
-            {provider.state.replace("_", " ")}
+            {provider.status}
           </span>
         </div>
         <div className="flex justify-between">
           <span className="text-nova-silver">Last Checked</span>
           <span className={isConnected ? "text-white" : "text-nova-silver"}>
-            {formatDate(provider.lastChecked)}
+            {formatDate(new Date())}
           </span>
         </div>
         <div className="flex justify-between">
           <span className="text-nova-silver">Latency</span>
           <span className={isConnected ? "text-white" : "text-nova-silver"}>
-            {provider.latencyMs !== null ? `${provider.latencyMs} ms` : "—"}
+            {provider.latencyMs !== undefined ? `${provider.latencyMs} ms` : "—"}
           </span>
-        </div>
-        <div className="flex justify-between">
-          <span className="text-nova-silver">Source</span>
-          <span className="text-nova-silver">{provider.source}</span>
         </div>
       </div>
     </div>

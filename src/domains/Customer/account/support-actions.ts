@@ -1,14 +1,14 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { isAdmin } from "@/lib/auth";
+import { IdentityService } from "@/modules/identity/services/IdentityService";
 import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY || "re_mock_key_123");
 
 export async function replyToTicket(ticketId: string, message: string) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   const ticket = await prisma.supportTicket.findUnique({
@@ -57,7 +57,7 @@ export async function replyToTicket(ticketId: string, message: string) {
 }
 
 export async function resolveTicket(ticketId: string) {
-  const authorized = await isAdmin();
+  const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
   await prisma.supportTicket.update({

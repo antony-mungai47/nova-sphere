@@ -116,7 +116,7 @@ describe("AuctionService", () => {
       expect(prisma.auction.update).toHaveBeenCalledWith({
         where: { id: "auction2" },
         data: expect.objectContaining({
-          status: "AWAITING_PAYMENT",
+          status: "SETTLED",
           highestBidderId: "winnerUser",
           currentBid: 500,
         })

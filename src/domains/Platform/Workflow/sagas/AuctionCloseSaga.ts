@@ -14,11 +14,11 @@ export const auctionCloseSagaWorkflow = (inngest as any).createFunction(
     await step.run('Lock Auction & Mark Awaiting Payment', async () => {
       await prisma.auction.update({
         where: { id: auctionId },
-        data: { status: AuctionStatus.AWAITING_PAYMENT }
+        data: { status: AuctionStatus.SETTLED }
       });
       await RealtimeEngine.broadcast(`presence-auction-${auctionId}`, 'state-changed', {
         auctionId,
-        status: AuctionStatus.AWAITING_PAYMENT,
+        status: AuctionStatus.SETTLED,
         timestamp: new Date().toISOString()
       });
     });

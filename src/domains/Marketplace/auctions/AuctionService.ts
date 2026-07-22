@@ -181,7 +181,7 @@ export class AuctionService {
       const updatedAuction = await tx.auction.update({
         where: { id: auctionId },
         data: {
-          status: "AWAITING_PAYMENT",
+          status: "SETTLED",
           highestBidderId: userId,
           currentBid: buyNowAmount,
           endTime: new Date(), // End instantly
@@ -202,14 +202,14 @@ export class AuctionService {
     return await prisma.$transaction(async (tx) => {
       const auction = await tx.auction.findUnique({ where: { id: auctionId } });
       if (!auction) throw new Error("Auction not found");
-      if (auction.status === "ENDED" || auction.status === "CLOSED_NO_SALE" || auction.status === "AWAITING_PAYMENT") return auction;
+      if (auction.status === "CLOSED" || auction.status === "SETTLED" || auction.status === "CANCELLED") return auction;
 
-      const currentBidNum = Number(auction.currentBid.toString());
-      const reserveNum = auction.reservePrice ? Number(auction.reservePrice.toString()) : 0;
+      const isExpired = new Date(auction.endTime) <= new Date();
+      if (!isExpired) return auction;
+
+      const reserveMet = !auction.reservePrice || auction.currentBid.gte(auction.reservePrice);
       
-      const reserveMet = !auction.reservePrice || currentBidNum >= reserveNum;
-      
-      const nextStatus = reserveMet && auction.highestBidderId ? "AWAITING_PAYMENT" : "CLOSED_NO_SALE";
+      const nextStatus = reserveMet && auction.highestBidderId ? "SETTLED" : "CLOSED";
 
       const updated = await tx.auction.update({
         where: { id: auctionId },
@@ -221,9 +221,9 @@ export class AuctionService {
         inngest.send({ name: "AuctionEnded", data: { auctionId, winnerId: reserveMet ? auction.highestBidderId || undefined : undefined } });
         
         if (!reserveMet) {
-          inngest.send({ name: "AuctionReserveFailed", data: { auctionId, highestBidAmount: currentBidNum } });
+          inngest.send({ name: "AuctionReserveFailed", data: { auctionId, highestBidAmount: Number(auction.currentBid.toString()) } });
         } else if (auction.highestBidderId) {
-          inngest.send({ name: "AuctionWon", data: { auctionId, winnerId: auction.highestBidderId, amount: currentBidNum } });
+          inngest.send({ name: "AuctionWon", data: { auctionId, winnerId: auction.highestBidderId, amount: Number(auction.currentBid.toString()) } });
         }
       });
 

@@ -6,15 +6,7 @@ import {
 import EmergencyControls from "./components/EmergencyControls";
 import LiveRefresh from "./components/LiveRefresh";
 import ServiceCard from "./components/ServiceCard";
-import { HealthService } from "@/modules/operations/services/HealthService";
-
-export interface IOperationsProvider {
-  state: "CONNECTED" | "UNAVAILABLE" | "NOT_CONFIGURED";
-  lastChecked?: Date | null;
-  latencyMs?: number | null;
-  source?: string;
-  data?: any;
-}
+import { HealthService, ComponentHealth } from "@/modules/operations/services/HealthService";
 
 export const dynamic = "force-dynamic";
 
@@ -22,22 +14,21 @@ export default async function OperationsConsole() {
   // Fetch unified health via Application Service layer
   const healthData = await HealthService.checkPlatformHealth();
   
-  const dbProvider = {
-    state: healthData.Database?.status === 'Healthy' ? 'CONNECTED' : 'UNAVAILABLE',
+  const dbProvider: ComponentHealth = {
+    status: healthData.Database?.status || 'Unavailable',
     latencyMs: healthData.Database?.latencyMs,
-    data: healthData.Database?.data
+    data: healthData.Database?.data as any
   };
-  const deployProvider = { data: null }; // Will be migrated to DeploymentService
-  const queueProvider = { state: healthData.Inngest?.status === 'Healthy' ? 'CONNECTED' : 'UNAVAILABLE' };
-  const aiProvider = { state: 'NOT_CONFIGURED' };
+  const deployProvider = { data: null as any }; // Will be migrated to DeploymentService
+  const queueProvider: ComponentHealth = { status: healthData.Inngest?.status || 'Unavailable' };
+  const aiProvider: ComponentHealth = { status: 'Degraded' };
   const metricsProvider = { state: 'NOT_CONFIGURED' };
 
-  // Stub missing providers as NOT_CONFIGURED
-  const stubProvider = (source: string): IOperationsProvider => ({
-    state: "NOT_CONFIGURED",
-    lastChecked: null,
-    latencyMs: null,
-    source,
+  // Stub missing providers as Degraded (Not Configured equivalent in HealthStatus)
+  const stubProvider = (source: string): ComponentHealth => ({
+    status: "Degraded",
+    latencyMs: undefined,
+    message: source,
     data: null
   });
 
@@ -85,7 +76,7 @@ export default async function OperationsConsole() {
             <div className="mt-6 pt-6 border-t border-white/5">
               <p className="text-nova-silver text-xs uppercase mb-3">Active Feature Flags</p>
               <div className="flex flex-wrap gap-2">
-                {deploy?.featureFlags.map((ff, i) => (
+                {deploy?.featureFlags?.map((ff: any, i: number) => (
                   <span key={i} className={`text-xs px-2 py-1 rounded font-bold ${ff.status === 'ON' ? 'bg-nova-emerald/20 text-nova-emerald' : 'bg-white/10 text-nova-silver'}`}>
                     {ff.name}: {ff.status}
                   </span>

@@ -1,8 +1,32 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { UserRole } from "@prisma/client";
 
 export class IdentityService {
+  /**
+   * Get or create the current user based on Clerk session.
+   */
+  static async getOrCreateUser() {
+    const { userId } = await auth();
+    const user = await currentUser();
+
+    if (!userId || !user) {
+      return null;
+    }
+
+    return prisma.user.upsert({
+      where: { clerkId: userId },
+      update: {
+        email: user.emailAddresses[0].emailAddress,
+        name: `${user.firstName} ${user.lastName}`,
+      },
+      create: {
+        clerkId: userId,
+        email: user.emailAddresses[0].emailAddress,
+        name: `${user.firstName} ${user.lastName}`,
+      },
+    });
+  }
   /**
    * Get the current user's role from the database.
    * Returns null if user is not authenticated or not found in DB.
@@ -17,6 +41,14 @@ export class IdentityService {
     });
 
     return user?.role ?? null;
+  }
+
+  /**
+   * Check if the current user is authenticated.
+   */
+  static async isAuthenticated(): Promise<boolean> {
+    const { userId } = await auth();
+    return !!userId;
   }
 
   /**

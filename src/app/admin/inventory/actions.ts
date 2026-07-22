@@ -1,5 +1,5 @@
 "use server";
-import { ProductRepository } from "@/domains/Commerce/products/repositories/product.repository";
+import { prisma } from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
 import { IdentityService } from "@/modules/identity/services/IdentityService";
@@ -12,7 +12,7 @@ export async function updateProductStock(productId: string, newStock: number) {
     throw new Error("Stock cannot be negative.");
   }
 
-  await ProductRepository.update({
+  await prisma.product.update({
     where: { id: productId },
     data: { stock: newStock }
   });

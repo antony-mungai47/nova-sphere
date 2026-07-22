@@ -6,6 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { ProductGrid } from "@/domains/Commerce/products/components/store/product-grid";
 import { Sparkles, Activity } from "lucide-react";
+import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export const revalidate = 0; // Fully dynamic personalization
 
@@ -92,7 +93,7 @@ export default async function RecommendedPage() {
     price: p.price.toNumber(),
     category: p.category,
     brand: p.brand,
-    image: p.images[0]?.url || "/hero-product.png",
+    image: ProductImageService.getThumbnailUrl(p),
     description: p.description,
     salePrice: p.salePrice ? p.salePrice.toNumber() : null,
     rating: p.rating,
