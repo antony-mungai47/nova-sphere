@@ -1,10 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest, NextFetchEvent } from 'next/server';
 import { getRateLimiter } from '@/lib/security/RateLimiterFactory';
 
 const isProtectedRoute = createRouteMatcher(['/admin(.*)']);
 
-export default clerkMiddleware(async (auth, req) => {
+const clerk = clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
     const { userId } = await auth();
     if (!userId) {
@@ -52,6 +52,22 @@ export default clerkMiddleware(async (auth, req) => {
 
   return response;
 });
+
+export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
+  try {
+    return await clerk(req, ev);
+  } catch (error: any) {
+    return new NextResponse(
+      JSON.stringify({
+        error: "Middleware Error",
+        message: error?.message,
+        name: error?.name,
+        stack: error?.stack
+      }),
+      { status: 500, headers: { 'content-type': 'application/json' } }
+    );
+  }
+}
 
 export const config = {
   matcher: [
