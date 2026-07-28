@@ -3,7 +3,21 @@ import { revalidateTag } from "next/cache";
 import { FeatureFlagRepository } from "../repositories/featureFlag.repository";
 import { FeatureFlag } from "@prisma/client";
 
+import { cache } from "react";
+
 const FEATURE_FLAGS_CACHE_TAG = "feature-flags";
+
+const getCachedFlags = cache(
+  unstable_cache(
+    async () => {
+      return FeatureFlagRepository.findAll();
+    },
+    ["all-feature-flags"],
+    {
+      tags: [FEATURE_FLAGS_CACHE_TAG],
+    }
+  )
+);
 
 export class FeatureFlagCache {
   /**
@@ -11,16 +25,6 @@ export class FeatureFlagCache {
    * This cache is only invalidated when an admin updates a flag.
    */
   static async getAllFlags(): Promise<FeatureFlag[]> {
-    const getCachedFlags = unstable_cache(
-      async () => {
-        return FeatureFlagRepository.findAll();
-      },
-      ["all-feature-flags"],
-      {
-        tags: [FEATURE_FLAGS_CACHE_TAG],
-      }
-    );
-    
     return getCachedFlags();
   }
 

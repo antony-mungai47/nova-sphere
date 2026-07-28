@@ -5,27 +5,20 @@ import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar"
 import { Footer } from "@/shared/components/layout/footer";
 import { AccountClient } from "./account-client";
 import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
+import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 
 export default async function AccountPage() {
-  const user = await currentUser();
+  const clerkUser = await currentUser();
 
-  if (!user) {
-    redirect("/sign-in");
+  if (!clerkUser) {
+    redirect("/login");
   }
 
-  // Find or create user in our DB
-  let dbUser = await prisma.user.findUnique({
-    where: { clerkId: user.id },
-  });
+  // IdentityService will sync the user if they don't exist
+  const dbUser = await IdentityFacade.getOrCreateUser();
 
   if (!dbUser) {
-    dbUser = await prisma.user.create({
-      data: {
-        clerkId: user.id,
-        email: user.emailAddresses[0].emailAddress,
-        name: user.fullName || user.firstName || "User",
-      },
-    });
+    redirect("/login");
   }
 
   // Fetch orders
@@ -90,7 +83,7 @@ export default async function AccountPage() {
   const formattedUser = {
     name: dbUser.name,
     email: dbUser.email,
-    imageUrl: user.imageUrl
+    imageUrl: clerkUser.imageUrl
   };
 
   return (

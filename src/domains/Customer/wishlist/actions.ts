@@ -1,26 +1,14 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
+import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 
 export async function toggleWishlist(productId: string) {
-  const user = await currentUser();
-  if (!user) {
-    return { status: "LOCAL_ONLY" };
-  }
-
-  // Ensure user exists in our DB
-  let dbUser = await prisma.user.findUnique({ where: { clerkId: user.id } });
+  const dbUser = await IdentityFacade.getOrCreateUser();
   if (!dbUser) {
-    dbUser = await prisma.user.create({
-      data: {
-        clerkId: user.id,
-        email: user.emailAddresses[0].emailAddress,
-        name: user.fullName || user.firstName || "User",
-      }
-    });
+    return { status: "LOCAL_ONLY" };
   }
 
   // Check if it already exists
@@ -54,11 +42,8 @@ export async function toggleWishlist(productId: string) {
 }
 
 export async function syncWishlistAction(productIds: string[]) {
-  const user = await currentUser();
-  if (!user) return { status: "LOCAL_ONLY" };
-
-  let dbUser = await prisma.user.findUnique({ where: { clerkId: user.id } });
-  if (!dbUser) return { status: "FAILED", error: "User not found" };
+  const dbUser = await IdentityFacade.getOrCreateUser();
+  if (!dbUser) return { status: "LOCAL_ONLY" };
 
   try {
     await prisma.$transaction(async (tx) => {

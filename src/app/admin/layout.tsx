@@ -3,17 +3,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { LayoutDashboard, PackageSearch, Users, Settings, ArrowLeft, ShieldCheck, BarChart3 } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
-import { IdentityService } from "@/modules/identity/services/IdentityService";
+import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { redirect } from "next/navigation";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const authorized = await IdentityService.isAdmin();
+  const authorized = await IdentityFacade.isAdmin();
   
   if (!authorized) {
     redirect("/");
   }
 
-  const role = await IdentityService.getUserRole();
+  const role = await IdentityFacade.getUserRole();
   const roleLabel = role?.replace("_", " ") ?? "Unknown";
 
   return (

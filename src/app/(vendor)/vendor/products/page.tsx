@@ -1,17 +1,17 @@
 import React from 'react';
 import { prisma } from '@/lib/prisma';
-import { auth } from '@clerk/nextjs/server';
+import { IdentityFacade } from '@/modules/identity/IdentityFacade';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 export const dynamic = "force-dynamic";
 
 export default async function VendorProductsPage() {
-  const { userId } = await auth();
-  if (!userId) redirect('/sign-in');
-
-  const user = await prisma.user.findUnique({ where: { clerkId: userId } });
+  const user = await IdentityFacade.getCurrentUser();
   if (!user) redirect('/login');
+  
+  const isVendor = await IdentityFacade.isVendor();
+  if (!isVendor) redirect('/');
 
   const products = await prisma.product.findMany({
     where: { ownerTenantId: user.id },

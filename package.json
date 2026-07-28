@@ -10,7 +10,9 @@
     "lint": "eslint",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "identity:backfill": "tsx scripts/identity-backfill.ts",
+    "identity:verify": "tsx scripts/verify-identity.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.5",
@@ -40,6 +42,7 @@
     "recharts": "^3.9.2",
     "resend": "^6.14.0",
     "stripe": "^22.3.0",
+    "svix": "^1.99.1",
     "tailwind-merge": "^3.6.0",
     "z": "^1.0.9",
     "zod": "^4.4.3",

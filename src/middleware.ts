@@ -2,13 +2,13 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse, NextRequest, NextFetchEvent } from 'next/server';
 import { getRateLimiter } from '@/lib/security/RateLimiterFactory';
 
-const isProtectedRoute = createRouteMatcher(['/admin(.*)']);
+const isProtectedRoute = createRouteMatcher(['/admin(.*)', '/vendor(.*)', '/account(.*)', '/orders(.*)', '/checkout(.*)']);
 
 const clerk = clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
     const { userId } = await auth();
     if (!userId) {
-      const signInUrl = new URL('/sign-in', req.url);
+      const signInUrl = new URL('/login', req.url);
       signInUrl.searchParams.set('redirect_url', req.url);
       return NextResponse.redirect(signInUrl);
     }

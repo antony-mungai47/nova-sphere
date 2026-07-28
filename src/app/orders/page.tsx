@@ -1,6 +1,6 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { redirect } from "next/navigation";
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
@@ -8,32 +8,26 @@ import { Package, Clock, CheckCircle } from "lucide-react";
 import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
 export default async function OrdersPage() {
-  const { userId } = await auth();
+  const user = await IdentityFacade.getCurrentUser();
 
-  if (!userId) {
-    redirect("/sign-in");
+  if (!user) {
+    redirect("/login");
   }
 
-  // Find user in Prisma
-  const user = await prisma.user.findUnique({
-    where: { clerkId: userId },
+  // Find user orders in Prisma
+  const orders = await prisma.order.findMany({
+    where: { userId: user.id },
+    orderBy: { createdAt: "desc" },
     include: {
-      orders: {
-        orderBy: { createdAt: "desc" },
-        include: {
-          items: {
-            include: { 
-              product: {
-                include: { images: true }
-              } 
-            }
-          }
+      items: {
+        include: { 
+          product: {
+            include: { images: true }
+          } 
         }
       }
     }
   });
-
-  const orders = user?.orders || [];
 
   return (
     <main className="min-h-screen flex flex-col bg-black relative overflow-hidden">

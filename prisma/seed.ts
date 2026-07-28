@@ -503,7 +503,8 @@ async function main() {
   await prisma.productImage.deleteMany();
   await prisma.invoice.deleteMany();
   await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
+  await prisma.orderTimeline.deleteMany();
+  await prisma.order.deleteMany({});
   await prisma.product.deleteMany();
   
   let count = 0;

@@ -2,8 +2,18 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { THEMES, resolveThemeId } from "@/lib/themes";
+
+const getStoreSettings = cache(
+  unstable_cache(
+    async () => prisma.storeSettings.findFirst(),
+    ["store-settings-global-cache"],
+    { tags: ["store-settings"] }
+  )
+);
 import { ConnectionStatus } from '@/domains/Realtime/components/ConnectionStatus';
 import { RealtimeNotifier } from '@/domains/Realtime/components/RealtimeNotifier';
 import { Watermark } from "@/shared/components/ui/watermark";
@@ -16,7 +26,7 @@ const inter = Inter({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await prisma.storeSettings.findFirst();
+  const settings = await getStoreSettings();
   const siteName = settings?.storeName || "NOVA SPHERE";
   const title = settings?.seoTitle || `${siteName} | Premium E-Commerce Marketplace`;
   const description = settings?.seoDescription || settings?.storeDescription || "Experience the future of smart shopping.";
@@ -71,7 +81,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await prisma.storeSettings.findFirst();
+  const settings = await getStoreSettings();
   const activeThemeId = resolveThemeId(settings?.theme);
   const activeTheme = THEMES[activeThemeId];
 
@@ -109,12 +119,14 @@ export default async function RootLayout({
                         <LiveSupportWidget />
                       </div>
                       <MobileFAB />
+                      {/* Temporarily disabled popups to fix UI 
                       <PulseUI />
                       <ScriptLoader />
                       <GlobalCommandPaletteListener />
                       <DiscoveryTakeover />
                       <CookieConsentBanner />
                       <ExitIntentObserver />
+                      */}
                     </FlyToCartProvider>
                   </SessionTracker>
                 </PulseProvider>

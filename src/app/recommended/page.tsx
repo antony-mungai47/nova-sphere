@@ -2,7 +2,7 @@ import React from "react";
 import { prisma } from "@/lib/prisma";
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
-import { auth } from "@clerk/nextjs/server";
+import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { headers } from "next/headers";
 import { ProductGrid } from "@/domains/Commerce/products/components/store/product-grid";
 import { Sparkles, Activity } from "lucide-react";
@@ -11,7 +11,7 @@ import { ProductImageService } from "@/modules/commerce/services/ProductImageSer
 export const revalidate = 0; // Fully dynamic personalization
 
 export default async function RecommendedPage() {
-  const { userId } = await auth();
+  const user = await IdentityFacade.getCurrentUser();
   const headersList = await headers();
   const country = headersList.get('x-vercel-ip-country') || 'US';
   
@@ -19,9 +19,9 @@ export default async function RecommendedPage() {
   let userContext = "Welcome to the future of smart shopping.";
   let confidenceScore = 65; // Baseline confidence
 
-  if (userId) {
+  if (user) {
     const dbUser = await prisma.user.findUnique({
-      where: { clerkId: userId },
+      where: { id: user.id },
       include: {
         recentlyViewed: { include: { product: true }, orderBy: { viewedAt: 'desc' }, take: 20 },
         orders: { include: { items: { include: { product: true } } } },

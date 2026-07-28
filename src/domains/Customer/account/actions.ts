@@ -1,18 +1,13 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
+import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { revalidatePath } from "next/cache";
 
 export async function saveSearch(query: string, filters?: any) {
-  const { userId } = await auth();
-  if (!userId) {
-    throw new Error("You must be signed in to save searches.");
-  }
-
-  const dbUser = await prisma.user.findUnique({ where: { clerkId: userId } });
+  const dbUser = await IdentityFacade.getCurrentUser();
   if (!dbUser) {
-    throw new Error("User not found.");
+    throw new Error("You must be signed in to save searches.");
   }
 
   const existingSearch = await prisma.savedSearch.findFirst({
@@ -36,13 +31,10 @@ export async function saveSearch(query: string, filters?: any) {
 }
 
 export async function deleteSavedSearch(id: string) {
-  const { userId } = await auth();
-  if (!userId) {
+  const dbUser = await IdentityFacade.getCurrentUser();
+  if (!dbUser) {
     throw new Error("Unauthorized");
   }
-  
-  const dbUser = await prisma.user.findUnique({ where: { clerkId: userId } });
-  if (!dbUser) return;
 
   await prisma.savedSearch.deleteMany({
     where: { id, userId: dbUser.id }
