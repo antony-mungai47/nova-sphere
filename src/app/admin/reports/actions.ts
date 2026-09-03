@@ -2,12 +2,13 @@
 import { OrderRepository } from "@/domains/Customer/orders/repositories/order.repository";
 import { prisma } from "@/lib/prisma";
 import { IdentityService } from "@/modules/identity/services/IdentityService";
+import { AdminProductQueryService } from "@/modules/commerce/application/queries/AdminProductQueryService";
 
 export async function generateOrdersCSV() {
   const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
-  const orders = await OrderRepository.findMany({
+  const orders = await prisma.order.findMany({
     include: { user: true },
     orderBy: { createdAt: 'desc' }
   });
@@ -34,9 +35,10 @@ export async function generateInventoryCSV() {
   const authorized = await IdentityService.isAdmin();
   if (!authorized) throw new Error("Unauthorized");
 
-  const products = await prisma.product.findMany({
-    orderBy: { stock: 'asc' }
-  });
+  const products = await AdminProductQueryService.getInventoryOverview();
+  
+  // Sort by stock ascending (just like before)
+  products.sort((a, b) => a.stock - b.stock);
 
   const headers = ["Product ID", "SKU", "Name", "Category", "Price", "Stock Level"];
   const rows = products.map(p => [

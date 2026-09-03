@@ -1,7 +1,7 @@
 import { OrderRepository } from "@/domains/Customer/orders/repositories/order.repository";
 import { SystemLogRepository } from "@/domains/Foundation/database/repositories/systemLog.repository";
 import { NextResponse } from "next/server";
-import { logger } from "@/lib/logger";
+import { logger } from "@/lib/logger";import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request) {
   // Verify cron authorization (Vercel cron sends a specific header, or we can use a CRON_SECRET)
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     
-    const deletedOrders = await OrderRepository.deleteMany({
+    const deletedOrders = await prisma.order.deleteMany({
       where: {
         status: "PENDING",
         createdAt: {

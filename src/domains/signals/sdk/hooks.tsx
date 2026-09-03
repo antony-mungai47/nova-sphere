@@ -3,15 +3,24 @@
 import React, { createContext, useContext, useEffect, ReactNode } from "react";
 import { Telemetry } from "../SignalsEngine";
 import { EventName, SignalCategory, SignalPayload } from "../types";
+import { RuntimeGate } from "@/lib/observability/assertions";
 
 interface SignalsContextType {
   track: (eventName: EventName, category: SignalCategory, payload?: SignalPayload, isImmediate?: boolean) => void;
   identify: (userId: string) => void;
 }
 
-const SignalsContext = createContext<SignalsContextType | undefined>(undefined);
+export const SignalsContext = createContext<SignalsContextType | undefined>(undefined);
 
 export function SignalsProvider({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    const traceId = 'client_global_session';
+    RuntimeGate.registerProviderMount('SignalsProvider', traceId, 'SignalsProvider');
+    return () => {
+      RuntimeGate.registerProviderUnmount('SignalsProvider', traceId);
+    };
+  }, []);
+
   // We can expose the global Telemetry singleton instance here for React land.
   
   const value: SignalsContextType = {
@@ -33,13 +42,7 @@ export function SignalsProvider({ children }: { children: ReactNode }) {
 export function useSignals() {
   const context = useContext(SignalsContext);
   if (context === undefined) {
-    // Graceful fallback if not wrapped in provider (e.g. some isolated component tests)
-    return {
-      track: (eventName: EventName, category: SignalCategory, payload: SignalPayload = {}, isImmediate = false) => {
-        Telemetry.track(eventName, category, payload, isImmediate);
-      },
-      identify: (userId: string) => Telemetry.identify(userId)
-    };
+    throw new Error("useSignals must be used within a SignalsProvider");
   }
   return context;
 }

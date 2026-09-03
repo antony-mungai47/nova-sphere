@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ 
       success: true, 
-      discountPercent: coupon.discountPercent 
+      discountPercent: coupon.discountValue 
     });
 
   } catch (error) {

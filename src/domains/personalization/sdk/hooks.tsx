@@ -13,7 +13,7 @@ interface ExperienceContextType {
   trackExperienceEvent: (eventName: string, payload?: any) => void;
 }
 
-const Context = createContext<ExperienceContextType | undefined>(undefined);
+export const ExperienceContext = createContext<ExperienceContextType | undefined>(undefined);
 
 export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [context, setContext] = useState<PersonalizationContext | null>(null);
@@ -42,11 +42,11 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  return <ExperienceContext.Provider value={value}>{children}</ExperienceContext.Provider>;
 }
 
 export function useExperience() {
-  const ctx = useContext(Context);
+  const ctx = useContext(ExperienceContext);
   if (!ctx) throw new Error("useExperience must be used within an ExperienceProvider");
   return ctx;
 }

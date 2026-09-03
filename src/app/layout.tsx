@@ -57,24 +57,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 import { auth } from "@clerk/nextjs/server";
-import { RealtimeToaster } from "@/domains/Engagement/Notifications/components/RealtimeToaster";
 import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
 import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
-import { LiveSupportWidget } from "@/components/LiveSupportWidget";
-import { ScriptLoader } from "@/shared/components/layout/script-loader";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
-import { CookieConsentBanner } from "@/components/compliance/CookieConsentBanner";
-import { MobileFAB } from "@/shared/components/layout/MobileFAB";
 import { MotionProvider } from "@/components/motion/MotionProvider";
-import { PulseProvider } from "@/domains/Experience/components/pulse/PulseEngine";
-import { PulseUI } from "@/domains/Experience/components/pulse/PulseUI";
-import { FlyToCartProvider } from "@/components/motion/FlyToCartEngine";
-import { SessionTracker } from "@/domains/Experience/components/conversion/SessionTracker";
-import { ExitIntentObserver } from "@/domains/Experience/components/conversion/ExitIntentObserver";
-import { SignalsProvider } from "@/domains/signals/sdk/hooks";
-import { GlobalCommandPaletteListener } from "@/domains/discovery/sdk/CommandPaletteListener";
-import { DiscoveryTakeover } from "@/domains/discovery/ui/DiscoveryTakeover";
-import { ExperienceProvider } from "@/domains/personalization/sdk/hooks";
+
+
+import { RuntimeDiagnostics } from "@/shared/components/diagnostics/RuntimeDiagnostics";
 
 export default async function RootLayout({
   children,
@@ -88,51 +77,26 @@ export default async function RootLayout({
   // Map Clerk appearance to theme
   const clerkAppearance = activeTheme.mode === "dark" ? { baseTheme: dark } as any : undefined;
 
-  const { userId } = await auth();
-  const liveNotificationsEnabled = await getFeatureFlag(FeatureFlags.LIVE_NOTIFICATIONS);
-
   return (
     <ClerkProvider appearance={clerkAppearance}>
       <html lang="en" data-theme={activeThemeId} className={`${inter.variable} ${activeTheme.mode}`} style={{ colorScheme: activeTheme.mode }}>
         <head />
         <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent selection:text-primary transition-colors duration-300">
           <PostHogProvider>
-            <SignalsProvider>
-              <ExperienceProvider>
-                <MotionProvider>
-                <PulseProvider>
-                  <SessionTracker>
-                    <FlyToCartProvider>
-                      <a href="#main-content" className="skip-to-content focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-background text-foreground px-4 py-2 rounded-md shadow-md">
-                        Skip to content
-                      </a>
-                      <Watermark 
-                        enabled={settings?.watermarkEnabled ?? true} 
-                        opacity={settings?.watermarkOpacity ?? 0.02} 
-                        logoUrl={settings?.storeLogo || "/logo.png"} 
-                      />
-                      <div id="main-content" className="relative z-10 flex flex-col min-h-screen">
-                        {children}
-                        <ConnectionStatus />
-                        <RealtimeNotifier />
-                        <RealtimeToaster userId={userId} enabled={liveNotificationsEnabled} />
-                        <LiveSupportWidget />
-                      </div>
-                      <MobileFAB />
-                      {/* Temporarily disabled popups to fix UI 
-                      <PulseUI />
-                      <ScriptLoader />
-                      <GlobalCommandPaletteListener />
-                      <DiscoveryTakeover />
-                      <CookieConsentBanner />
-                      <ExitIntentObserver />
-                      */}
-                    </FlyToCartProvider>
-                  </SessionTracker>
-                </PulseProvider>
-                </MotionProvider>
-              </ExperienceProvider>
-            </SignalsProvider>
+            <MotionProvider>
+              <a href="#main-content" className="skip-to-content focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-background text-foreground px-4 py-2 rounded-md shadow-md">
+                Skip to content
+              </a>
+              <Watermark 
+                enabled={settings?.watermarkEnabled ?? true} 
+                opacity={settings?.watermarkOpacity ?? 0.02} 
+                logoUrl={settings?.storeLogo || "/logo.png"} 
+              />
+              <div id="main-content" className="relative z-10 flex flex-col min-h-screen">
+                <RuntimeDiagnostics />
+                {children}
+              </div>
+            </MotionProvider>
           </PostHogProvider>
         </body>
       </html>

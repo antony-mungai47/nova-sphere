@@ -1,6 +1,7 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
 import { DollarSign, ShoppingCart, TrendingUp, Users, Package, AlertTriangle, AlertCircle, Calendar } from "lucide-react";
+import { AdminProductQueryService } from "@/modules/commerce/application/queries/AdminProductQueryService";
 
 export const dynamic = 'force-dynamic';
 
@@ -14,16 +15,13 @@ export default async function AdminAnalyticsPage() {
   const thirtyDaysAgo = new Date(today);
   thirtyDaysAgo.setDate(today.getDate() - 30);
 
-  const [todayMetrics, last30DaysMetrics, productStats] = await Promise.all([
+  const [todayMetrics, last30DaysMetrics, inventoryStats] = await Promise.all([
     prisma.dailyMetrics.findUnique({ where: { date: today } }),
     prisma.dailyMetrics.findMany({
       where: { date: { gte: thirtyDaysAgo } },
       orderBy: { date: 'asc' }
     }),
-    prisma.product.aggregate({
-      _count: { id: true },
-      // To get out-of-stock quickly without loading rows
-    })
+    AdminProductQueryService.getInventoryStats()
   ]);
 
   // Aggregate metrics from Rollups
@@ -55,9 +53,9 @@ export default async function AdminAnalyticsPage() {
   const returningCustomers = customerMetrics?.returningUsers || 0;
 
   // Inventory
-  const totalProducts = productStats._count.id;
-  const outOfStock = await prisma.product.count({ where: { stock: 0 } });
-  const lowStock = await prisma.product.count({ where: { stock: { gt: 0, lte: 10 } } });
+  const totalProducts = inventoryStats.total;
+  const outOfStock = inventoryStats.outOfStock;
+  const lowStock = inventoryStats.lowStock;
 
   // Best Sellers (From CategoryMetrics or VendorMetrics rollup)
   const bestSellers = [

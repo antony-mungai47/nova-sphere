@@ -14,11 +14,30 @@ const clerk = clerkMiddleware(async (auth, req) => {
     }
   }
 
-  // Inject Trace ID / Correlation ID for APM / Observability
+  // Inject W3C Trace Context (traceparent / tracestate)
   const requestHeaders = new Headers(req.headers);
-  const traceId = req.headers.get('x-trace-id') || crypto.randomUUID();
-  requestHeaders.set('x-trace-id', traceId);
-  requestHeaders.set('x-request-id', traceId); // Standard correlation ID
+  const incomingTraceParent = req.headers.get('traceparent');
+  const incomingTraceState = req.headers.get('tracestate') || '';
+
+  let traceId = '';
+  if (incomingTraceParent) {
+    const parts = incomingTraceParent.split('-');
+    if (parts.length >= 4 && parts[0] === '00') {
+      traceId = parts[1];
+    }
+  }
+
+  if (!traceId) {
+    traceId = crypto.randomUUID().replace(/-/g, ''); // 32 hex chars
+  }
+
+  const spanId = crypto.randomUUID().replace(/-/g, '').substring(0, 16); // 16 hex chars
+  const traceparent = `00-${traceId}-${spanId}-01`;
+
+  requestHeaders.set('traceparent', traceparent);
+  if (incomingTraceState) {
+    requestHeaders.set('tracestate', incomingTraceState);
+  }
 
   // Rate Limiting
   const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
@@ -44,8 +63,10 @@ const clerk = clerkMiddleware(async (auth, req) => {
     },
   });
 
-  response.headers.set('x-trace-id', traceId);
-  response.headers.set('x-request-id', traceId);
+  response.headers.set('traceparent', traceparent);
+  if (incomingTraceState) {
+    response.headers.set('tracestate', incomingTraceState);
+  }
   response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
   response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
   response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toString());

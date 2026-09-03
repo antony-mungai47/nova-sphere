@@ -8,6 +8,8 @@ import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
 import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
 import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 
+import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
+
 export const revalidate = 3600; // ISR revalidate every hour
 export default async function StorePage({
   searchParams,
@@ -24,54 +26,15 @@ export default async function StorePage({
 
   const useV3PDP = await getFeatureFlag(FeatureFlags.PDP_V3);
 
-  // Build Prisma where clause
-  const where: any = {};
-  if (query) {
-    where.OR = [
-      { name: { contains: query, mode: 'insensitive' } },
-      { description: { contains: query, mode: 'insensitive' } },
-    ];
-  }
-  if (category && category !== 'All') where.category = category;
-  if (brand && brand !== 'All') where.brand = brand;
-  if (minPrice !== undefined || maxPrice !== undefined) {
-    where.price = {};
-    if (minPrice !== undefined) where.price.gte = minPrice;
-    if (maxPrice !== undefined) where.price.lte = maxPrice;
-  }
-
-  // Build Prisma orderBy
-  let orderBy: any = { createdAt: 'desc' };
-  if (sort === 'price-low') orderBy = { price: 'asc' };
-  if (sort === 'price-high') orderBy = { price: 'desc' };
-  if (sort === 'rating') orderBy = { rating: 'desc' };
-
-  // Run Queries in parallel: filtered products, and aggregations for the filter sidebar
-  const [products, allCategories, allBrands] = await Promise.all([
-    prisma.product.findMany({
-      where,
-      orderBy,
-      include: { images: true },
+  const [formattedProducts, filterOptions] = await Promise.all([
+    StorefrontProductQueryService.searchCatalog({
+      query, category, brand, minPrice, maxPrice, sort
     }),
-    prisma.product.findMany({ select: { category: true }, distinct: ['category'] }),
-    prisma.product.findMany({ select: { brand: true }, distinct: ['brand'] }),
+    StorefrontProductQueryService.getFilterOptions()
   ]);
 
-  const uniqueCategories = ['All', ...allCategories.map(c => c.category)];
-  const uniqueBrands = ['All', ...allBrands.map(b => b.brand)];
-
-  const formattedProducts = products.map((p) => ({
-    id: p.id,
-    name: p.name,
-    price: p.price.toNumber(),
-    category: p.category,
-    brand: p.brand,
-    image: ProductImageService.getThumbnailUrl(p),
-    description: p.description,
-    salePrice: p.salePrice ? p.salePrice.toNumber() : null,
-    rating: p.rating,
-    reviewCount: p.reviewCount,
-  }));
+  const uniqueCategories = filterOptions.categories;
+  const uniqueBrands = filterOptions.brands;
 
   return (
     <main className="min-h-screen flex flex-col bg-black">

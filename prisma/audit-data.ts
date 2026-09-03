@@ -47,7 +47,7 @@ async function runAudit() {
       }
     }
 
-    if (product.auctions.length > 0 && product.images.length === 0) {
+    if (product.auctions && product.images.length === 0) {
       console.log(`[AUCTION MISSING IMAGE] Auction for: ${product.name}`);
       auctionMissingImages++;
     }

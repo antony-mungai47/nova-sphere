@@ -2,8 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-
 import { IdentityService } from "@/modules/identity/services/IdentityService";
+import { AdminProductCommandService } from "@/modules/commerce/application/commands/AdminProductCommandService";
 
 export async function createProduct(formData: FormData) {
   if (!(await IdentityService.isAdmin())) throw new Error("Unauthorized");
@@ -26,22 +26,20 @@ export async function createProduct(formData: FormData) {
   const brand = (formData.get("brand") as string) || "Nova";
   const sku = (formData.get("sku") as string) || `SKU-${Date.now()}`;
 
-  await prisma.product.create({
-    data: {
-      name,
-      description,
-      price,
-      category,
-      brand,
-      sku,
-      stock,
-      isTrending,
-      ...(imageUrl ? {
-        images: {
-          create: { url: imageUrl, isPrimary: true }
-        }
-      } : {})
-    },
+  await AdminProductCommandService.createProduct({
+    name,
+    description,
+    price,
+    category,
+    brand,
+    sku,
+    stock,
+    isTrending,
+    ...(imageUrl ? {
+      images: {
+        create: { url: imageUrl, isPrimary: true }
+      }
+    } : {})
   });
 
   revalidatePath("/admin/products");
@@ -69,24 +67,21 @@ export async function updateProduct(id: string, formData: FormData) {
   const brand = (formData.get("brand") as string) || "Nova";
   const sku = (formData.get("sku") as string) || `SKU-${Date.now()}`;
 
-  await prisma.product.update({
-    where: { id },
-    data: {
-      name,
-      description,
-      price,
-      category,
-      brand,
-      sku,
-      stock,
-      isTrending,
-      ...(imageUrl ? {
-        images: {
-          deleteMany: {},
-          create: { url: imageUrl, isPrimary: true }
-        }
-      } : {})
-    },
+  await AdminProductCommandService.updateProduct(id, {
+    name,
+    description,
+    price,
+    category,
+    brand,
+    sku,
+    stock,
+    isTrending,
+    ...(imageUrl ? {
+      images: {
+        deleteMany: {},
+        create: { url: imageUrl, isPrimary: true }
+      }
+    } : {})
   });
 
   revalidatePath("/admin/products");
@@ -101,9 +96,7 @@ export async function deleteProduct(id: string) {
     where: { productId: id }
   });
 
-  await prisma.product.delete({
-    where: { id },
-  });
+  await AdminProductCommandService.deleteProduct(id);
 
   revalidatePath("/admin/products");
   revalidatePath("/store");

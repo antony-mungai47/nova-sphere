@@ -1,21 +1,16 @@
 import React from "react";
-import { prisma } from "@/lib/prisma";
+import { AdminProductQueryService } from "@/modules/commerce/application/queries/AdminProductQueryService";
 import { InventoryTable } from "./inventory-table";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminInventoryPage() {
-  const products = await prisma.product.findMany({
-    select: {
-      id: true,
-      name: true,
-      sku: true,
-      stock: true
-    },
-    orderBy: [
-      { stock: 'asc' },
-      { name: 'asc' }
-    ]
+  const products = await AdminProductQueryService.getInventoryOverview();
+  
+  // Sort just like before
+  products.sort((a, b) => {
+    if (a.stock !== b.stock) return a.stock - b.stock;
+    return a.name.localeCompare(b.name);
   });
 
   const lowStockCount = products.filter(p => p.stock > 0 && p.stock < 20).length;

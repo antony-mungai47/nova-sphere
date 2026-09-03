@@ -1,7 +1,10 @@
 import React from 'react';
-import { prisma } from '@/lib/prisma';
+
 import { IdentityFacade } from '@/modules/identity/IdentityFacade';
 import { redirect } from 'next/navigation';
+
+import { VendorProductQueryService } from '@/modules/commerce/application/queries/VendorProductQueryService';
+import { VendorOrderQueryService } from '@/modules/commerce/application/queries/VendorOrderQueryService';
 
 export const dynamic = "force-dynamic";
 
@@ -12,21 +15,12 @@ export default async function VendorDashboard() {
   const isVendor = await IdentityFacade.isVendor();
   if (!isVendor) redirect('/');
 
-  // Query actual data
-  const products = await prisma.product.findMany({
-    where: { ownerTenantId: user.id },
-    select: { id: true, name: true, price: true, stock: true }
-  });
-
-  const productIds = products.map(p => p.id);
-
-  const orderItems = await prisma.orderItem.findMany({
-    where: { productId: { in: productIds } },
-    include: { order: true }
-  });
+  // Query via read services
+  const products = await VendorProductQueryService.getVendorProducts(user.id);
+  const orderItems = await VendorOrderQueryService.getVendorOrders(user.id);
 
   const totalRevenue = orderItems.reduce((acc, item) => {
-    if (item.order.status !== 'CANCELLED' && item.order.status !== 'FAILED') {
+    if (item.orderStatus !== 'CANCELLED' && item.orderStatus !== 'FAILED') {
       return acc + (Number(item.price) * item.quantity);
     }
     return acc;
@@ -34,7 +28,7 @@ export default async function VendorDashboard() {
 
   const pendingOrdersCount = new Set(
     orderItems
-      .filter(item => item.order.status === 'CREATED')
+      .filter(item => item.orderStatus === 'CREATED' || item.orderStatus === 'PENDING')
       .map(item => item.orderId)
   ).size;
 
@@ -77,16 +71,15 @@ export default async function VendorDashboard() {
             </thead>
             <tbody className="divide-y divide-white/10">
               {orderItems.slice(0, 5).map(item => {
-                const p = products.find(prod => prod.id === item.productId);
                 return (
                   <tr key={item.id} className="hover:bg-white/5 transition-colors">
                     <td className="px-4 py-3">{item.orderId.slice(-6)}</td>
-                    <td className="px-4 py-3 text-white">{p?.name || 'Unknown'}</td>
+                    <td className="px-4 py-3 text-white">{item.productName}</td>
                     <td className="px-4 py-3">{item.quantity}</td>
                     <td className="px-4 py-3">${Number(item.price).toFixed(2)}</td>
                     <td className="px-4 py-3">
                       <span className="bg-nova-blue/20 text-nova-blue px-2 py-1 rounded-full text-xs font-bold border border-nova-blue/30 uppercase">
-                        {item.order.status}
+                        {item.orderStatus}
                       </span>
                     </td>
                   </tr>

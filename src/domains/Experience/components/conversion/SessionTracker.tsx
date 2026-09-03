@@ -16,7 +16,7 @@ interface SessionContextType extends SessionState {
   addWishlistedItem: (id: string) => void;
 }
 
-const SessionContext = createContext<SessionContextType | undefined>(undefined);
+export const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
 const MAX_ITEMS = 10;
 const SESSION_KEY = "ns_session_intelligence";

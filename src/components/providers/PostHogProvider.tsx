@@ -3,8 +3,17 @@
 import posthog from 'posthog-js';
 import { PostHogProvider as PHProvider } from 'posthog-js/react';
 import { useEffect, useState } from 'react';
+import { RuntimeGate } from '@/lib/observability/assertions';
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    const traceId = 'client_global_session';
+    RuntimeGate.registerProviderMount('PostHogProvider', traceId, 'PostHogProvider');
+    return () => {
+      RuntimeGate.registerProviderUnmount('PostHogProvider', traceId);
+    };
+  }, []);
+
   const [isConsentGranted] = useState(() => {
     if (typeof window === "undefined") return false;
     const consent = localStorage.getItem('nova_cookie_consent');

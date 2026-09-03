@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { Gavel, AlertCircle, Ban, Search } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import { AuctionClientActions } from "./components/AuctionClientActions";
+import { AdminProductQueryService } from "@/modules/commerce/application/queries/AdminProductQueryService";
 
 export const dynamic = "force-dynamic";
 
@@ -20,9 +21,7 @@ export default async function AdminAuctionsPage() {
     orderBy: { createdAt: "desc" }
   });
 
-  const products = await prisma.product.findMany({
-    select: { id: true, name: true, sku: true }
-  });
+  const products = await AdminProductQueryService.getAllProducts();
 
   const activeAuctions = auctions.filter(a => a.status === "LIVE" && new Date(a.endTime) > new Date());
   const endedAuctions = auctions.filter(a => a.status === "CLOSED" || a.status === "SETTLED" || new Date(a.endTime) <= new Date());

@@ -1,30 +1,14 @@
 import React from "react";
 import { prisma } from "@/lib/prisma";
+import { AdminProductQueryService } from "@/modules/commerce/application/queries/AdminProductQueryService";
 import { FolderTree, Package, DollarSign } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminCategoriesPage() {
-  // Aggregate category data from products
-  const categoryStats = await prisma.product.groupBy({
-    by: ['category'],
-    _count: {
-      id: true,
-    },
-    _sum: {
-      stock: true,
-    },
-    _avg: {
-      price: true,
-    }
-  });
-
-  const categories = categoryStats.map(stat => ({
-    name: stat.category,
-    productCount: stat._count.id,
-    totalStock: stat._sum.stock || 0,
-    avgPrice: stat._avg.price || 0
-  })).sort((a, b) => b.productCount - a.productCount);
+  const categories = await AdminProductQueryService.getCategoryStats();
+  
+  categories.sort((a, b) => b.productCount - a.productCount);
 
   const totalCategories = categories.length;
 

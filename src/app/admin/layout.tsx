@@ -5,6 +5,8 @@ import { LayoutDashboard, PackageSearch, Users, Settings, ArrowLeft, ShieldCheck
 import { UserButton } from "@clerk/nextjs";
 import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { redirect } from "next/navigation";
+import { Telemetry, EventType } from "@/lib/observability/Telemetry";
+import { getTraceContext } from "@/lib/observability/TraceContext";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const authorized = await IdentityFacade.isAdmin();
@@ -15,6 +17,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   const role = await IdentityFacade.getUserRole();
   const roleLabel = role?.replace("_", " ") ?? "Unknown";
+
+  const { traceId, spanId } = await getTraceContext();
+  Telemetry.record({
+    layer: 'Presentation',
+    type: EventType.LayoutMounted,
+    source: 'AdminLayout',
+    traceId,
+    spanId,
+  });
 
   return (
     <div className="min-h-screen bg-black flex">

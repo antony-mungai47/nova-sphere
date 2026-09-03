@@ -11,5 +11,27 @@
     "react-hooks/exhaustive-deps": "off",
     "react-hooks/rules-of-hooks": "off",
     "prefer-const": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/app/**/*.ts", "src/app/**/*.tsx", "src/components/**/*.ts", "src/components/**/*.tsx"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["*Repository", "**/repositories/*"],
+                "message": "Gate 6.5: Presentation layers (src/app, src/components) cannot import Repositories. Use an Application Service (e.g., QueryService) instead."
+              },
+              {
+                "group": ["@prisma/client", "@/lib/prisma"],
+                "message": "Gate 1: Presentation layers cannot import Prisma directly."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }

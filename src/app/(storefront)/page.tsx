@@ -18,26 +18,10 @@ import { prisma } from "@/lib/prisma";
 import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
 import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
 import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
+import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
 
 export default async function Home() {
-  const products = await prisma.product.findMany({
-    where: { isTrending: true },
-    include: { images: true },
-    take: 4,
-  });
-
-  const formattedProducts = products.map((p) => ({
-    id: p.id,
-    name: p.name,
-    price: p.price.toNumber(),
-    category: p.category,
-    brand: p.brand,
-    image: ProductImageService.getThumbnailUrl(p),
-    description: p.description,
-    salePrice: p.salePrice ? p.salePrice.toNumber() : null,
-    rating: p.rating,
-    reviewCount: p.reviewCount,
-  }));
+  const products = await StorefrontProductQueryService.getTrendingProducts([], 4);
 
   const liveActivityEnabled = await getFeatureFlag(FeatureFlags.LIVE_ACTIVITY);
 
@@ -59,7 +43,7 @@ export default async function Home() {
       {/* 5. Recommended For You (Experience Engine) */}
       <RankedProductRow 
         title="Recommended For You" 
-        rawProducts={formattedProducts.map(p => ({
+        rawProducts={products.map(p => ({
           id: p.id,
           category: p.category,
           price: p.price,

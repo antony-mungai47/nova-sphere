@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Check, Minus } from "lucide-react";
 import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
+import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
 
 export const dynamic = "force-dynamic";
 
@@ -34,10 +35,7 @@ export default async function ComparePage({
     );
   }
 
-  const products = await prisma.product.findMany({
-    where: { id: { in: ids } },
-    include: { images: true }
-  });
+  const products = await StorefrontProductQueryService.getCompareProductsByIds(ids);
 
   // Sort them to match the URL order
   products.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
@@ -79,7 +77,7 @@ export default async function ComparePage({
               {products.map(p => (
                 <div key={p.id} className="flex-1 min-w-[250px] p-4 border-b border-l border-white/10 flex flex-col items-center text-center">
                   <div className="relative w-40 h-40 rounded-xl bg-white/5 border border-white/10 p-4 mb-4">
-                    <Image src={ProductImageService.getThumbnailUrl(p)} alt={p.name} fill className="object-contain" />
+                    <Image src={p.image} alt={p.name} fill className="object-contain" />
                   </div>
                   <p className="text-xs text-nova-silver uppercase tracking-wider mb-1">{p.brand}</p>
                   <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">{p.name}</h3>
@@ -114,7 +112,7 @@ export default async function ComparePage({
               <div className="w-48 flex-shrink-0 p-4 font-bold text-white border-b border-white/10">Availability</div>
               {products.map(p => (
                 <div key={p.id} className="flex-1 min-w-[250px] p-4 border-b border-l border-white/10 text-center">
-                  {p.stock > 0 ? (
+                  {p.inStock ? (
                     <span className="text-green-400 flex items-center justify-center gap-1 text-sm"><Check className="w-4 h-4"/> In Stock</span>
                   ) : (
                     <span className="text-red-400 text-sm">Out of Stock</span>

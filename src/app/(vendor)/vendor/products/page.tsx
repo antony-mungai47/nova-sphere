@@ -1,8 +1,10 @@
 import React from 'react';
-import { prisma } from '@/lib/prisma';
+
 import { IdentityFacade } from '@/modules/identity/IdentityFacade';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+
+import { VendorProductQueryService } from '@/modules/commerce/application/queries/VendorProductQueryService';
 
 export const dynamic = "force-dynamic";
 
@@ -13,10 +15,7 @@ export default async function VendorProductsPage() {
   const isVendor = await IdentityFacade.isVendor();
   if (!isVendor) redirect('/');
 
-  const products = await prisma.product.findMany({
-    where: { ownerTenantId: user.id },
-    orderBy: { createdAt: 'desc' }
-  });
+  const products = await VendorProductQueryService.getVendorProducts(user.id);
 
   return (
     <div className="p-8">

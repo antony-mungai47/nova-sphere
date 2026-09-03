@@ -1,8 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { Store, Package, ShoppingCart, Settings } from 'lucide-react';
+import { Telemetry, EventType } from "@/lib/observability/Telemetry";
+import { getTraceContext } from "@/lib/observability/TraceContext";
 
-export default function VendorLayout({ children }: { children: React.ReactNode }) {
+export default async function VendorLayout({ children }: { children: React.ReactNode }) {
+  const { traceId, spanId } = await getTraceContext();
+  Telemetry.record({
+    layer: 'Presentation',
+    type: EventType.LayoutMounted,
+    source: 'VendorLayout',
+    traceId,
+    spanId,
+  });
+
   return (
     <div className="flex min-h-[calc(100vh-64px)] bg-[#0f1219]">
       <aside className="w-64 border-r border-white/10 bg-[#1a1f2e] p-6 hidden md:block">

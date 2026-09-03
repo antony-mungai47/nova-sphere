@@ -15,7 +15,7 @@ export async function createCoupon(code: string, discountPercent: number) {
   await CouponRepository.create({
     data: {
       code: code.toUpperCase(),
-      discountPercent,
+      discountValue: discountPercent,
       isActive: true,
     }
   });

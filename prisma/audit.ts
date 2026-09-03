@@ -54,7 +54,9 @@ async function runAudit() {
       }
     }
 
-    report.totalAuctions += product.auctions.length;
+    if (product.auctions) {
+      report.totalAuctions += 1;
+    }
   }
 
   const reportString = JSON.stringify(report, null, 2);

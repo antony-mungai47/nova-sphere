@@ -3,6 +3,7 @@ import type { Config } from 'jest';
 const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  testTimeout: 60000,
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },

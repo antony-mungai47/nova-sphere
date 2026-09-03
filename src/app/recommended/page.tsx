@@ -1,12 +1,12 @@
 import React from "react";
-import { prisma } from "@/lib/prisma";
+
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { Footer } from "@/shared/components/layout/footer";
 import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { headers } from "next/headers";
 import { ProductGrid } from "@/domains/Commerce/products/components/store/product-grid";
 import { Sparkles, Activity } from "lucide-react";
-import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
+import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
 
 export const revalidate = 0; // Fully dynamic personalization
 
@@ -15,91 +15,12 @@ export default async function RecommendedPage() {
   const headersList = await headers();
   const country = headersList.get('x-vercel-ip-country') || 'US';
   
-  let preferredCategories: string[] = [];
-  let userContext = "Welcome to the future of smart shopping.";
-  let confidenceScore = 65; // Baseline confidence
-
-  if (user) {
-    const dbUser = await prisma.user.findUnique({
-      where: { id: user.id },
-      include: {
-        recentlyViewed: { include: { product: true }, orderBy: { viewedAt: 'desc' }, take: 20 },
-        orders: { include: { items: { include: { product: true } } } },
-      }
-    });
-
-    if (dbUser) {
-      const categoryCounts: Record<string, number> = {};
-      let totalInteractions = 0;
-
-      dbUser.recentlyViewed.forEach(rv => {
-        categoryCounts[rv.product.category] = (categoryCounts[rv.product.category] || 0) + 2;
-        totalInteractions += 2;
-      });
-      
-      dbUser.orders.forEach(order => {
-        order.items.forEach(item => {
-          categoryCounts[item.product.category] = (categoryCounts[item.product.category] || 0) + 5;
-          totalInteractions += 5;
-        });
-      });
-      
-      preferredCategories = Object.entries(categoryCounts)
-        .sort((a, b) => b[1] - a[1])
-        .map(e => e[0])
-        .slice(0, 4); // Top 4 categories
-        
-      if (preferredCategories.length > 0) {
-        userContext = `Curated for you based on your interest in ${preferredCategories.join(", ")}.`;
-        confidenceScore = Math.min(98, 65 + (totalInteractions * 2));
-      } else {
-        userContext = "We need a bit more data to personalize your experience. Explore the store!";
-      }
-    }
-  } else {
-    // Guest Personalization
-    const month = new Date().getMonth();
-    if (month >= 5 && month <= 7) preferredCategories = ["Travel", "Fashion"]; 
-    else if (month >= 10 || month === 0) preferredCategories = ["Electronics", "Home & Kitchen"]; 
-    else preferredCategories = ["Watches", "Collectibles"]; 
-
-    if (country === 'GB' || country === 'FR' || country === 'DE') {
-      userContext = "Trending across Europe this season.";
-      confidenceScore = 75;
-    } else if (country === 'US' || country === 'CA') {
-      userContext = "Top selections for North America.";
-      confidenceScore = 78;
-    } else {
-      userContext = "Global marketplace highlights.";
-    }
-  }
-
-  // Fetch Recommended Products
-  const products = await prisma.product.findMany({
-    where: preferredCategories.length > 0 ? {
-      OR: [
-        { category: { in: preferredCategories } },
-        { isTrending: true }
-      ]
-    } : { isTrending: true },
-    include: { images: true },
-    orderBy: { rating: 'desc' },
-    take: 24, // Larger grid for the dedicated page
-  });
-
-  const formattedProducts = products.map((p) => ({
-    id: p.id,
-    name: p.name,
-    price: p.price.toNumber(),
-    category: p.category,
-    brand: p.brand,
-    image: ProductImageService.getThumbnailUrl(p),
-    description: p.description,
-    salePrice: p.salePrice ? p.salePrice.toNumber() : null,
-    rating: p.rating,
-    reviewCount: p.reviewCount,
-    stock: p.stock,
-  }));
+  const recommendations = await StorefrontProductQueryService.getRecommendedProducts(user, country);
+  
+  const formattedProducts = recommendations.products;
+  const userContext = recommendations.userContext;
+  const confidenceScore = recommendations.confidenceScore;
+  const preferredCategories = recommendations.preferredCategories;
 
   // Fetch aggregate data for the sidebar filters (even though they are recommended, users might still want to filter)
   const uniqueCategories = Array.from(new Set(formattedProducts.map(p => p.category)));

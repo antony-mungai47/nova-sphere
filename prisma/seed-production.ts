@@ -400,8 +400,8 @@ async function main() {
   console.log('Seeding coupons...');
   await prisma.coupon.upsert({
     where: { code: 'NOVA10' },
-    update: { discountPercent: 10, isActive: true },
-    create: { code: 'NOVA10', discountPercent: 10, isActive: true }
+    update: { discountValue: 10, isActive: true },
+    create: { code: 'NOVA10', discountValue: 10, isActive: true }
   });
 
   console.log('Seeding feature flags...');

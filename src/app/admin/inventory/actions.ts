@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
 import { IdentityService } from "@/modules/identity/services/IdentityService";
+import { AdminProductCommandService } from "@/modules/commerce/application/commands/AdminProductCommandService";
 
 export async function updateProductStock(productId: string, newStock: number) {
   const authorized = await IdentityService.isAdmin();
@@ -12,10 +13,7 @@ export async function updateProductStock(productId: string, newStock: number) {
     throw new Error("Stock cannot be negative.");
   }
 
-  await prisma.product.update({
-    where: { id: productId },
-    data: { stock: newStock }
-  });
+  await AdminProductCommandService.updateProductStock(productId, newStock);
 
   revalidatePath("/admin/inventory");
   revalidatePath("/admin/products");

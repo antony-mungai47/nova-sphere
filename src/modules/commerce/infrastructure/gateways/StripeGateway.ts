@@ -32,4 +32,11 @@ export class StripeGateway implements PaymentProvider {
   async verifyWebhook(body: string, signature: string, secret: string): Promise<any> {
     return { type: "payment_intent.succeeded" };
   }
+
+  async verifyPaymentStatus(idempotencyKey: string): Promise<{ status: string, checkoutUrl?: string, paymentReference?: string } | null> {
+    // In a real implementation, we would query Stripe's API for a Checkout Session
+    // or Payment Intent that was created with this idempotency key.
+    // For now, we return null to simulate that it wasn't found (no ambiguity resolution).
+    return null;
+  }
 }

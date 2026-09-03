@@ -1,56 +1,51 @@
-import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
+import { prisma as defaultPrisma } from "@/lib/prisma";
 
 export class InventoryRepository {
-  static async checkStock(productId: string): Promise<number> {
-    const product = await prisma.product.findUnique({
-      where: { id: productId },
-      select: { stock: true }
-    });
-    return product?.stock || 0;
-  }
-
-  static async reserveStock(productId: string, quantity: number) {
-    return prisma.product.update({
-      where: { id: productId },
-      data: { stock: { decrement: quantity } }
-    });
-  }
-
-  static async releaseStock(productId: string, quantity: number) {
-    return prisma.product.update({
-      where: { id: productId },
-      data: { stock: { increment: quantity } }
-    });
-  }
-
-  static async getOrCreateInventory(productId: string): Promise<string> {
-    const inventory = await prisma.inventory.findUnique({
+  /**
+   * Retrieves the raw warehouse inventory state for a product.
+   */
+  static async getInventory(productId: string, tx?: Prisma.TransactionClient) {
+    const client = tx || defaultPrisma;
+    return client.inventory.findUnique({
       where: { productId }
     });
-    if (inventory) return inventory.id;
-
-    const warehouse = await prisma.warehouse.findFirst();
-    let warehouseId = warehouse?.id;
-    if (!warehouseId) {
-      const newWh = await prisma.warehouse.create({ data: { name: "Default Warehouse" }});
-      warehouseId = newWh.id;
-    }
-
-    const newInv = await prisma.inventory.create({
-      data: {
-        productId,
-        warehouseId,
-        quantity: 0
-      }
-    });
-    return newInv.id;
   }
 
-  static async createReservation(data: { productId: string, orderId: string, quantity: number, status: string, expiresAt: Date }) {
-    const inventoryId = await this.getOrCreateInventory(data.productId);
-    return prisma.reservation.create({
+  /**
+   * Modifies the reserved counter in the warehouse inventory.
+   */
+  static async incrementReserved(inventoryId: string, quantity: number, tx: Prisma.TransactionClient) {
+    return tx.inventory.update({
+      where: { id: inventoryId },
+      data: { reserved: { increment: quantity } }
+    });
+  }
+
+  static async decrementReserved(inventoryId: string, quantity: number, tx: Prisma.TransactionClient) {
+    return tx.inventory.update({
+      where: { id: inventoryId },
+      data: { reserved: { decrement: quantity } }
+    });
+  }
+
+  static async commitReserved(inventoryId: string, quantity: number, tx: Prisma.TransactionClient) {
+    return tx.inventory.update({
+      where: { id: inventoryId },
+      data: { 
+        reserved: { decrement: quantity },
+        quantity: { decrement: quantity } // Actually deduct from warehouse total
+      }
+    });
+  }
+
+  /**
+   * Creates a reservation record.
+   */
+  static async createReservation(data: { inventoryId: string, orderId: string, quantity: number, status: string, expiresAt: Date }, tx: Prisma.TransactionClient) {
+    return tx.reservation.create({
       data: {
-        inventoryId,
+        inventoryId: data.inventoryId,
         orderId: data.orderId,
         quantity: data.quantity,
         status: data.status,
@@ -59,36 +54,33 @@ export class InventoryRepository {
     });
   }
 
-  static async extendReservation(orderId: string, expiresAt: Date) {
-    return prisma.reservation.updateMany({
-      where: { orderId, status: "PENDING" },
-      data: { expiresAt }
-    });
-  }
-
-  static async updateReservationStatus(orderId: string, status: string) {
-    return prisma.reservation.updateMany({
+  /**
+   * Updates reservation status.
+   */
+  static async updateReservationStatus(orderId: string, status: string, tx: Prisma.TransactionClient) {
+    return tx.reservation.updateMany({
       where: { orderId },
       data: { status }
     });
   }
 
-  static async updateReservationStatusById(id: string, status: string) {
-    return prisma.reservation.update({
-      where: { id },
-      data: { status }
-    });
-  }
-
-  static async getReservationsForOrder(orderId: string) {
-    return prisma.reservation.findMany({
+  /**
+   * Retrieves all reservations for an order.
+   */
+  static async getReservationsForOrder(orderId: string, tx?: Prisma.TransactionClient) {
+    const client = tx || defaultPrisma;
+    return client.reservation.findMany({
       where: { orderId },
       include: { inventory: true }
     });
   }
 
-  static async findExpiredReservations(now: Date) {
-    return prisma.reservation.findMany({
+  /**
+   * Finds expired pending reservations.
+   */
+  static async findExpiredReservations(now: Date, tx?: Prisma.TransactionClient) {
+    const client = tx || defaultPrisma;
+    return client.reservation.findMany({
       where: {
         status: "PENDING",
         expiresAt: { lt: now }

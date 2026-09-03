@@ -91,7 +91,7 @@ export function CouponManager({ coupons }: { coupons: any[] }) {
                   <td className="p-4 text-white font-mono font-bold flex items-center gap-2">
                     <Tag className="w-4 h-4 text-nova-blue" /> {c.code}
                   </td>
-                  <td className="p-4 text-center text-nova-emerald font-medium">{c.discountPercent}% OFF</td>
+                  <td className="p-4 text-center text-nova-emerald font-medium">{c.discountValue}% OFF</td>
                   <td className="p-4 text-center">
                     <span className={`px-2 py-1 text-xs rounded-full border ${c.isActive ? 'bg-nova-emerald/20 text-nova-emerald border-nova-emerald/20' : 'bg-white/5 text-nova-silver border-white/10'}`}>
                       {c.isActive ? "ACTIVE" : "INACTIVE"}

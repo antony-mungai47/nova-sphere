@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { AdminProductCommandService } from "@/modules/commerce/application/commands/AdminProductCommandService";
 
 // This endpoint is STRICTLY for load testing and E2E automation
 export async function POST(req: Request) {
@@ -20,17 +21,15 @@ export async function POST(req: Request) {
     });
 
     // Create a mock product
-    await prisma.product.create({
-      data: {
-        id: productId,
-        name: 'K6 Load Test Item',
-        description: 'For Load Testing',
-        price: 100,
-        sku: `SKU-K6-${timestamp}`,
-        category: 'TEST',
-        brand: 'TEST BRAND',
-        status: 'ACTIVE'
-      }
+    await AdminProductCommandService.createProduct({
+      id: productId,
+      name: 'K6 Load Test Item',
+      description: 'For Load Testing',
+      price: 100,
+      sku: `SKU-K6-${timestamp}`,
+      category: 'TEST',
+      brand: 'TEST BRAND',
+      status: 'ACTIVE'
     });
 
     // Create an order

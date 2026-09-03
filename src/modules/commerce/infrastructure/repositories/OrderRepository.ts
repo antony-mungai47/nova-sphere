@@ -1,38 +1,56 @@
-import { prisma } from "@/lib/prisma";
-import { OrderStatus } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma as defaultPrisma } from "../../../../lib/prisma";
 
 export class OrderRepository {
-  static async createOrder(data: any) {
-    return prisma.order.create({ data });
-  }
-
-  static async findById(id: string) {
-    return prisma.order.findUnique({
-      where: { id },
+  /**
+   * Structurally enforces Gate 14 (Tenant Isolation).
+   */
+  static async findById(id: string, tenantId: string, tx?: Prisma.TransactionClient) {
+    const client = tx || defaultPrisma;
+    
+    // Structurally enforce tenant boundary
+    const order = await client.order.findFirst({
+      where: { id, tenantId },
       include: { items: true }
     });
+
+    return order;
   }
 
-  static async updateStatus(id: string, status: OrderStatus) {
-    return prisma.order.update({
-      where: { id },
-      data: { status }
+  /**
+   * Atomically updates an order using optimistic concurrency.
+   * Throws if the version does not match.
+   */
+  static async updateStatus(
+    id: string, 
+    tenantId: string,
+    expectedVersion: number, 
+    newStatus: string, 
+    tx: Prisma.TransactionClient
+  ) {
+    // updateMany is used because Prisma does not support composite where predicates 
+    // with non-unique fields (tenantId, version) in `update`.
+    const result = await tx.order.updateMany({
+      where: {
+        id,
+        tenantId,
+        version: expectedVersion
+      },
+      data: {
+        status: newStatus as any,
+        version: { increment: 1 }
+      }
     });
+
+    if (result.count === 0) {
+      throw new Error("ConcurrencyConflictException: Order update failed due to version mismatch or not found.");
+    }
+
+    return true;
   }
 
-  static async findByUserId(userId: string) {
-    return prisma.order.findMany({
-      where: { userId },
-      include: { items: true },
-      orderBy: { createdAt: "desc" }
-    });
-  }
-
-  static async findMany(args: any) {
-    return prisma.order.findMany(args);
-  }
-
-  static async deleteMany(args: any) {
-    return prisma.order.deleteMany(args);
+  static async createOrder(data: any, tx?: Prisma.TransactionClient) {
+    const client = tx || defaultPrisma;
+    return client.order.create({ data });
   }
 }
