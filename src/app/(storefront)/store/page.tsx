@@ -39,11 +39,11 @@ export default async function StorePage({
       
       {/* Header Section */}
       <section className="pt-32 pb-16 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-nova-blue/10 rounded-full blur-[150px] -z-10 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/10 rounded-full blur-[150px] -z-10 pointer-events-none" />
         
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-nova-blue to-nova-amber">Store</span>
+            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-nova-amber">Store</span>
           </h1>
           <p className="text-xl text-nova-silver max-w-2xl mx-auto">
             Browse our entire collection of next-generation technology. Your future starts here.

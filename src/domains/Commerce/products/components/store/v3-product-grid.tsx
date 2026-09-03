@@ -111,7 +111,7 @@ export const ProductGridV3 = ({
         <div className="glass-panel p-6 rounded-2xl border border-white/10 sticky top-24">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Filter className="w-5 h-5 text-nova-blue" /> Filters
+              <Filter className="w-5 h-5 text-white" /> Filters
             </h3>
             <button onClick={clearFilters} className="text-xs text-nova-silver hover:text-white transition-colors">
               Clear All
@@ -128,7 +128,7 @@ export const ProductGridV3 = ({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Find products..."
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 pl-9 pr-4 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-nova-blue transition-colors"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 pl-9 pr-4 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
             </div>
@@ -138,7 +138,7 @@ export const ProductGridV3 = ({
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-nova-blue transition-colors appearance-none"
+                className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-white transition-colors appearance-none"
               >
                 {uniqueCategories.map(cat => (
                   <option key={cat} value={cat}>{cat}</option>
@@ -151,7 +151,7 @@ export const ProductGridV3 = ({
               <select
                 value={selectedBrand}
                 onChange={(e) => setSelectedBrand(e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-nova-blue transition-colors appearance-none"
+                className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-white transition-colors appearance-none"
               >
                 {uniqueBrands.map(brand => (
                   <option key={brand} value={brand}>{brand}</option>
@@ -167,7 +167,7 @@ export const ProductGridV3 = ({
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value)}
                   placeholder="Min"
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-nova-blue transition-colors"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-white transition-colors"
                 />
                 <span className="text-nova-silver">-</span>
                 <input
@@ -175,7 +175,7 @@ export const ProductGridV3 = ({
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
                   placeholder="Max"
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-nova-blue transition-colors"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
             </div>
@@ -195,7 +195,7 @@ export const ProductGridV3 = ({
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-black/50 border border-white/10 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-nova-blue transition-colors appearance-none"
+              className="bg-black/50 border border-white/10 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-white transition-colors appearance-none"
             >
               <option value="newest">Newest Arrivals</option>
               <option value="price-low">Price: Low to High</option>
@@ -265,7 +265,7 @@ export const ProductGridV3 = ({
                           <span className="text-xs text-nova-silver">({product.reviewCount})</span>
                         </div>
                         
-                        <h3 className="text-sm font-bold text-white mb-1 line-clamp-2 group-hover:text-nova-blue transition-colors">
+                        <h3 className="text-sm font-bold text-white mb-1 line-clamp-2 group-hover:text-white transition-colors">
                           {product.name}
                         </h3>
                         <p className="text-xs text-nova-silver mb-4">{product.brand}</p>
@@ -284,7 +284,7 @@ export const ProductGridV3 = ({
                           
                           <button 
                             onClick={(e) => handleAddToCart(product, e)}
-                            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:bg-nova-blue group-hover:border-nova-blue transition-colors"
+                            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:border-white transition-colors"
                           >
                             <ShoppingCart className="w-4 h-4" />
                           </button>

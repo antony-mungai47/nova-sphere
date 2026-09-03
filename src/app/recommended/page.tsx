@@ -32,15 +32,15 @@ export default async function RecommendedPage() {
       
       {/* Header Section */}
       <section className="pt-32 pb-16 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-nova-blue/10 rounded-full blur-[150px] -z-10 pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/10 rounded-full blur-[150px] -z-10 pointer-events-none" />
         
         <div className="container mx-auto px-6">
           <div className="flex flex-col items-center text-center">
-            <div className="w-16 h-16 rounded-full bg-nova-blue/10 flex items-center justify-center mb-6">
-              <Sparkles className="w-8 h-8 text-nova-blue" />
+            <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-6">
+              <Sparkles className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-              Recommended <span className="text-transparent bg-clip-text bg-gradient-to-r from-nova-blue to-nova-emerald">For You</span>
+              Recommended <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-nova-emerald">For You</span>
             </h1>
             <p className="text-xl text-nova-silver max-w-2xl mx-auto mb-8">
               {userContext}
