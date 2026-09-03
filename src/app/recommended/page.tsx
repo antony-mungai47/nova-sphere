@@ -4,7 +4,7 @@ import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar"
 import { Footer } from "@/shared/components/layout/footer";
 import { IdentityFacade } from "@/modules/identity/IdentityFacade";
 import { headers } from "next/headers";
-import { ProductGrid } from "@/domains/Commerce/products/components/store/product-grid";
+import { ProductGridV3 } from "@/domains/Commerce/products/components/store/v3-product-grid";
 import { Sparkles, Activity } from "lucide-react";
 import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
 
@@ -59,7 +59,7 @@ export default async function RecommendedPage() {
       {/* Main Content */}
       <section className="flex-1 pb-24">
         <div className="container mx-auto px-6">
-          <ProductGrid 
+          <ProductGridV3 
             initialProducts={formattedProducts} 
             uniqueCategories={['All', ...uniqueCategories]} 
             uniqueBrands={['All', ...uniqueBrands]}
