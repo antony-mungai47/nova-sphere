@@ -48,7 +48,7 @@ export default function WelcomePage() {
 
         <div className="space-y-4">
           <Link 
-            href="/login" 
+            href="/sign-in" 
             className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-white text-black font-bold hover:bg-gray-100 transition-all shadow-glow-primary"
           >
             <LogIn className="w-5 h-5" />
@@ -56,7 +56,7 @@ export default function WelcomePage() {
           </Link>
           
           <Link 
-            href="/register" 
+            href="/sign-up" 
             className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl glass-panel border border-white/20 text-white font-bold hover:bg-white/10 transition-all"
           >
             <UserPlus className="w-5 h-5" />

@@ -82,7 +82,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               src={images[activeIndex]}
               alt={`${productName} image ${activeIndex + 1}`}
               fill
-              className="object-contain p-8 mix-blend-multiply transition-transform duration-200 ease-out"
+              className="object-cover transition-transform duration-200 ease-out"
               style={{
                 transformOrigin: `${zoomState.x}% ${zoomState.y}%`,
                 transform: zoomState.isZooming ? "scale(2.5)" : "scale(1)",
@@ -112,7 +112,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               activeIndex === idx ? "border-cta-primary opacity-100 ring-2 ring-cta-primary/20" : "border-transparent opacity-60 hover:opacity-100"
             }`}
           >
-            <Image src={img} alt={`Thumbnail ${idx}`} fill className="object-cover mix-blend-multiply p-2" />
+            <Image src={img} alt={`Thumbnail ${idx}`} fill className="object-cover" />
           </button>
         ))}
       </div>

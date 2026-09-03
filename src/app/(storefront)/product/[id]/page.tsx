@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
-import { ProductClient } from "./product-client";
 import { ProductClientV3 } from "./v3-product-client";
 import { notFound } from "next/navigation";
 import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
@@ -82,8 +81,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     }),
   };
 
-  const useV3PDP = await getFeatureFlag(FeatureFlags.PDP_V3);
-
   return (
     <>
       <Navbar />
@@ -91,19 +88,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {useV3PDP ? (
-        <ProductClientV3 
-          product={product} 
-          relatedProducts={relatedProducts} 
-          liveInventoryEnabled={liveInventoryEnabled} 
-        />
-      ) : (
-        <ProductClient 
-          product={product} 
-          relatedProducts={relatedProducts} 
-          liveInventoryEnabled={liveInventoryEnabled} 
-        />
-      )}
+      <ProductClientV3 
+        product={product} 
+        relatedProducts={relatedProducts} 
+        liveInventoryEnabled={liveInventoryEnabled} 
+      />
       <Footer />
     </>
   );

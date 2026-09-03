@@ -229,12 +229,12 @@ export const ProductGridV3 = ({
                     <div className="glass-panel glass-panel-glow h-full flex flex-col overflow-hidden rounded-2xl relative transition-transform duration-motion-standard group-hover:-translate-y-1">
                       
                       {/* Image container */}
-                      <div className="relative aspect-square bg-white/5 p-6 flex items-center justify-center overflow-hidden">
+                      <div className="relative aspect-square bg-white/5 overflow-hidden">
                         <Image 
                           src={product.image} 
                           alt={product.name} 
                           fill 
-                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-motion-slow" 
+                          className="object-cover group-hover:scale-105 transition-transform duration-motion-slow" 
                         />
                         
                         {/* Tags */}
