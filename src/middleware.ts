@@ -8,7 +8,7 @@ const clerk = clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
     const { userId } = await auth();
     if (!userId) {
-      const signInUrl = new URL('/login', req.url);
+      const signInUrl = new URL('/sign-in', req.url);
       signInUrl.searchParams.set('redirect_url', req.url);
       return NextResponse.redirect(signInUrl);
     }

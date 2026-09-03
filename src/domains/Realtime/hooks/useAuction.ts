@@ -22,7 +22,7 @@ export function useAuction(auctionId: string, initialState: Omit<AuctionRealtime
   });
 
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_PUSHER_KEY) return;
+    if (!process.env.NEXT_PUBLIC_PUSHER_KEY || process.env.NEXT_PUBLIC_PUSHER_KEY === 'mock_pusher_key') return;
 
     if (!pusherClient) {
       pusherClient = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
