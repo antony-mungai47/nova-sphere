@@ -67,7 +67,7 @@ export default async function AdminAnalyticsPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">Analytics Dashboard</h1>
-          <p className="text-nova-silver">Real-time business performance and metrics.</p>
+          <p className="text-slate-300">Real-time business performance and metrics.</p>
         </div>
       </div>
 
@@ -76,29 +76,29 @@ export default async function AdminAnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <div className="flex items-center gap-3 mb-2">
-            <DollarSign className="w-5 h-5 text-nova-blue" />
-            <h3 className="text-nova-silver">Today</h3>
+            <DollarSign className="w-5 h-5 text-cta-primary" />
+            <h3 className="text-slate-300">Today</h3>
           </div>
           <p className="text-3xl font-bold text-white">${todayRevenue.toFixed(2)}</p>
         </div>
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <div className="flex items-center gap-3 mb-2">
-            <Calendar className="w-5 h-5 text-nova-blue" />
-            <h3 className="text-nova-silver">Last 7 Days</h3>
+            <Calendar className="w-5 h-5 text-cta-primary" />
+            <h3 className="text-slate-300">Last 7 Days</h3>
           </div>
           <p className="text-3xl font-bold text-white">${last7DaysRevenue.toFixed(2)}</p>
         </div>
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <div className="flex items-center gap-3 mb-2">
-            <TrendingUp className="w-5 h-5 text-nova-blue" />
-            <h3 className="text-nova-silver">Last 30 Days</h3>
+            <TrendingUp className="w-5 h-5 text-cta-primary" />
+            <h3 className="text-slate-300">Last 30 Days</h3>
           </div>
           <p className="text-3xl font-bold text-white">${last30DaysRevenue.toFixed(2)}</p>
         </div>
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <div className="flex items-center gap-3 mb-2">
-            <DollarSign className="w-5 h-5 text-nova-emerald" />
-            <h3 className="text-nova-silver">Lifetime Revenue</h3>
+            <DollarSign className="w-5 h-5 text-emerald-500" />
+            <h3 className="text-slate-300">Lifetime Revenue</h3>
           </div>
           <p className="text-3xl font-bold text-white">${lifetimeRevenue.toFixed(2)}</p>
         </div>
@@ -107,22 +107,22 @@ export default async function AdminAnalyticsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {/* Orders Section */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><ShoppingCart className="w-5 h-5 text-nova-amber" /> Orders</h2>
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><ShoppingCart className="w-5 h-5 text-amber-500" /> Orders</h2>
           <div className="space-y-4">
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="text-nova-silver">Pending</span>
+              <span className="text-slate-300">Pending</span>
               <span className="text-white font-bold">{pendingOrders}</span>
             </div>
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="text-nova-silver">Processing</span>
+              <span className="text-slate-300">Processing</span>
               <span className="text-white font-bold">{processingOrders}</span>
             </div>
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="text-nova-silver">Completed</span>
-              <span className="text-nova-emerald font-bold">{completedOrders}</span>
+              <span className="text-slate-300">Completed</span>
+              <span className="text-emerald-500 font-bold">{completedOrders}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-nova-silver">Cancelled</span>
+              <span className="text-slate-300">Cancelled</span>
               <span className="text-red-400 font-bold">{cancelledOrders}</span>
             </div>
           </div>
@@ -130,22 +130,22 @@ export default async function AdminAnalyticsPage() {
 
         {/* Customers Section */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Users className="w-5 h-5 text-nova-silver" /> Customers</h2>
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Users className="w-5 h-5 text-slate-300" /> Customers</h2>
           <div className="space-y-4">
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="text-nova-silver">Total Customers</span>
+              <span className="text-slate-300">Total Customers</span>
               <span className="text-white font-bold">{totalCustomers}</span>
             </div>
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="text-nova-silver">New (30 Days)</span>
+              <span className="text-slate-300">New (30 Days)</span>
               <span className="text-white font-bold">{newCustomers}</span>
             </div>
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="text-nova-silver">Returning</span>
-              <span className="text-nova-blue font-bold">{returningCustomers}</span>
+              <span className="text-slate-300">Returning</span>
+              <span className="text-cta-primary font-bold">{returningCustomers}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-nova-silver">Retention Rate</span>
+              <span className="text-slate-300">Retention Rate</span>
               <span className="text-white font-bold">{totalCustomers > 0 ? ((returningCustomers / totalCustomers) * 100).toFixed(1) : 0}%</span>
             </div>
           </div>
@@ -156,15 +156,15 @@ export default async function AdminAnalyticsPage() {
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Package className="w-5 h-5 text-gray-300" /> Inventory</h2>
           <div className="space-y-4">
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="text-nova-silver">Total Products</span>
+              <span className="text-slate-300">Total Products</span>
               <span className="text-white font-bold">{totalProducts}</span>
             </div>
             <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <span className="flex items-center gap-2 text-nova-silver"><AlertTriangle className="w-4 h-4 text-nova-amber" /> Low Stock</span>
-              <span className="text-nova-amber font-bold">{lowStock}</span>
+              <span className="flex items-center gap-2 text-slate-300"><AlertTriangle className="w-4 h-4 text-amber-500" /> Low Stock</span>
+              <span className="text-amber-500 font-bold">{lowStock}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="flex items-center gap-2 text-nova-silver"><AlertCircle className="w-4 h-4 text-red-400" /> Out of Stock</span>
+              <span className="flex items-center gap-2 text-slate-300"><AlertCircle className="w-4 h-4 text-red-400" /> Out of Stock</span>
               <span className="text-red-400 font-bold">{outOfStock}</span>
             </div>
           </div>
@@ -172,14 +172,14 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       <div className="glass-panel p-6 rounded-2xl border border-white/10">
-        <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-nova-emerald" /> Top Best Sellers</h2>
+        <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-emerald-500" /> Top Best Sellers</h2>
         {bestSellers.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="p-3 text-nova-silver font-medium">Product Name</th>
-                  <th className="p-3 text-nova-silver font-medium text-right">Units Sold</th>
+                  <th className="p-3 text-slate-300 font-medium">Product Name</th>
+                  <th className="p-3 text-slate-300 font-medium text-right">Units Sold</th>
                 </tr>
               </thead>
               <tbody>
@@ -193,7 +193,7 @@ export default async function AdminAnalyticsPage() {
             </table>
           </div>
         ) : (
-          <p className="text-nova-silver text-sm py-4">No sales data available yet.</p>
+          <p className="text-slate-300 text-sm py-4">No sales data available yet.</p>
         )}
       </div>
 

@@ -35,7 +35,7 @@ export function LiveStatistics() {
 
   return (
     <section className="w-full bg-black border-y border-white/5 py-16 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-nova-blue/5 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cta-primary/5 via-transparent to-transparent pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div 
@@ -49,21 +49,21 @@ export function LiveStatistics() {
             <h4 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2 font-mono">
               {formatNumber(stats.products)}+
             </h4>
-            <p className="text-nova-silver text-sm uppercase tracking-widest font-semibold">Premium Products</p>
+            <p className="text-slate-300 text-sm uppercase tracking-widest font-semibold">Premium Products</p>
           </motion.div>
 
           <motion.div variants={FADE_UP} className="flex flex-col items-center text-center">
             <h4 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2 font-mono">
               {formatNumber(stats.auctions)}
             </h4>
-            <p className="text-nova-silver text-sm uppercase tracking-widest font-semibold">Active Auctions</p>
+            <p className="text-slate-300 text-sm uppercase tracking-widest font-semibold">Active Auctions</p>
           </motion.div>
 
           <motion.div variants={FADE_UP} className="flex flex-col items-center text-center">
             <h4 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2 font-mono">
               {formatNumber(stats.customers)}+
             </h4>
-            <p className="text-nova-silver text-sm uppercase tracking-widest font-semibold">Verified Customers</p>
+            <p className="text-slate-300 text-sm uppercase tracking-widest font-semibold">Verified Customers</p>
           </motion.div>
 
           <motion.div variants={FADE_UP} className="flex flex-col items-center text-center">
@@ -71,7 +71,7 @@ export function LiveStatistics() {
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-3" />
               {formatNumber(stats.transactions)}
             </h4>
-            <p className="text-nova-silver text-sm uppercase tracking-widest font-semibold">Total Transactions</p>
+            <p className="text-slate-300 text-sm uppercase tracking-widest font-semibold">Total Transactions</p>
           </motion.div>
         </motion.div>
       </div>

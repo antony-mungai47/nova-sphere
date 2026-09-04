@@ -43,7 +43,7 @@ export function OrderActions({ orderId, currentStatus }: OrderActionsProps) {
       <button 
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
-        className="p-2 text-nova-silver hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+        className="p-2 text-slate-300 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
       >
         {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <MoreVertical className="w-4 h-4" />}
       </button>
@@ -52,7 +52,7 @@ export function OrderActions({ orderId, currentStatus }: OrderActionsProps) {
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
           <div className="absolute right-0 mt-2 w-48 rounded-xl bg-[#1A1A2E] border border-white/10 shadow-2xl z-20 overflow-hidden py-1">
-            <div className="px-3 py-2 border-b border-white/10 text-xs text-nova-silver font-medium uppercase tracking-wider">
+            <div className="px-3 py-2 border-b border-white/10 text-xs text-slate-300 font-medium uppercase tracking-wider">
               Update Status
             </div>
             {['PENDING', 'PAID', 'SHIPPED', 'DELIVERED'].map((status) => (
@@ -63,7 +63,7 @@ export function OrderActions({ orderId, currentStatus }: OrderActionsProps) {
                 className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/5 disabled:opacity-50 disabled:hover:bg-transparent flex items-center justify-between"
               >
                 {status}
-                {status === currentStatus && <CheckCircle2 className="w-4 h-4 text-nova-emerald" />}
+                {status === currentStatus && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
               </button>
             ))}
             

@@ -185,28 +185,28 @@ export function SupportClient({ initialConversations }: { initialConversations: 
                 }}
                 className={`w-full text-left p-4 rounded-xl transition-all border ${
                   activeConversationId === conv.id 
-                    ? "bg-nova-blue/20 border-nova-blue/50" 
+                    ? "bg-cta-primary/20 border-cta-primary/50" 
                     : "bg-transparent border-transparent hover:bg-white/5"
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
                     conv.status === "ACTIVE" ? "bg-red-400/20 text-red-400" :
-                    "bg-nova-emerald/20 text-nova-emerald"
+                    "bg-emerald-500/20 text-emerald-500"
                   }`}>
                     {conv.status}
                   </span>
-                  <span className="text-nova-silver text-xs">{format(new Date(conv.updatedAt), "MMM d, h:mm a")}</span>
+                  <span className="text-slate-300 text-xs">{format(new Date(conv.updatedAt), "MMM d, h:mm a")}</span>
                 </div>
                 <h3 className="text-white font-medium text-sm line-clamp-1 mb-1">{conv.title || "Support Request"}</h3>
-                <p className="text-nova-silver text-xs truncate">
+                <p className="text-slate-300 text-xs truncate">
                   {lastMessage ? lastMessage.content : "No messages yet"}
                 </p>
               </button>
             );
           })}
           {conversations.length === 0 && (
-            <div className="p-8 text-center text-nova-silver">No conversations found.</div>
+            <div className="p-8 text-center text-slate-300">No conversations found.</div>
           )}
         </div>
       </div>
@@ -219,7 +219,7 @@ export function SupportClient({ initialConversations }: { initialConversations: 
             <div className="p-6 border-b border-white/10 flex items-center justify-between bg-white/5">
               <div>
                 <h2 className="text-xl font-bold text-white mb-1">{activeConversation.title || "Support Request"}</h2>
-                <div className="flex items-center gap-4 text-sm text-nova-silver">
+                <div className="flex items-center gap-4 text-sm text-slate-300">
                   <span className="flex items-center gap-1"><User className="w-4 h-4" /> {customerId}</span>
                   <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {format(new Date(activeConversation.createdAt), "PPp")}</span>
                 </div>
@@ -228,14 +228,14 @@ export function SupportClient({ initialConversations }: { initialConversations: 
                 <button 
                   onClick={handleGenerateSummary}
                   disabled={isAiLoading}
-                  className="px-4 py-2 bg-nova-amber/20 text-nova-amber hover:bg-nova-amber hover:text-white transition-colors rounded-lg font-bold text-xs flex items-center gap-2 border border-nova-amber/30"
+                  className="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500 hover:text-white transition-colors rounded-lg font-bold text-xs flex items-center gap-2 border border-amber-500/30"
                 >
                   <Sparkles className="w-4 h-4" /> Summary
                 </button>
                 <button 
                   onClick={handleSuggestReplies}
                   disabled={isAiLoading}
-                  className="px-4 py-2 bg-nova-amber/20 text-nova-amber hover:bg-nova-amber hover:text-white transition-colors rounded-lg font-bold text-xs flex items-center gap-2 border border-nova-amber/30"
+                  className="px-4 py-2 bg-amber-500/20 text-amber-500 hover:bg-amber-500 hover:text-white transition-colors rounded-lg font-bold text-xs flex items-center gap-2 border border-amber-500/30"
                 >
                   <Sparkles className="w-4 h-4" /> Suggest Replies
                 </button>
@@ -244,31 +244,31 @@ export function SupportClient({ initialConversations }: { initialConversations: 
 
             {/* AI Summary Banner */}
             {aiSummary && (
-              <div className="p-4 bg-nova-amber/10 border-b border-nova-amber/20 flex gap-3 items-start relative">
-                <Sparkles className="w-5 h-5 text-nova-amber flex-shrink-0 mt-0.5" />
+              <div className="p-4 bg-amber-500/10 border-b border-amber-500/20 flex gap-3 items-start relative">
+                <Sparkles className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-nova-amber font-bold text-sm mb-1">Nova AI Summary</h4>
-                  <p className="text-sm text-nova-silver">{aiSummary}</p>
+                  <h4 className="text-amber-500 font-bold text-sm mb-1">Nova AI Summary</h4>
+                  <p className="text-sm text-slate-300">{aiSummary}</p>
                 </div>
-                <button onClick={() => setAiSummary(null)} className="absolute top-4 right-4 text-nova-silver hover:text-white">✕</button>
+                <button onClick={() => setAiSummary(null)} className="absolute top-4 right-4 text-slate-300 hover:text-white">✕</button>
               </div>
             )}
 
             {/* Suggested Replies */}
             {suggestedReplies.length > 0 && (
-              <div className="p-4 bg-nova-amber/10 border-b border-nova-amber/20">
+              <div className="p-4 bg-amber-500/10 border-b border-amber-500/20">
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-nova-amber font-bold text-sm flex items-center gap-2">
+                  <h4 className="text-amber-500 font-bold text-sm flex items-center gap-2">
                     <Sparkles className="w-4 h-4" /> AI Suggestions
                   </h4>
-                  <button onClick={() => setSuggestedReplies([])} className="text-nova-silver hover:text-white text-xs">Clear</button>
+                  <button onClick={() => setSuggestedReplies([])} className="text-slate-300 hover:text-white text-xs">Clear</button>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {suggestedReplies.map((reply, i) => (
                     <button
                       key={i}
                       onClick={() => handleApplySuggestion(reply)}
-                      className="px-3 py-1.5 bg-black/40 border border-nova-amber/30 text-nova-amber rounded-lg text-xs hover:bg-nova-amber hover:text-white transition-colors text-left line-clamp-1"
+                      className="px-3 py-1.5 bg-black/40 border border-amber-500/30 text-amber-500 rounded-lg text-xs hover:bg-amber-500 hover:text-white transition-colors text-left line-clamp-1"
                     >
                       {reply}
                     </button>
@@ -287,7 +287,7 @@ export function SupportClient({ initialConversations }: { initialConversations: 
                 if (isSystem) {
                   return (
                     <div key={msg.id} className="flex justify-center">
-                      <div className="px-4 py-1.5 bg-white/5 rounded-full text-xs font-medium text-nova-silver flex items-center gap-2">
+                      <div className="px-4 py-1.5 bg-white/5 rounded-full text-xs font-medium text-slate-300 flex items-center gap-2">
                         <AlertCircle className="w-3 h-3" />
                         {msg.content}
                       </div>
@@ -299,10 +299,10 @@ export function SupportClient({ initialConversations }: { initialConversations: 
                   <div key={msg.id} className={`flex ${isAdmin ? "justify-end" : "justify-start"}`}>
                     <div className={`max-w-[80%] p-4 rounded-2xl ${
                       isAdmin 
-                        ? "bg-nova-blue text-white rounded-tr-none" 
+                        ? "bg-cta-primary text-white rounded-tr-none" 
                         : isAi 
-                          ? "bg-nova-amber text-white rounded-tl-none" 
-                          : "glass-panel border border-white/10 bg-white/5 text-nova-silver rounded-tl-none"
+                          ? "bg-amber-500 text-white rounded-tl-none" 
+                          : "glass-panel border border-white/10 bg-white/5 text-slate-300 rounded-tl-none"
                     }`}>
                       <div className="flex items-center gap-2 mb-2 opacity-70">
                         <span className="text-xs font-bold flex items-center gap-1">
@@ -319,11 +319,11 @@ export function SupportClient({ initialConversations }: { initialConversations: 
               
               {typingUsers.length > 0 && (
                 <div className="flex justify-start">
-                  <div className="max-w-[80%] p-3 rounded-2xl glass-panel border border-white/10 bg-white/5 text-nova-silver rounded-tl-none flex items-center gap-2">
+                  <div className="max-w-[80%] p-3 rounded-2xl glass-panel border border-white/10 bg-white/5 text-slate-300 rounded-tl-none flex items-center gap-2">
                     <div className="flex gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-nova-silver animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-nova-silver animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                      <div className="w-1.5 h-1.5 rounded-full bg-nova-silver animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: "300ms" }}></div>
                     </div>
                     <span className="text-xs italic">Someone is typing...</span>
                   </div>
@@ -341,25 +341,25 @@ export function SupportClient({ initialConversations }: { initialConversations: 
                     value={replyMessage}
                     onChange={handleTyping}
                     placeholder="Type your reply here..."
-                    className="flex-1 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-nova-blue resize-none h-14"
+                    className="flex-1 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cta-primary resize-none h-14"
                   />
                   <button
                     type="submit"
                     disabled={isSubmitting || !replyMessage.trim()}
-                    className="px-6 py-2 bg-nova-blue text-white rounded-xl font-bold hover:bg-nova-blue/80 transition-colors disabled:opacity-50 flex items-center gap-2 h-14"
+                    className="px-6 py-2 bg-cta-primary text-white rounded-xl font-bold hover:bg-cta-primary/80 transition-colors disabled:opacity-50 flex items-center gap-2 h-14"
                   >
                     <Send className="w-4 h-4" /> {isSubmitting ? "Sending..." : "Reply"}
                   </button>
                 </form>
               </div>
             ) : (
-              <div className="p-4 border-t border-white/10 bg-white/5 text-center text-nova-silver flex items-center justify-center gap-2">
-                <CheckCircle className="w-4 h-4 text-nova-emerald" /> This conversation is closed.
+              <div className="p-4 border-t border-white/10 bg-white/5 text-center text-slate-300 flex items-center justify-center gap-2">
+                <CheckCircle className="w-4 h-4 text-emerald-500" /> This conversation is closed.
               </div>
             )}
           </>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center text-nova-silver p-8 text-center">
+          <div className="flex-1 flex flex-col items-center justify-center text-slate-300 p-8 text-center">
             <MessageSquare className="w-12 h-12 mb-4 opacity-20" />
             <p>Select a conversation from the sidebar to view details and reply.</p>
           </div>

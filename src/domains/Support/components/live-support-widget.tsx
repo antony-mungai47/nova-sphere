@@ -36,7 +36,7 @@ export function LiveSupportWidget() {
       {/* Floating Action Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl border border-white/10 ${isOpen ? 'bg-red-500 hover:bg-red-600 rotate-90' : 'bg-nova-blue hover:bg-blue-600'}`}
+        className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl border border-white/10 ${isOpen ? 'bg-red-500 hover:bg-red-600 rotate-90' : 'bg-cta-primary hover:bg-orange-'}`}
       >
         {isOpen ? <X className="text-white w-6 h-6" /> : <MessageCircle className="text-white w-6 h-6" />}
       </button>
@@ -45,9 +45,9 @@ export function LiveSupportWidget() {
       {isOpen && (
         <div className="absolute bottom-20 right-0 w-80 sm:w-96 bg-[#1a1a1a] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5">
           {/* Header */}
-          <div className="bg-nova-blue/10 border-b border-white/5 p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-nova-blue/20 flex items-center justify-center">
-              <Bot className="text-nova-blue w-6 h-6" />
+          <div className="bg-cta-primary/10 border-b border-white/5 p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-cta-primary/20 flex items-center justify-center">
+              <Bot className="text-cta-primary w-6 h-6" />
             </div>
             <div>
               <h3 className="text-white font-bold text-sm">Nova Support Platform</h3>
@@ -62,23 +62,23 @@ export function LiveSupportWidget() {
           <div className="flex-1 p-4 h-96 overflow-y-auto flex flex-col gap-4">
             {messages.map((m: any) => (
               <div key={m.id} className={`flex gap-3 max-w-[85%] ${m.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}>
-                <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${m.role === 'user' ? 'bg-white/10' : 'bg-nova-blue/20'}`}>
-                  {m.role === 'user' ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-nova-blue" />}
+                <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${m.role === 'user' ? 'bg-white/10' : 'bg-cta-primary/20'}`}>
+                  {m.role === 'user' ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-cta-primary" />}
                 </div>
-                <div className={`p-3 rounded-2xl text-sm ${m.role === 'user' ? 'bg-nova-blue text-white rounded-tr-sm' : 'bg-white/5 text-nova-silver border border-white/5 rounded-tl-sm'}`}>
+                <div className={`p-3 rounded-2xl text-sm ${m.role === 'user' ? 'bg-cta-primary text-white rounded-tr-sm' : 'bg-white/5 text-slate-300 border border-white/5 rounded-tl-sm'}`}>
                   {m.content}
                 </div>
               </div>
             ))}
             {isLoading && (
               <div className="flex gap-3 max-w-[85%]">
-                <div className="w-8 h-8 rounded-full bg-nova-blue/20 flex items-center justify-center">
-                  <Bot className="w-4 h-4 text-nova-blue" />
+                <div className="w-8 h-8 rounded-full bg-cta-primary/20 flex items-center justify-center">
+                  <Bot className="w-4 h-4 text-cta-primary" />
                 </div>
-                <div className="p-3 rounded-2xl bg-white/5 border border-white/5 rounded-tl-sm text-nova-silver flex items-center gap-1">
-                  <span className="w-2 h-2 bg-nova-silver rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 bg-nova-silver rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 bg-nova-silver rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="p-3 rounded-2xl bg-white/5 border border-white/5 rounded-tl-sm text-slate-300 flex items-center gap-1">
+                  <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -91,12 +91,12 @@ export function LiveSupportWidget() {
                 value={input}
                 onChange={handleInputChange}
                 placeholder="Type your message..."
-                className="w-full bg-white/5 border border-white/10 rounded-full py-3 px-4 pr-12 text-sm text-white placeholder-white/30 focus:outline-none focus:border-nova-blue transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-full py-3 px-4 pr-12 text-sm text-white placeholder-white/30 focus:outline-none focus:border-cta-primary transition-colors"
               />
               <button 
                 type="submit" 
                 disabled={!input.trim() || isLoading}
-                className="absolute right-2 p-2 bg-nova-blue rounded-full text-white hover:bg-blue-600 disabled:opacity-50 disabled:hover:bg-nova-blue transition-colors"
+                className="absolute right-2 p-2 bg-cta-primary rounded-full text-white hover:bg-orange- disabled:opacity-50 disabled:hover:bg-cta-primary transition-colors"
               >
                 <Send className="w-4 h-4" />
               </button>

@@ -89,7 +89,7 @@ export function FlyToCartProvider({ children }: { children: React.ReactNode }) {
               }}
               className="absolute w-20 h-20 bg-surface rounded-xl shadow-glow-primary flex items-center justify-center p-2 pointer-events-none"
             >
-              <Image src={item.image} alt="Flying item" fill className="object-contain p-2 mix-blend-multiply" />
+              <Image src={item.image} alt="Flying item" fill className="object-contain p-2" />
             </motion.div>
           ))}
         </AnimatePresence>

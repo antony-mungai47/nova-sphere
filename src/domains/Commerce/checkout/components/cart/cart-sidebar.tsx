@@ -123,20 +123,20 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-nova-navy/95 backdrop-blur-xl border-l border-white/10 z-50 flex flex-col shadow-2xl"
+            className="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-slate-900/95 backdrop-blur-xl border-l border-white/10 z-50 flex flex-col shadow-2xl"
           >
             {/* Header */}
             <div className="p-6 border-b border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <ShoppingBag className="w-5 h-5 text-nova-blue" />
+                <ShoppingBag className="w-5 h-5 text-cta-primary" />
                 <h2 className="text-xl font-bold text-white">Your Cart</h2>
-                <span className="bg-nova-blue/20 text-nova-blue text-xs font-bold px-2 py-1 rounded-full">
+                <span className="bg-cta-primary/20 text-cta-primary text-xs font-bold px-2 py-1 rounded-full">
                   {items.length}
                 </span>
               </div>
               <button 
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-white/10 text-nova-silver hover:text-white transition-colors"
+                className="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -145,7 +145,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
             {/* Cart Items */}
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-nova-silver space-y-4">
+                <div className="h-full flex flex-col items-center justify-center text-slate-300 space-y-4">
                   <ShoppingBag className="w-16 h-16 opacity-20" />
                   <p className="text-lg">Your cart is empty.</p>
                   <Button onClick={onClose} className="mt-4">
@@ -162,19 +162,19 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                       <div className="flex-1 flex flex-col justify-between py-1">
                         <div>
                           <h3 className="text-white font-medium text-sm line-clamp-1">{item.name}</h3>
-                          <p className="text-nova-blue font-semibold mt-1">${item.price.toFixed(2)}</p>
+                          <p className="text-cta-primary font-semibold mt-1">${item.price.toFixed(2)}</p>
                         </div>
                         <div className="flex items-center gap-3">
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-nova-blue transition-colors"
+                            className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-cta-primary transition-colors"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
                           <span className="text-white text-sm w-4 text-center">{item.quantity}</span>
                           <button 
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-nova-blue transition-colors"
+                            className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-white hover:bg-cta-primary transition-colors"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
@@ -182,7 +182,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                       </div>
                       <button 
                         onClick={() => removeItem(item.id)}
-                        className="absolute top-4 right-4 text-nova-silver hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                        className="absolute top-4 right-4 text-slate-300 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -193,7 +193,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                   {upsells.length > 0 && (
                     <div className="pt-8 mt-8 border-t border-white/10">
                       <h4 className="text-white font-bold mb-4 flex items-center gap-2">
-                        <Star className="w-4 h-4 text-nova-amber fill-nova-amber" /> You Might Also Like
+                        <Star className="w-4 h-4 text-amber-500 fill-amber-500" /> You Might Also Like
                       </h4>
                       <div className="space-y-4">
                         {upsells.map((upsell) => (
@@ -203,7 +203,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                             </div>
                             <div className="flex-1">
                               <p className="text-white text-xs font-bold line-clamp-1">{upsell.name}</p>
-                              <p className="text-nova-blue text-xs font-medium">${(upsell.salePrice || upsell.price).toFixed(2)}</p>
+                              <p className="text-cta-primary text-xs font-medium">${(upsell.salePrice || upsell.price).toFixed(2)}</p>
                             </div>
                             <button 
                               onClick={() => {
@@ -211,7 +211,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                                   id: upsell.id, name: upsell.name, price: upsell.salePrice || upsell.price, image: upsell.image, quantity: 1
                                 });
                               }}
-                              className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-nova-blue transition-colors"
+                              className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-cta-primary transition-colors"
                             >
                               <Plus className="w-4 h-4" />
                             </button>
@@ -236,7 +236,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
                       placeholder="Coupon Code (Try NOVA10)" 
-                      className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-nova-blue"
+                      className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-cta-primary"
                     />
                     <button 
                       onClick={applyCoupon}
@@ -254,7 +254,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
 
                 <div className="pt-2">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-nova-silver">Subtotal</span>
+                    <span className="text-slate-300">Subtotal</span>
                     <span className="text-white font-medium">${getCartTotal().toFixed(2)}</span>
                   </div>
                   {discountPercent > 0 && (
@@ -267,7 +267,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                     <span className="text-white font-bold">Total</span>
                     <span className="text-white font-bold text-xl">${getDiscountedTotal().toFixed(2)}</span>
                   </div>
-                  <p className="text-xs text-nova-silver mb-4 text-center">Shipping & taxes calculated at checkout.</p>
+                  <p className="text-xs text-slate-300 mb-4 text-center">Shipping & taxes calculated at checkout.</p>
                 </div>
                 <Button 
                   onClick={handleCheckout} 

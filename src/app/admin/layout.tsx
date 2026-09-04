@@ -30,9 +30,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen bg-black flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-nova-charcoal border-r border-white/10 flex flex-col h-screen sticky top-0">
+      <aside className="w-64 bg-slate-800 border-r border-white/10 flex flex-col h-screen sticky top-0">
         <div className="p-6 border-b border-white/10">
-          <Link href="/" className="flex items-center gap-2 mb-6 text-nova-silver hover:text-white transition-colors">
+          <Link href="/" className="flex items-center gap-2 mb-6 text-slate-300 hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm">Back to Store</span>
           </Link>
@@ -41,45 +41,45 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               <Image src="/logo.png" alt="Nova Sphere Admin" fill className="object-contain" sizes="32px" priority />
             </div>
             <div className="text-xl font-black text-white tracking-widest uppercase">
-              NOVA<span className="text-transparent bg-clip-text bg-gradient-to-r from-nova-blue to-nova-emerald">ADMIN</span>
+              NOVA<span className="text-transparent bg-clip-text bg-gradient-to-r from-cta-primary to-emerald-500">ADMIN</span>
             </div>
           </div>
         </div>
 
         <nav className="flex-1 p-4 space-y-2">
           <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-colors">
-            <LayoutDashboard className="w-5 h-5 text-nova-blue" />
+            <LayoutDashboard className="w-5 h-5 text-cta-primary" />
             <span className="font-medium">Dashboard</span>
           </Link>
-          <Link href="/admin/products" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/products" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <PackageSearch className="w-5 h-5" />
             <span className="font-medium">Products</span>
           </Link>
-          <Link href="/admin/orders" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/orders" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <PackageSearch className="w-5 h-5" />
             <span className="font-medium">Orders</span>
           </Link>
-          <Link href="/admin/customers" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/customers" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <Users className="w-5 h-5" />
             <span className="font-medium">Users</span>
           </Link>
-          <Link href="/admin/analytics" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/analytics" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <BarChart3 className="w-5 h-5" />
             <span className="font-medium">Analytics</span>
           </Link>
-          <Link href="/admin/financials" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/financials" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <BarChart3 className="w-5 h-5" />
             <span className="font-medium">Financials</span>
           </Link>
-          <Link href="/admin/marketing" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/marketing" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <BarChart3 className="w-5 h-5" />
             <span className="font-medium">Marketing</span>
           </Link>
-          <Link href="/admin/settings" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/settings" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <Settings className="w-5 h-5" />
             <span className="font-medium">Settings</span>
           </Link>
-          <Link href="/admin/reports" className="flex items-center gap-3 px-4 py-3 rounded-xl text-nova-silver hover:bg-white/5 hover:text-white transition-colors">
+          <Link href="/admin/reports" className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
             <BarChart3 className="w-5 h-5" />
             <span className="font-medium">Reports</span>
           </Link>
@@ -90,8 +90,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <UserButton />
             <div className="flex flex-col">
               <span className="text-white text-sm font-medium">Admin Panel</span>
-              <span className="text-nova-silver text-xs flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-nova-emerald" />
+              <span className="text-slate-300 text-xs flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-emerald-500" />
                 {roleLabel}
               </span>
             </div>

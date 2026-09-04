@@ -21,16 +21,16 @@ export default async function VendorProductsPage() {
     <div className="p-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold text-white">My Products</h1>
-        <Link href="/vendor/products/new" className="bg-nova-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+        <Link href="/vendor/products/new" className="bg-cta-primary text-white px-4 py-2 rounded-lg hover:bg-orange- transition-colors">
           + Add Product
         </Link>
       </div>
 
       <div className="bg-[#1a1f2e] border border-white/10 rounded-xl shadow-lg p-6">
         {products.length === 0 ? (
-          <p className="text-nova-silver">You haven't listed any products yet.</p>
+          <p className="text-slate-300">You haven't listed any products yet.</p>
         ) : (
-          <table className="w-full text-left text-sm text-nova-silver">
+          <table className="w-full text-left text-sm text-slate-300">
             <thead className="bg-black/30 text-white uppercase font-bold text-xs">
               <tr>
                 <th className="px-4 py-3">Product Name</th>

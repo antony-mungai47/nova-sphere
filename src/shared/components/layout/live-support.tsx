@@ -34,7 +34,7 @@ export function LiveSupport() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-nova-blue rounded-full shadow-[0_0_30px_rgba(59,130,246,0.5)] flex items-center justify-center text-white hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-cta-primary rounded-full shadow-[0_0_30px_rgba(249,115,22,0.5)] flex items-center justify-center text-white hover:scale-110 transition-transform"
       >
         <MessageCircle className="w-6 h-6" />
       </button>
@@ -50,7 +50,7 @@ export function LiveSupport() {
             style={{ height: "500px" }}
           >
             {/* Header */}
-            <div className="bg-nova-blue p-4 flex items-center justify-between">
+            <div className="bg-cta-primary p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                   <User className="w-5 h-5 text-white" />
@@ -71,8 +71,8 @@ export function LiveSupport() {
                 <div key={idx} className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}>
                   <div className={`max-w-[85%] rounded-2xl p-3 text-sm ${
                     msg.sender === "user" 
-                      ? "bg-nova-blue text-white rounded-br-none" 
-                      : "bg-white/10 text-nova-silver border border-white/5 rounded-bl-none"
+                      ? "bg-cta-primary text-white rounded-br-none" 
+                      : "bg-white/10 text-slate-300 border border-white/5 rounded-bl-none"
                   }`}>
                     {msg.text}
                   </div>
@@ -89,11 +89,11 @@ export function LiveSupport() {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-sm text-white focus:outline-none focus:border-nova-blue"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-4 pr-12 text-sm text-white focus:outline-none focus:border-cta-primary"
                 />
                 <button 
                   onClick={handleSend}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-nova-blue rounded-lg flex items-center justify-center text-white hover:bg-nova-blue/80 transition-colors"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-cta-primary rounded-lg flex items-center justify-center text-white hover:bg-cta-primary/80 transition-colors"
                 >
                   <Send className="w-4 h-4" />
                 </button>

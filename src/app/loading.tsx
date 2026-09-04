@@ -5,11 +5,11 @@ export default function Loading() {
         {/* Animated spinner */}
         <div className="relative w-16 h-16">
           <div className="absolute inset-0 rounded-full border-2 border-white/10" />
-          <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-nova-blue animate-spin" />
+          <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-cta-primary animate-spin" />
         </div>
         <div className="flex items-center gap-2">
           <span className="text-white font-bold tracking-widest text-sm uppercase">NOVA</span>
-          <span className="text-nova-blue font-bold tracking-widest text-sm uppercase">SPHERE</span>
+          <span className="text-cta-primary font-bold tracking-widest text-sm uppercase">SPHERE</span>
         </div>
       </div>
     </div>

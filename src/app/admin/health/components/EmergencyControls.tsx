@@ -34,9 +34,9 @@ export default function EmergencyControls() {
               <Power className="w-4 h-4 text-red-400" />
               Enable Maintenance Mode
             </div>
-            <div className="text-nova-silver text-xs">Redirects all traffic to status page</div>
+            <div className="text-slate-300 text-xs">Redirects all traffic to status page</div>
           </div>
-          {loading === "Maintenance Mode" && <RefreshCw className="w-4 h-4 text-nova-silver animate-spin" />}
+          {loading === "Maintenance Mode" && <RefreshCw className="w-4 h-4 text-slate-300 animate-spin" />}
         </button>
 
         <button 
@@ -49,9 +49,9 @@ export default function EmergencyControls() {
               <Database className="w-4 h-4 text-amber-400" />
               Disable Checkout
             </div>
-            <div className="text-nova-silver text-xs">Halts new payments and cart execution</div>
+            <div className="text-slate-300 text-xs">Halts new payments and cart execution</div>
           </div>
-          {loading === "Disable Checkout" && <RefreshCw className="w-4 h-4 text-nova-silver animate-spin" />}
+          {loading === "Disable Checkout" && <RefreshCw className="w-4 h-4 text-slate-300 animate-spin" />}
         </button>
         
         <button 
@@ -61,21 +61,21 @@ export default function EmergencyControls() {
         >
           <div>
             <div className="text-white font-bold mb-1">Disable Live Auctions</div>
-            <div className="text-nova-silver text-xs">Stops websocket bid processing</div>
+            <div className="text-slate-300 text-xs">Stops websocket bid processing</div>
           </div>
-          {loading === "Disable Auctions" && <RefreshCw className="w-4 h-4 text-nova-silver animate-spin" />}
+          {loading === "Disable Auctions" && <RefreshCw className="w-4 h-4 text-slate-300 animate-spin" />}
         </button>
         
         <button 
           onClick={() => handleAction("Restart Workers")}
           disabled={loading !== null}
-          className="flex items-center justify-between p-4 bg-black/40 hover:bg-nova-blue/20 border border-white/5 hover:border-nova-blue/50 rounded-lg transition-colors text-left group"
+          className="flex items-center justify-between p-4 bg-black/40 hover:bg-cta-primary/20 border border-white/5 hover:border-cta-primary/50 rounded-lg transition-colors text-left group"
         >
           <div>
             <div className="text-white font-bold mb-1">Restart Workers</div>
-            <div className="text-nova-silver text-xs">Flushes Inngest queue cache</div>
+            <div className="text-slate-300 text-xs">Flushes Inngest queue cache</div>
           </div>
-          {loading === "Restart Workers" && <RefreshCw className="w-4 h-4 text-nova-silver animate-spin" />}
+          {loading === "Restart Workers" && <RefreshCw className="w-4 h-4 text-slate-300 animate-spin" />}
         </button>
       </div>
     </div>

@@ -43,27 +43,27 @@ export default async function AdminAuctionsPage() {
       <div className="mb-8 flex justify-between items-start">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">Auction Moderation</h1>
-          <p className="text-nova-silver">Monitor live bids and manage marketplace integrity.</p>
+          <p className="text-slate-300">Monitor live bids and manage marketplace integrity.</p>
         </div>
         <AuctionClientActions products={products} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <div className="flex items-center gap-3 mb-4 text-nova-silver">
-            <Gavel className="w-5 h-5 text-nova-blue" /> Active Auctions
+          <div className="flex items-center gap-3 mb-4 text-slate-300">
+            <Gavel className="w-5 h-5 text-cta-primary" /> Active Auctions
           </div>
           <p className="text-3xl font-bold text-white">{activeAuctions.length}</p>
         </div>
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <div className="flex items-center gap-3 mb-4 text-nova-silver">
-            <AlertCircle className="w-5 h-5 text-nova-amber" /> Total Volume (Ended)
+          <div className="flex items-center gap-3 mb-4 text-slate-300">
+            <AlertCircle className="w-5 h-5 text-amber-500" /> Total Volume (Ended)
           </div>
           <p className="text-3xl font-bold text-white">${totalVolume.toFixed(2)}</p>
         </div>
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <div className="flex items-center gap-3 mb-4 text-nova-silver">
-            <Search className="w-5 h-5 text-nova-emerald" /> Total Bids (All Time)
+          <div className="flex items-center gap-3 mb-4 text-slate-300">
+            <Search className="w-5 h-5 text-emerald-500" /> Total Bids (All Time)
           </div>
           <p className="text-3xl font-bold text-white">{auctions.reduce((s, a) => s + a._count.bids, 0)}</p>
         </div>
@@ -76,12 +76,12 @@ export default async function AdminAuctionsPage() {
         <table className="w-full text-left">
           <thead className="bg-white/5 border-b border-white/10">
             <tr>
-              <th className="p-4 text-nova-silver font-medium text-sm">Product</th>
-              <th className="p-4 text-nova-silver font-medium text-sm">Current Bid</th>
-              <th className="p-4 text-nova-silver font-medium text-sm">Bids</th>
-              <th className="p-4 text-nova-silver font-medium text-sm">Status</th>
-              <th className="p-4 text-nova-silver font-medium text-sm">End Time</th>
-              <th className="p-4 text-nova-silver font-medium text-sm text-right">Actions</th>
+              <th className="p-4 text-slate-300 font-medium text-sm">Product</th>
+              <th className="p-4 text-slate-300 font-medium text-sm">Current Bid</th>
+              <th className="p-4 text-slate-300 font-medium text-sm">Bids</th>
+              <th className="p-4 text-slate-300 font-medium text-sm">Status</th>
+              <th className="p-4 text-slate-300 font-medium text-sm">End Time</th>
+              <th className="p-4 text-slate-300 font-medium text-sm text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
@@ -97,23 +97,23 @@ export default async function AdminAuctionsPage() {
                 <tr key={auction.id} className="hover:bg-white/5 transition-colors group">
                   <td className="p-4">
                     <p className="text-white font-medium line-clamp-1">{auction.product.name}</p>
-                    <p className="text-nova-silver text-xs">{auction.product.sku}</p>
+                    <p className="text-slate-300 text-xs">{auction.product.sku}</p>
                   </td>
                   <td className="p-4 text-white font-mono">
                     ${auction.currentBid.toFixed(2)}
-                    {auction.bids[0] && <p className="text-[10px] text-nova-blue mt-1">By: {auction.bids[0].user.name || 'Anon'}</p>}
+                    {auction.bids[0] && <p className="text-[10px] text-cta-primary mt-1">By: {auction.bids[0].user.name || 'Anon'}</p>}
                   </td>
-                  <td className="p-4 text-nova-silver">{auction._count.bids}</td>
+                  <td className="p-4 text-slate-300">{auction._count.bids}</td>
                   <td className="p-4">
                     <span className={`px-2 py-1 text-xs rounded-full border ${
-                      displayStatus === 'ACTIVE' ? 'bg-nova-emerald/20 text-nova-emerald border-nova-emerald/20' : 
-                      displayStatus === 'ENDED' ? 'bg-nova-silver/20 text-nova-silver border-nova-silver/20' : 
+                      displayStatus === 'ACTIVE' ? 'bg-emerald-500/20 text-emerald-500 border-emerald-500/20' : 
+                      displayStatus === 'ENDED' ? 'bg-slate-300/20 text-slate-300 border-slate-300/20' : 
                       'bg-red-500/20 text-red-400 border-red-500/20'
                     }`}>
                       {displayStatus}
                     </span>
                   </td>
-                  <td className="p-4 text-nova-silver text-sm">
+                  <td className="p-4 text-slate-300 text-sm">
                     {new Date(auction.endTime).toLocaleString()}
                   </td>
                   <td className="p-4 text-right">

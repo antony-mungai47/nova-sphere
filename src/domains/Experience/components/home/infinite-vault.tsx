@@ -51,7 +51,7 @@ export function InfiniteVault() {
   return (
     <section className="py-24 bg-black relative overflow-hidden">
       {/* Vault lighting effect */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-nova-amber/5 blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-amber-500/5 blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-6 mb-12 text-center relative z-10">
         <h2 className="text-sm font-bold text-[var(--color-accent)] tracking-[0.3em] uppercase mb-4">The Nova Vault</h2>

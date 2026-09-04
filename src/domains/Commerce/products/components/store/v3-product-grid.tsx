@@ -113,28 +113,28 @@ export const ProductGridV3 = ({
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <Filter className="w-5 h-5 text-white" /> Filters
             </h3>
-            <button onClick={clearFilters} className="text-xs text-nova-silver hover:text-white transition-colors">
+            <button onClick={clearFilters} className="text-xs text-slate-300 hover:text-white transition-colors">
               Clear All
             </button>
           </div>
 
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-nova-silver mb-2">Search</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Search</label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-nova-silver" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Find products..."
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 pl-9 pr-4 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-white transition-colors"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 pl-9 pr-4 text-sm text-white placeholder-slate-300/50 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-nova-silver mb-2">Category</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
@@ -147,7 +147,7 @@ export const ProductGridV3 = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-nova-silver mb-2">Brand</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Brand</label>
               <select
                 value={selectedBrand}
                 onChange={(e) => setSelectedBrand(e.target.value)}
@@ -160,22 +160,22 @@ export const ProductGridV3 = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-nova-silver mb-2">Price Range</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Price Range</label>
               <div className="flex items-center gap-2">
                 <input
                   type="number"
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value)}
                   placeholder="Min"
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-white transition-colors"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-slate-300/50 focus:outline-none focus:border-white transition-colors"
                 />
-                <span className="text-nova-silver">-</span>
+                <span className="text-slate-300">-</span>
                 <input
                   type="number"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
                   placeholder="Max"
-                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-nova-silver/50 focus:outline-none focus:border-white transition-colors"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-3 text-sm text-white placeholder-slate-300/50 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
             </div>
@@ -187,11 +187,11 @@ export const ProductGridV3 = ({
       <div className="flex-1">
         {/* Top Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          <p className="text-nova-silver text-sm">
+          <p className="text-slate-300 text-sm">
             Showing <span className="text-white font-bold">{initialProducts.length}</span> results
           </p>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-nova-silver">Sort by:</span>
+            <span className="text-sm text-slate-300">Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -208,9 +208,9 @@ export const ProductGridV3 = ({
         {/* Product Grid */}
         {initialProducts.length === 0 ? (
           <div className="glass-panel py-20 text-center rounded-2xl border-dashed border-2 border-white/10">
-            <Search className="w-12 h-12 text-nova-silver mx-auto mb-4 opacity-50" />
+            <Search className="w-12 h-12 text-slate-300 mx-auto mb-4 opacity-50" />
             <h3 className="text-xl font-bold text-white mb-2">No products found</h3>
-            <p className="text-nova-silver mb-6">Try adjusting your filters or search query.</p>
+            <p className="text-slate-300 mb-6">Try adjusting your filters or search query.</p>
             <Button variant="secondary" onClick={clearFilters}>Clear All Filters</Button>
           </div>
         ) : (
@@ -240,7 +240,7 @@ export const ProductGridV3 = ({
                         {/* Tags */}
                         <div className="absolute top-3 left-3 flex flex-col gap-2">
                           {product.salePrice && (
-                            <span className="bg-nova-amber text-black text-xs font-bold px-2 py-1 rounded shadow-lg">
+                            <span className="bg-amber-500 text-black text-xs font-bold px-2 py-1 rounded shadow-lg">
                               SALE
                             </span>
                           )}
@@ -250,7 +250,7 @@ export const ProductGridV3 = ({
                         <div className="absolute top-3 right-3 flex flex-col gap-2 translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-motion-standard">
                           <button 
                             onClick={(e) => handleWishlist(product, e)}
-                            className="w-8 h-8 bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:text-nova-emerald transition-colors"
+                            className="w-8 h-8 bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:text-emerald-500 transition-colors"
                           >
                             <Heart className="w-4 h-4" />
                           </button>
@@ -260,22 +260,22 @@ export const ProductGridV3 = ({
                       {/* Content */}
                       <div className="p-5 flex flex-col flex-grow">
                         <div className="flex items-center gap-1 mb-2">
-                          <Star className="w-3 h-3 text-nova-amber fill-nova-amber" />
+                          <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
                           <span className="text-xs font-bold text-white">{product.rating.toFixed(1)}</span>
-                          <span className="text-xs text-nova-silver">({product.reviewCount})</span>
+                          <span className="text-xs text-slate-300">({product.reviewCount})</span>
                         </div>
                         
                         <h3 className="text-sm font-bold text-white mb-1 line-clamp-2 group-hover:text-white transition-colors">
                           {product.name}
                         </h3>
-                        <p className="text-xs text-nova-silver mb-4">{product.brand}</p>
+                        <p className="text-xs text-slate-300 mb-4">{product.brand}</p>
                         
                         <div className="mt-auto flex items-end justify-between">
                           <div>
                             {product.salePrice ? (
                               <div className="flex flex-col">
-                                <span className="text-xs text-nova-silver line-through">${product.price.toFixed(2)}</span>
-                                <span className="text-lg font-bold text-nova-amber">${product.salePrice.toFixed(2)}</span>
+                                <span className="text-xs text-slate-300 line-through">${product.price.toFixed(2)}</span>
+                                <span className="text-lg font-bold text-amber-500">${product.salePrice.toFixed(2)}</span>
                               </div>
                             ) : (
                               <span className="text-lg font-bold text-white">${product.price.toFixed(2)}</span>

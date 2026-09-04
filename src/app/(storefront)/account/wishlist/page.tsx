@@ -20,7 +20,7 @@ export default async function WishlistPage() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
       <div className="flex items-center gap-3 mb-8 pb-4 border-b border-white/10">
-        <Heart className="w-8 h-8 text-nova-accent fill-nova-accent" />
+        <Heart className="w-8 h-8 text-cta-primary fill-cta-primary" />
         <h1 className="text-3xl font-bold text-white">Your Wishlist</h1>
         <span className="ml-auto bg-white/10 text-white px-3 py-1 rounded-full text-sm font-semibold">
           {items.length} Items
@@ -31,8 +31,8 @@ export default async function WishlistPage() {
         <div className="text-center py-20 bg-white/5 border border-white/10 rounded-2xl">
           <Heart className="w-16 h-16 text-white/20 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-white mb-2">Your wishlist is empty</h2>
-          <p className="text-nova-silver mb-6">Explore the marketplace and save your favorite items.</p>
-          <Link href="/store" className="bg-nova-blue text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+          <p className="text-slate-300 mb-6">Explore the marketplace and save your favorite items.</p>
+          <Link href="/store" className="bg-cta-primary text-white px-6 py-3 rounded-lg hover:bg-orange- transition-colors font-semibold">
             Start Shopping
           </Link>
         </div>
@@ -62,7 +62,7 @@ export default async function WishlistPage() {
                 <div className="p-4 flex flex-col flex-1">
                   <h3 className="font-bold text-white line-clamp-1 mb-1">{item.product.name}</h3>
                   <div className="flex items-center justify-between mb-4 mt-auto">
-                    <span className="text-xl font-bold text-nova-accent">${Number(item.product.price).toLocaleString()}</span>
+                    <span className="text-xl font-bold text-cta-primary">${Number(item.product.price).toLocaleString()}</span>
                     {item.product.stock > 0 ? (
                       <span className="text-xs text-emerald-400 font-semibold bg-emerald-400/10 px-2 py-1 rounded">In Stock</span>
                     ) : (

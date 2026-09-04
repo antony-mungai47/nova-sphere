@@ -40,16 +40,16 @@ export default async function RecommendedPage() {
               <Sparkles className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-              Recommended <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-nova-emerald">For You</span>
+              Recommended <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-emerald-500">For You</span>
             </h1>
-            <p className="text-xl text-nova-silver max-w-2xl mx-auto mb-8">
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
               {userContext}
             </p>
 
-            <div className="glass-panel px-6 py-3 rounded-full border border-nova-emerald/30 bg-nova-emerald/5 flex items-center gap-3">
-              <Activity className="w-4 h-4 text-nova-emerald animate-pulse" />
+            <div className="glass-panel px-6 py-3 rounded-full border border-emerald-500/30 bg-emerald-500/5 flex items-center gap-3">
+              <Activity className="w-4 h-4 text-emerald-500 animate-pulse" />
               <span className="text-sm font-bold text-white tracking-wider">
-                MATCH CONFIDENCE: <span className="text-nova-emerald">{confidenceScore}%</span>
+                MATCH CONFIDENCE: <span className="text-emerald-500">{confidenceScore}%</span>
               </span>
             </div>
           </div>

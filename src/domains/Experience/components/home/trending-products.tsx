@@ -40,8 +40,8 @@ export const TrendingProducts = ({ initialProducts }: { initialProducts: Product
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-nova-blue/10 rounded-full blur-[100px] -z-10 pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-nova-amber/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-cta-primary/10 rounded-full blur-[100px] -z-10 pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px] -z-10 pointer-events-none" />
 
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
@@ -53,9 +53,9 @@ export const TrendingProducts = ({ initialProducts }: { initialProducts: Product
             className="max-w-2xl"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-              Trending <span className="text-transparent bg-clip-text bg-gradient-to-r from-nova-blue to-nova-amber">Now</span>
+              Trending <span className="text-transparent bg-clip-text bg-gradient-to-r from-cta-primary to-amber-500">Now</span>
             </h2>
-            <p className="text-nova-silver text-lg">
+            <p className="text-slate-300 text-lg">
               Discover the most sought-after tech shaping the future. Handpicked selections for the visionaries.
             </p>
           </motion.div>
@@ -95,13 +95,13 @@ export const TrendingProducts = ({ initialProducts }: { initialProducts: Product
                     
                     {/* Sale Badge */}
                     {product.salePrice && (
-                      <div className="absolute top-3 left-3 z-20 px-2 py-0.5 rounded-full bg-nova-amber/20 border border-nova-amber/30 text-nova-amber text-[10px] font-bold tracking-wider">
+                      <div className="absolute top-3 left-3 z-20 px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-500 text-[10px] font-bold tracking-wider">
                         SALE
                       </div>
                     )}
                     <button 
                       onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                      className="absolute top-3 right-3 text-white/50 hover:text-nova-amber transition-colors z-10"
+                      className="absolute top-3 right-3 text-white/50 hover:text-amber-500 transition-colors z-10"
                     >
                       <Heart className="w-5 h-5" />
                     </button>
@@ -120,15 +120,15 @@ export const TrendingProducts = ({ initialProducts }: { initialProducts: Product
                   
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
-                      <p className="text-xs text-nova-silver font-medium mb-1 uppercase tracking-wider">{product.brand}</p>
-                      <h3 className="text-lg font-semibold text-white leading-tight mb-2 group-hover:text-nova-blue transition-colors line-clamp-1">{product.name}</h3>
+                      <p className="text-xs text-slate-300 font-medium mb-1 uppercase tracking-wider">{product.brand}</p>
+                      <h3 className="text-lg font-semibold text-white leading-tight mb-2 group-hover:text-cta-primary transition-colors line-clamp-1">{product.name}</h3>
                     </div>
                     <div className="flex items-center justify-between mt-4">
                       <div className="flex flex-col">
                         {product.salePrice ? (
                           <>
-                            <span className="text-xs text-nova-silver line-through">${product.price.toFixed(2)}</span>
-                            <span className="text-xl font-bold text-nova-amber">${product.salePrice.toFixed(2)}</span>
+                            <span className="text-xs text-slate-300 line-through">${product.price.toFixed(2)}</span>
+                            <span className="text-xl font-bold text-amber-500">${product.salePrice.toFixed(2)}</span>
                           </>
                         ) : (
                           <span className="text-xl font-bold text-white">${product.price.toFixed(2)}</span>
@@ -136,7 +136,7 @@ export const TrendingProducts = ({ initialProducts }: { initialProducts: Product
                       </div>
                       <button 
                         onClick={(e) => { e.preventDefault(); handleAddToCart(product, e); }}
-                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-nova-blue hover:text-white text-nova-silver flex items-center justify-center transition-colors z-10 relative"
+                        className="w-10 h-10 rounded-full bg-white/10 hover:bg-cta-primary hover:text-white text-slate-300 flex items-center justify-center transition-colors z-10 relative"
                       >
                         <ShoppingCart className="w-4 h-4" />
                       </button>

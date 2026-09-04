@@ -33,7 +33,7 @@ export function AuctionCountdown({ endTimeStr }: { endTimeStr: string }) {
 
   if (!timeLeft) {
     return (
-      <div className="flex items-center gap-2 text-nova-silver animate-pulse">
+      <div className="flex items-center gap-2 text-slate-300 animate-pulse">
         <Clock className="w-5 h-5" /> Calculating...
       </div>
     );
@@ -50,20 +50,20 @@ export function AuctionCountdown({ endTimeStr }: { endTimeStr: string }) {
         {timeLeft.d > 0 && (
           <div className="flex flex-col items-center">
             <span>{timeLeft.d.toString().padStart(2, "0")}</span>
-            <span className="text-[10px] text-nova-slate uppercase font-sans tracking-wider">Days</span>
+            <span className="text-[10px] text-slate-500 uppercase font-sans tracking-wider">Days</span>
           </div>
         )}
-        {timeLeft.d > 0 && <span className="text-nova-slate mt-1">:</span>}
+        {timeLeft.d > 0 && <span className="text-slate-500 mt-1">:</span>}
         <div className="flex flex-col items-center">
           <span>{timeLeft.h.toString().padStart(2, "0")}</span>
-          <span className="text-[10px] text-nova-slate uppercase font-sans tracking-wider">Hrs</span>
+          <span className="text-[10px] text-slate-500 uppercase font-sans tracking-wider">Hrs</span>
         </div>
-        <span className="text-nova-slate mt-1">:</span>
+        <span className="text-slate-500 mt-1">:</span>
         <div className="flex flex-col items-center">
           <span>{timeLeft.m.toString().padStart(2, "0")}</span>
-          <span className="text-[10px] text-nova-slate uppercase font-sans tracking-wider">Min</span>
+          <span className="text-[10px] text-slate-500 uppercase font-sans tracking-wider">Min</span>
         </div>
-        <span className="text-nova-slate mt-1">:</span>
+        <span className="text-slate-500 mt-1">:</span>
         <div className="flex flex-col items-center text-[var(--color-accent)] drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
           <span>{timeLeft.s.toString().padStart(2, "0")}</span>
           <span className="text-[10px] text-[var(--color-accent)] opacity-70 uppercase font-sans tracking-wider">Sec</span>

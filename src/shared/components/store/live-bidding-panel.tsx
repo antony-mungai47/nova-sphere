@@ -60,12 +60,12 @@ export function LiveBiddingPanel({ auctionId, initialBid, initialEndTime, reserv
     <div className="glass-panel p-6 rounded-3xl border border-white/10 sticky top-24">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-white flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-nova-blue" />
+          <TrendingUp className="w-5 h-5 text-cta-primary" />
           Live Auction
         </h3>
         <div className="flex items-center gap-2 bg-black/40 px-3 py-1 rounded-full border border-white/5">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs text-nova-silver">{activeBidders} Active</span>
+          <span className="text-xs text-slate-300">{activeBidders} Active</span>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ export function LiveBiddingPanel({ auctionId, initialBid, initialEndTime, reserv
               />
             )}
           </AnimatePresence>
-          <p className="text-sm text-nova-silver mb-1 relative z-10">Current Bid</p>
+          <p className="text-sm text-slate-300 mb-1 relative z-10">Current Bid</p>
           <motion.p 
             key={currentBid}
             initial={{ y: -10, opacity: 0 }}
@@ -116,7 +116,7 @@ export function LiveBiddingPanel({ auctionId, initialBid, initialEndTime, reserv
         </div>
 
         {/* Trust Indicators */}
-        <div className="pt-4 border-t border-white/10 flex justify-between text-xs text-nova-silver">
+        <div className="pt-4 border-t border-white/10 flex justify-between text-xs text-slate-300">
           <span className="flex items-center gap-1">
             <Clock className="w-3 h-3" /> Ends: {new Date(endTime).toLocaleTimeString()}
           </span>

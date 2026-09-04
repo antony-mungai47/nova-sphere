@@ -43,9 +43,9 @@ export default async function StorePage({
         
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-nova-amber">Store</span>
+            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-500">Store</span>
           </h1>
-          <p className="text-xl text-nova-silver max-w-2xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
             Browse our entire collection of next-generation technology. Your future starts here.
           </p>
         </div>

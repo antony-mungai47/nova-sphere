@@ -31,7 +31,7 @@ export function AnimatedGradient({
       {colors.map((color, i) => (
         <motion.div
           key={i}
-          className="absolute w-[600px] h-[600px] rounded-full mix-blend-multiply opacity-30 filter blur-[100px] will-change-transform"
+          className="absolute w-[600px] h-[600px] rounded-full opacity-30 filter blur-[100px] will-change-transform"
           style={{
             background: color,
             left: `${(i * 30) % 100}%`,

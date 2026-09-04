@@ -109,7 +109,7 @@ export default async function InvoicePage({ params }: { params: Promise<{ id: st
         <div className="mt-16 pt-8 border-t border-gray-200 text-center text-xs text-gray-500">
           <p className="mb-2">Thank you for your business.</p>
           <p>Payment Status: <span className="font-bold text-gray-800">{order.status}</span></p>
-          <p className="mt-4 no-print text-blue-600 hover:underline cursor-pointer" onClick={() => {/* Will be converted to client component or handled via JS */}}>
+          <p className="mt-4 no-print text-orange- hover:underline cursor-pointer" onClick={() => {/* Will be converted to client component or handled via JS */}}>
             <button className="px-4 py-2 bg-black text-white rounded mt-4" onClick={() => window.print()}>Print Invoice</button>
           </p>
         </div>

@@ -93,7 +93,7 @@ export function UpsellDrawer({ isOpen, onClose }: UpsellDrawerProps) {
                 {items.slice(0, 2).map((item: any) => (
                   <div key={item.id} className="flex gap-4 p-4 bg-surface border border-border rounded-xl">
                     <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-muted/20 border border-border">
-                       <Image src={item.image} alt={item.name} fill className="object-cover mix-blend-multiply" />
+                       <Image src={item.image} alt={item.name} fill className="object-cover" />
                     </div>
                     <div className="flex flex-col flex-1">
                       <span className="text-sm font-bold text-foreground line-clamp-1">{item.name}</span>

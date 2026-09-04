@@ -34,7 +34,7 @@ export function LiveSupportWidget() {
       {/* Floating Button */}
       <button 
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 w-14 h-14 bg-nova-blue text-white rounded-full flex items-center justify-center shadow-glow-primary hover:scale-110 transition-transform z-50 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        className={`fixed bottom-6 right-6 w-14 h-14 bg-cta-primary text-white rounded-full flex items-center justify-center shadow-glow-primary hover:scale-110 transition-transform z-50 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         aria-label="Live Support"
       >
         <MessageCircle className="w-6 h-6" />
@@ -51,19 +51,19 @@ export function LiveSupportWidget() {
             className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] max-h-[80vh] glass-panel bg-black/80 rounded-2xl border border-white/10 shadow-2xl flex flex-col overflow-hidden z-50"
           >
             {/* Header */}
-            <div className="bg-nova-blue/20 border-b border-white/10 p-4 flex items-center justify-between">
+            <div className="bg-cta-primary/20 border-b border-white/10 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-nova-blue flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-cta-primary flex items-center justify-center">
                   <HelpCircle className="w-4 h-4 text-white" />
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-sm">Nova Sphere Support</h3>
-                  <p className="text-nova-silver text-xs">We typically reply in a few minutes.</p>
+                  <p className="text-slate-300 text-xs">We typically reply in a few minutes.</p>
                 </div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="text-nova-silver hover:text-white transition-colors"
+                className="text-slate-300 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -75,8 +75,8 @@ export function LiveSupportWidget() {
                 <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${
                     msg.sender === 'user' 
-                      ? 'bg-nova-blue text-white rounded-br-none' 
-                      : 'bg-white/10 text-nova-silver rounded-bl-none border border-white/5'
+                      ? 'bg-cta-primary text-white rounded-br-none' 
+                      : 'bg-white/10 text-slate-300 rounded-bl-none border border-white/5'
                   }`}>
                     {msg.text}
                   </div>
@@ -92,12 +92,12 @@ export function LiveSupportWidget() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Type your message..."
-                  className="w-full bg-black/50 border border-white/10 rounded-full py-2 pl-4 pr-12 text-sm text-white placeholder:text-nova-silver/50 focus:outline-none focus:border-nova-blue transition-colors"
+                  className="w-full bg-black/50 border border-white/10 rounded-full py-2 pl-4 pr-12 text-sm text-white placeholder:text-slate-300/50 focus:outline-none focus:border-cta-primary transition-colors"
                 />
                 <button 
                   type="submit"
                   disabled={!message.trim()}
-                  className="absolute right-2 w-8 h-8 rounded-full bg-nova-blue text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-nova-blue/80 transition-colors"
+                  className="absolute right-2 w-8 h-8 rounded-full bg-cta-primary text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-cta-primary/80 transition-colors"
                 >
                   <Send className="w-4 h-4 -ml-0.5" />
                 </button>

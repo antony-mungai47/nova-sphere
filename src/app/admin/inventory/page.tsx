@@ -20,17 +20,17 @@ export default async function AdminInventoryPage() {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">Inventory Management</h1>
-        <p className="text-nova-silver">Monitor and update product stock levels.</p>
+        <p className="text-slate-300">Monitor and update product stock levels.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <h3 className="text-nova-silver mb-1 text-sm font-medium">Total Tracked Products</h3>
+          <h3 className="text-slate-300 mb-1 text-sm font-medium">Total Tracked Products</h3>
           <p className="text-3xl font-bold text-white">{products.length}</p>
         </div>
-        <div className="glass-panel p-6 rounded-2xl border border-nova-amber/20 bg-nova-amber/5">
-          <h3 className="text-nova-amber mb-1 text-sm font-medium">Low Stock Alerts</h3>
-          <p className="text-3xl font-bold text-nova-amber">{lowStockCount}</p>
+        <div className="glass-panel p-6 rounded-2xl border border-amber-500/20 bg-amber-500/5">
+          <h3 className="text-amber-500 mb-1 text-sm font-medium">Low Stock Alerts</h3>
+          <p className="text-3xl font-bold text-amber-500">{lowStockCount}</p>
         </div>
         <div className="glass-panel p-6 rounded-2xl border border-red-500/20 bg-red-500/5">
           <h3 className="text-red-400 mb-1 text-sm font-medium">Out of Stock</h3>

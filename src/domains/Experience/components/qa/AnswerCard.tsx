@@ -34,7 +34,7 @@ export function AnswerCard({ answer }: { answer: AnswerDTO }) {
   };
 
   return (
-    <div className={`p-5 rounded-2xl border ${answer.isAccepted ? 'border-cta-primary bg-cta-primary/5 shadow-[0_0_20px_rgba(59,130,246,0.1)]' : 'border-border bg-surface'} mb-4`}>
+    <div className={`p-5 rounded-2xl border ${answer.isAccepted ? 'border-cta-primary bg-cta-primary/5 shadow-[0_0_20px_rgba(249,115,22,0.1)]' : 'border-border bg-surface'} mb-4`}>
       
       {/* Official Answer Pinned Banner */}
       {answer.isAccepted && (

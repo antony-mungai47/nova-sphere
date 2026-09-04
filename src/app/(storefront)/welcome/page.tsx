@@ -31,7 +31,7 @@ export default function WelcomePage() {
         }}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-nova-blue/10 via-transparent to-black pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cta-primary/10 via-transparent to-black pointer-events-none z-0" />
       
       <div className="relative z-10 max-w-lg w-full px-6">
         <div className="flex flex-col items-center text-center mb-12">
@@ -39,9 +39,9 @@ export default function WelcomePage() {
             <Image src="/logo.png" alt="Nova Sphere Logo" fill className="object-contain" priority />
           </div>
           <h1 className="text-4xl font-black text-white tracking-tight mb-4">
-            Welcome to <span className="text-nova-blue">NOVA</span>SPHERE
+            Welcome to <span className="text-cta-primary">NOVA</span>SPHERE
           </h1>
-          <p className="text-nova-silver text-lg">
+          <p className="text-slate-300 text-lg">
             A premium, curated global marketplace for verified luxury goods, electronics, and rare collectibles.
           </p>
         </div>
@@ -68,14 +68,14 @@ export default function WelcomePage() {
               <div className="w-full border-t border-white/10"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-black text-nova-silver">or</span>
+              <span className="px-4 bg-black text-slate-300">or</span>
             </div>
           </div>
 
           <form action={continueAsGuest}>
             <button 
               type="submit"
-              className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl text-nova-silver font-medium hover:text-white transition-all group"
+              className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl text-slate-300 font-medium hover:text-white transition-all group"
             >
               Continue as Guest
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

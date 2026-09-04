@@ -45,11 +45,11 @@ export function InventoryTable({ products }: { products: ProductData[] }) {
       <table className="w-full text-left">
         <thead className="bg-white/5 border-b border-white/10">
           <tr>
-            <th className="p-4 text-nova-silver font-medium">SKU</th>
-            <th className="p-4 text-nova-silver font-medium">Product Name</th>
-            <th className="p-4 text-nova-silver font-medium">Status</th>
-            <th className="p-4 text-nova-silver font-medium">Stock Level</th>
-            <th className="p-4 text-nova-silver font-medium text-right">Actions</th>
+            <th className="p-4 text-slate-300 font-medium">SKU</th>
+            <th className="p-4 text-slate-300 font-medium">Product Name</th>
+            <th className="p-4 text-slate-300 font-medium">Status</th>
+            <th className="p-4 text-slate-300 font-medium">Stock Level</th>
+            <th className="p-4 text-slate-300 font-medium text-right">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-white/5">
@@ -60,7 +60,7 @@ export function InventoryTable({ products }: { products: ProductData[] }) {
 
             return (
               <tr key={product.id} className="hover:bg-white/5 transition-colors">
-                <td className="p-4 text-nova-silver font-mono text-sm">{product.sku}</td>
+                <td className="p-4 text-slate-300 font-mono text-sm">{product.sku}</td>
                 <td className="p-4 text-white font-medium">{product.name}</td>
                 <td className="p-4">
                   {isOut ? (
@@ -68,11 +68,11 @@ export function InventoryTable({ products }: { products: ProductData[] }) {
                       <AlertTriangle className="w-3 h-3" /> Out of Stock
                     </span>
                   ) : isLow ? (
-                    <span className="px-2 py-1 bg-nova-amber/20 text-nova-amber border border-nova-amber/20 rounded-full text-xs font-medium flex w-fit items-center gap-1">
+                    <span className="px-2 py-1 bg-amber-500/20 text-amber-500 border border-amber-500/20 rounded-full text-xs font-medium flex w-fit items-center gap-1">
                       <AlertTriangle className="w-3 h-3" /> Low Stock
                     </span>
                   ) : (
-                    <span className="px-2 py-1 bg-nova-emerald/20 text-nova-emerald border border-nova-emerald/20 rounded-full text-xs font-medium flex w-fit items-center gap-1">
+                    <span className="px-2 py-1 bg-emerald-500/20 text-emerald-500 border border-emerald-500/20 rounded-full text-xs font-medium flex w-fit items-center gap-1">
                       <Check className="w-3 h-3" /> In Stock
                     </span>
                   )}
@@ -83,14 +83,14 @@ export function InventoryTable({ products }: { products: ProductData[] }) {
                     min="0"
                     value={currentStock}
                     onChange={(e) => handleStockChange(product.id, e.target.value)}
-                    className="w-24 bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-nova-blue transition-colors"
+                    className="w-24 bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-cta-primary transition-colors"
                   />
                 </td>
                 <td className="p-4 text-right">
                   <button
                     onClick={() => handleSave(product.id)}
                     disabled={isUpdating[product.id] || stockState[product.id] === product.stock}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-1.5 bg-nova-blue text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:hover:bg-nova-blue transition-colors text-sm font-medium"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-1.5 bg-cta-primary text-white rounded-lg hover:bg-orange- disabled:opacity-50 disabled:hover:bg-cta-primary transition-colors text-sm font-medium"
                   >
                     {isUpdating[product.id] ? (
                       <Loader2 className="w-4 h-4 animate-spin" />

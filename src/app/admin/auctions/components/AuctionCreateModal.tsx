@@ -36,8 +36,8 @@ export function AuctionCreateModal({ products, onClose }: { products: any[]; onC
 
         <form onSubmit={handleSubmit} className="space-y-4 text-sm">
           <div>
-            <label className="block text-nova-silver mb-1">Product</label>
-            <select name="productId" required className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-nova-blue">
+            <label className="block text-slate-300 mb-1">Product</label>
+            <select name="productId" required className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cta-primary">
               <option value="">Select a product...</option>
               {products.map(p => (
                 <option key={p.id} value={p.id}>{p.name} ({p.sku})</option>
@@ -47,35 +47,35 @@ export function AuctionCreateModal({ products, onClose }: { products: any[]; onC
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-nova-silver mb-1">Base Bid ($)</label>
-              <input type="number" step="0.01" name="baseAmount" required className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-nova-blue" />
+              <label className="block text-slate-300 mb-1">Base Bid ($)</label>
+              <input type="number" step="0.01" name="baseAmount" required className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cta-primary" />
             </div>
             <div>
-              <label className="block text-nova-silver mb-1">Reserve Price</label>
-              <input type="number" step="0.01" name="reservePrice" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-nova-blue" />
+              <label className="block text-slate-300 mb-1">Reserve Price</label>
+              <input type="number" step="0.01" name="reservePrice" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cta-primary" />
             </div>
             <div>
-              <label className="block text-nova-silver mb-1">Buy Now Price</label>
-              <input type="number" step="0.01" name="buyNowPrice" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-nova-blue" />
+              <label className="block text-slate-300 mb-1">Buy Now Price</label>
+              <input type="number" step="0.01" name="buyNowPrice" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cta-primary" />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-nova-silver mb-1">Start Time (Optional)</label>
-              <input type="datetime-local" name="startTime" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-nova-blue" />
+              <label className="block text-slate-300 mb-1">Start Time (Optional)</label>
+              <input type="datetime-local" name="startTime" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cta-primary" />
             </div>
             <div>
-              <label className="block text-nova-silver mb-1">End Time</label>
-              <input type="datetime-local" name="endTime" required className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-nova-blue" />
+              <label className="block text-slate-300 mb-1">End Time</label>
+              <input type="datetime-local" name="endTime" required className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-cta-primary" />
             </div>
           </div>
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-white/10 mt-6">
-            <button type="button" onClick={onClose} className="px-5 py-2.5 text-nova-silver hover:text-white transition-colors">
+            <button type="button" onClick={onClose} className="px-5 py-2.5 text-slate-300 hover:text-white transition-colors">
               Cancel
             </button>
-            <button type="submit" disabled={loading} className="px-5 py-2.5 bg-nova-blue text-white rounded-lg font-medium hover:bg-blue-600 transition-colors disabled:opacity-50">
+            <button type="submit" disabled={loading} className="px-5 py-2.5 bg-cta-primary text-white rounded-lg font-medium hover:bg-orange- transition-colors disabled:opacity-50">
               {loading ? "Creating..." : "Create Auction"}
             </button>
           </div>

@@ -18,11 +18,11 @@ export default async function AuditLogsPage() {
 
   const getSystemIcon = (level: string) => {
     switch (level) {
-      case "INFO": return <Info className="w-4 h-4 text-nova-blue" />;
-      case "WARN": return <AlertTriangle className="w-4 h-4 text-nova-amber" />;
+      case "INFO": return <Info className="w-4 h-4 text-cta-primary" />;
+      case "WARN": return <AlertTriangle className="w-4 h-4 text-amber-500" />;
       case "ERROR": return <XCircle className="w-4 h-4 text-red-500" />;
       case "FATAL": return <Bug className="w-4 h-4 text-danger" />;
-      default: return <Info className="w-4 h-4 text-nova-silver" />;
+      default: return <Info className="w-4 h-4 text-slate-300" />;
     }
   };
 
@@ -30,7 +30,7 @@ export default async function AuditLogsPage() {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">System Audit & Health Logs</h1>
-        <p className="text-nova-silver">Combined view of admin actions and system faults.</p>
+        <p className="text-slate-300">Combined view of admin actions and system faults.</p>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
@@ -45,16 +45,16 @@ export default async function AuditLogsPage() {
             <table className="w-full text-left text-sm">
               <thead className="sticky top-0 bg-[#1A1A2E] z-10">
                 <tr className="border-b border-white/10">
-                  <th className="p-3 text-nova-silver font-medium w-10"></th>
-                  <th className="p-3 text-nova-silver font-medium">Time</th>
-                  <th className="p-3 text-nova-silver font-medium">Source</th>
-                  <th className="p-3 text-nova-silver font-medium">Message</th>
+                  <th className="p-3 text-slate-300 font-medium w-10"></th>
+                  <th className="p-3 text-slate-300 font-medium">Time</th>
+                  <th className="p-3 text-slate-300 font-medium">Source</th>
+                  <th className="p-3 text-slate-300 font-medium">Message</th>
                 </tr>
               </thead>
               <tbody>
                 {systemLogs.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="p-8 text-center text-nova-silver">System is healthy. No logs recorded.</td>
+                    <td colSpan={4} className="p-8 text-center text-slate-300">System is healthy. No logs recorded.</td>
                   </tr>
                 ) : (
                   systemLogs.map((log) => (
@@ -64,9 +64,9 @@ export default async function AuditLogsPage() {
                           {getSystemIcon(log.level)}
                         </div>
                       </td>
-                      <td className="p-3 text-nova-silver text-xs whitespace-nowrap">{format(new Date(log.createdAt), "MM/dd HH:mm:ss")}</td>
+                      <td className="p-3 text-slate-300 text-xs whitespace-nowrap">{format(new Date(log.createdAt), "MM/dd HH:mm:ss")}</td>
                       <td className="p-3 text-white text-xs font-mono">{log.source}</td>
-                      <td className="p-3 text-nova-silver text-xs max-w-[200px] truncate" title={log.message}>
+                      <td className="p-3 text-slate-300 text-xs max-w-[200px] truncate" title={log.message}>
                         {log.message}
                       </td>
                     </tr>
@@ -80,34 +80,34 @@ export default async function AuditLogsPage() {
         {/* Admin Logs */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-nova-blue" />
+            <ShieldAlert className="w-5 h-5 text-cta-primary" />
             Recent Admin Activity
           </h2>
           <div className="overflow-x-auto max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent pr-2">
             <table className="w-full text-left text-sm">
               <thead className="sticky top-0 bg-[#1A1A2E] z-10">
                 <tr className="border-b border-white/10">
-                  <th className="p-3 text-nova-silver font-medium">Time</th>
-                  <th className="p-3 text-nova-silver font-medium">Admin ID</th>
-                  <th className="p-3 text-nova-silver font-medium">Action</th>
-                  <th className="p-3 text-nova-silver font-medium">Entity</th>
+                  <th className="p-3 text-slate-300 font-medium">Time</th>
+                  <th className="p-3 text-slate-300 font-medium">Admin ID</th>
+                  <th className="p-3 text-slate-300 font-medium">Action</th>
+                  <th className="p-3 text-slate-300 font-medium">Entity</th>
                 </tr>
               </thead>
               <tbody>
                 {adminLogs.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="p-8 text-center text-nova-silver">No admin logs found.</td>
+                    <td colSpan={4} className="p-8 text-center text-slate-300">No admin logs found.</td>
                   </tr>
                 ) : (
                   adminLogs.map((log) => (
                     <tr key={log.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                      <td className="p-3 text-nova-silver text-xs whitespace-nowrap">{format(new Date(log.createdAt), "MM/dd HH:mm:ss")}</td>
+                      <td className="p-3 text-slate-300 text-xs whitespace-nowrap">{format(new Date(log.createdAt), "MM/dd HH:mm:ss")}</td>
                       <td className="p-3 text-white text-xs truncate max-w-[100px]">{log.adminId}</td>
                       <td className="p-3">
                         <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded ${
-                          log.action === "UPDATE" ? "bg-nova-amber/20 text-nova-amber" :
+                          log.action === "UPDATE" ? "bg-amber-500/20 text-amber-500" :
                           log.action === "DELETE" ? "bg-red-400/20 text-red-400" :
-                          "bg-nova-emerald/20 text-nova-emerald"
+                          "bg-emerald-500/20 text-emerald-500"
                         }`}>
                           {log.action}
                         </span>

@@ -64,11 +64,11 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4 mt-6">
       <div className="flex gap-4 items-end">
         <div className="flex-1">
-          <label className="block text-sm font-medium text-nova-silver mb-2">
+          <label className="block text-sm font-medium text-slate-300 mb-2">
             Your Bid Amount ($)
           </label>
           <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-nova-silver">$</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300">$</span>
             <input
               type="number"
               step="0.01"
@@ -77,10 +77,10 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
               onChange={(e) => setAmount(e.target.value)}
               required
               data-testid="bid-amount-input"
-              className="w-full bg-black/50 border border-white/10 rounded-xl pl-8 pr-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors"
+              className="w-full bg-black/50 border border-white/10 rounded-xl pl-8 pr-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors"
             />
           </div>
-          <p className="text-xs text-nova-silver mt-2">
+          <p className="text-xs text-slate-300 mt-2">
             Enter ${minBid.toFixed(2)} or more
           </p>
         </div>
@@ -88,7 +88,7 @@ export function BidForm({ auctionId, currentBid, startingBid }: BidFormProps) {
           type="submit"
           disabled={isPending}
           data-testid="place-bid-btn"
-          className="bg-nova-blue hover:bg-nova-blue/80 text-white px-8 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 h-[50px] shadow-glow-primary disabled:opacity-50"
+          className="bg-cta-primary hover:bg-cta-primary/80 text-white px-8 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 h-[50px] shadow-glow-primary disabled:opacity-50"
         >
           {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <TrendingUp className="w-5 h-5" />}
           Place Bid

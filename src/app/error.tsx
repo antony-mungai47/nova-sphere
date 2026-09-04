@@ -28,7 +28,7 @@ export default function GlobalError({
         </div>
         
         <h1 className="text-3xl font-bold text-white mb-4">Critical Systems Failure</h1>
-        <p className="text-nova-silver mb-8 leading-relaxed">
+        <p className="text-slate-300 mb-8 leading-relaxed">
           Our defense grid intercepted an anomaly. Don't worry, no data was lost. 
           Please attempt to reinitialize the sequence.
         </p>
@@ -36,14 +36,14 @@ export default function GlobalError({
         <div className="flex flex-col gap-4">
           <Button 
             onClick={() => reset()}
-            className="w-full flex items-center justify-center gap-2 bg-nova-blue hover:bg-nova-blue/80 text-white py-4 rounded-xl font-bold"
+            className="w-full flex items-center justify-center gap-2 bg-cta-primary hover:bg-cta-primary/80 text-white py-4 rounded-xl font-bold"
           >
             <RefreshCcw className="w-5 h-5" />
             Reinitialize Sequence
           </Button>
           
           <Link href="/">
-            <button className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-nova-silver hover:text-white py-4 rounded-xl font-bold transition-all border border-white/10">
+            <button className="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white py-4 rounded-xl font-bold transition-all border border-white/10">
               <Home className="w-5 h-5" />
               Return to Core Hub
             </button>
@@ -51,7 +51,7 @@ export default function GlobalError({
         </div>
         
         {error.digest && (
-          <p className="mt-8 text-xs text-nova-silver/50 font-mono">
+          <p className="mt-8 text-xs text-slate-300/50 font-mono">
             Error Digest: {error.digest}
           </p>
         )}

@@ -44,7 +44,7 @@ export function RealtimeToaster({ userId, enabled }: { userId: string | null; en
     switch (priority) {
       case 'CRITICAL': return <AlertTriangle className="text-red-500 w-5 h-5" />;
       case 'HIGH': return <Bell className="text-orange-500 w-5 h-5" />;
-      case 'LOW': return <Info className="text-blue-500 w-5 h-5" />;
+      case 'LOW': return <Info className="text-orange- w-5 h-5" />;
       default: return <CheckCircle className="text-green-500 w-5 h-5" />;
     }
   };
@@ -53,7 +53,7 @@ export function RealtimeToaster({ userId, enabled }: { userId: string | null; en
     switch (priority) {
       case 'CRITICAL': return 'border-red-500/50';
       case 'HIGH': return 'border-orange-500/50';
-      case 'LOW': return 'border-blue-500/50';
+      case 'LOW': return 'border-orange-/50';
       default: return 'border-green-500/50';
     }
   };

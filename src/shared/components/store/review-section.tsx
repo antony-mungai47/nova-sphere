@@ -28,14 +28,14 @@ export function ReviewSection({ productId, averageRating, reviewCount, ratingDis
         <div className="w-full md:w-1/3 space-y-6">
           <h3 className="text-2xl font-bold text-white">Customer Reviews</h3>
           <div className="flex items-center gap-4">
-            <div className="flex gap-1 text-nova-accent">
+            <div className="flex gap-1 text-cta-primary">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star key={star} className={`w-6 h-6 ${averageRating >= star ? 'fill-current' : 'text-white/20'}`} />
               ))}
             </div>
             <span className="text-2xl font-bold text-white">{averageRating.toFixed(1)} out of 5</span>
           </div>
-          <p className="text-nova-silver">{reviewCount} global ratings</p>
+          <p className="text-slate-300">{reviewCount} global ratings</p>
           
           {/* Distribution Bars */}
           <div className="space-y-3">
@@ -44,11 +44,11 @@ export function ReviewSection({ productId, averageRating, reviewCount, ratingDis
               const percentage = reviewCount > 0 ? (count / reviewCount) * 100 : 0;
               return (
                 <div key={star} className="flex items-center gap-4 text-sm">
-                  <span className="w-12 text-nova-silver hover:text-nova-blue cursor-pointer">{star} star</span>
+                  <span className="w-12 text-slate-300 hover:text-cta-primary cursor-pointer">{star} star</span>
                   <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-nova-accent rounded-full" style={{ width: `${percentage}%` }} />
+                    <div className="h-full bg-cta-primary rounded-full" style={{ width: `${percentage}%` }} />
                   </div>
-                  <span className="w-12 text-right text-nova-silver">{Math.round(percentage)}%</span>
+                  <span className="w-12 text-right text-slate-300">{Math.round(percentage)}%</span>
                 </div>
               );
             })}
@@ -56,7 +56,7 @@ export function ReviewSection({ productId, averageRating, reviewCount, ratingDis
 
           <div className="pt-6 border-t border-white/10">
             <h4 className="font-bold text-white mb-2">Review this product</h4>
-            <p className="text-sm text-nova-silver mb-4">Share your thoughts with other customers</p>
+            <p className="text-sm text-slate-300 mb-4">Share your thoughts with other customers</p>
             {canReview ? (
               <button 
                 onClick={() => setIsWriting(true)}
@@ -77,14 +77,14 @@ export function ReviewSection({ productId, averageRating, reviewCount, ratingDis
           {reviews.map((review) => (
             <div key={review.id} className="pb-8 border-b border-white/5">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-full bg-nova-blue/20 flex items-center justify-center text-nova-blue font-bold">
+                <div className="w-8 h-8 rounded-full bg-cta-primary/20 flex items-center justify-center text-cta-primary font-bold">
                   {review.user.name?.[0] || 'A'}
                 </div>
                 <span className="font-bold text-white">{review.user.name || 'Anonymous User'}</span>
               </div>
               
               <div className="flex items-center gap-3 mb-2">
-                <div className="flex text-nova-accent">
+                <div className="flex text-cta-primary">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star key={star} className={`w-4 h-4 ${review.rating >= star ? 'fill-current' : 'text-white/20'}`} />
                   ))}
@@ -93,10 +93,10 @@ export function ReviewSection({ productId, averageRating, reviewCount, ratingDis
               </div>
               
               <span className="text-xs font-semibold text-emerald-400 mb-4 block">Verified Purchase</span>
-              <p className="text-nova-silver text-sm leading-relaxed mb-4">{review.content}</p>
+              <p className="text-slate-300 text-sm leading-relaxed mb-4">{review.content}</p>
               
-              <div className="flex items-center gap-6 text-sm text-nova-silver/70">
-                <button className="flex items-center gap-2 hover:text-nova-blue transition-colors">
+              <div className="flex items-center gap-6 text-sm text-slate-300/70">
+                <button className="flex items-center gap-2 hover:text-cta-primary transition-colors">
                   <ThumbsUp className="w-4 h-4" /> {review.helpfulVotes || 'Helpful'}
                 </button>
                 <button className="flex items-center gap-2 hover:text-white transition-colors">
@@ -105,19 +105,19 @@ export function ReviewSection({ productId, averageRating, reviewCount, ratingDis
               </div>
 
               {review.sellerReply && (
-                <div className="mt-4 p-4 bg-nova-blue/5 border-l-2 border-nova-blue rounded-r-lg">
+                <div className="mt-4 p-4 bg-cta-primary/5 border-l-2 border-cta-primary rounded-r-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <MessageSquare className="w-4 h-4 text-nova-blue" />
+                    <MessageSquare className="w-4 h-4 text-cta-primary" />
                     <span className="font-bold text-white text-sm">Response from Nova Sphere</span>
                   </div>
-                  <p className="text-sm text-nova-silver">{review.sellerReply}</p>
+                  <p className="text-sm text-slate-300">{review.sellerReply}</p>
                 </div>
               )}
             </div>
           ))}
           
           {reviews.length === 0 && (
-            <div className="text-center py-12 text-nova-silver">
+            <div className="text-center py-12 text-slate-300">
               No reviews yet. Be the first to share your experience!
             </div>
           )}

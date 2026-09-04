@@ -30,11 +30,11 @@ export function ReportDownloader() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col items-center text-center">
-        <div className="w-16 h-16 rounded-2xl bg-nova-blue/10 flex items-center justify-center border border-nova-blue/20 mb-4">
-          <FileSpreadsheet className="w-8 h-8 text-nova-blue" />
+        <div className="w-16 h-16 rounded-2xl bg-cta-primary/10 flex items-center justify-center border border-cta-primary/20 mb-4">
+          <FileSpreadsheet className="w-8 h-8 text-cta-primary" />
         </div>
         <h3 className="text-xl font-bold text-white mb-2">Financial Orders Report</h3>
-        <p className="text-nova-silver text-sm mb-6">Export a complete history of all transactions, customers, and order statuses.</p>
+        <p className="text-slate-300 text-sm mb-6">Export a complete history of all transactions, customers, and order statuses.</p>
         <button 
           onClick={() => handleDownload('orders')}
           disabled={downloading !== null}
@@ -46,11 +46,11 @@ export function ReportDownloader() {
       </div>
 
       <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col items-center text-center">
-        <div className="w-16 h-16 rounded-2xl bg-nova-emerald/10 flex items-center justify-center border border-nova-emerald/20 mb-4">
-          <PackageOpen className="w-8 h-8 text-nova-emerald" />
+        <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 mb-4">
+          <PackageOpen className="w-8 h-8 text-emerald-500" />
         </div>
         <h3 className="text-xl font-bold text-white mb-2">Inventory Stock Report</h3>
-        <p className="text-nova-silver text-sm mb-6">Export the full catalog with current stock levels, SKUs, and pricing.</p>
+        <p className="text-slate-300 text-sm mb-6">Export the full catalog with current stock levels, SKUs, and pricing.</p>
         <button 
           onClick={() => handleDownload('inventory')}
           disabled={downloading !== null}

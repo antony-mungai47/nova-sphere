@@ -52,16 +52,16 @@ export function FeatureFlagClient({ initialFlags }: { initialFlags: FeatureFlag[
   );
 
   return (
-    <div className="bg-nova-charcoal/50 border border-white/10 rounded-2xl overflow-hidden">
+    <div className="bg-slate-800/50 border border-white/10 rounded-2xl overflow-hidden">
       <div className="p-4 border-b border-white/10 flex items-center justify-between">
         <div className="relative w-96">
-          <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-nova-silver" />
+          <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
           <input 
             type="text" 
             placeholder="Search flags by name, key, or category..." 
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-black/50 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:border-nova-blue transition-colors"
+            className="w-full pl-10 pr-4 py-2 bg-black/50 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:border-cta-primary transition-colors"
           />
         </div>
       </div>
@@ -69,7 +69,7 @@ export function FeatureFlagClient({ initialFlags }: { initialFlags: FeatureFlag[
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-white/5 border-b border-white/10 text-xs uppercase tracking-wider text-nova-silver">
+            <tr className="bg-white/5 border-b border-white/10 text-xs uppercase tracking-wider text-slate-300">
               <th className="p-4 font-semibold">Flag</th>
               <th className="p-4 font-semibold">Category</th>
               <th className="p-4 font-semibold">Type</th>
@@ -84,11 +84,11 @@ export function FeatureFlagClient({ initialFlags }: { initialFlags: FeatureFlag[
                 <td className="p-4">
                   <div className="flex flex-col">
                     <span className="text-white font-medium">{flag.name}</span>
-                    <span className="text-xs text-nova-silver font-mono">{flag.key}</span>
+                    <span className="text-xs text-slate-300 font-mono">{flag.key}</span>
                   </div>
                 </td>
                 <td className="p-4">
-                  <span className="inline-block px-2 py-1 rounded text-xs bg-white/10 text-nova-silver">
+                  <span className="inline-block px-2 py-1 rounded text-xs bg-white/10 text-slate-300">
                     {flag.category}
                   </span>
                 </td>
@@ -96,8 +96,8 @@ export function FeatureFlagClient({ initialFlags }: { initialFlags: FeatureFlag[
                   <div className="flex items-center gap-2">
                     {flag.type === "Kill Switch" as any && <ShieldAlert className="w-4 h-4 text-red-500" />}
                     {flag.type === "Experiment" && <Zap className="w-4 h-4 text-amber-500" />}
-                    {flag.type === "Release" && <Globe className="w-4 h-4 text-nova-blue" />}
-                    <span className={`text-xs ${flag.type === 'Kill Switch' as any ? 'text-red-400' : 'text-nova-silver'}`}>
+                    {flag.type === "Release" && <Globe className="w-4 h-4 text-cta-primary" />}
+                    <span className={`text-xs ${flag.type === 'Kill Switch' as any ? 'text-red-400' : 'text-slate-300'}`}>
                       {flag.type}
                     </span>
                   </div>
@@ -106,7 +106,7 @@ export function FeatureFlagClient({ initialFlags }: { initialFlags: FeatureFlag[
                   <button 
                     onClick={() => handleRolloutChange(flag.id, flag.rolloutPercentage)}
                     disabled={isPending}
-                    className="group flex items-center justify-center gap-1 mx-auto text-sm text-nova-silver hover:text-white transition-colors"
+                    className="group flex items-center justify-center gap-1 mx-auto text-sm text-slate-300 hover:text-white transition-colors"
                   >
                     {flag.rolloutPercentage}%
                     <Edit2 className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -116,13 +116,13 @@ export function FeatureFlagClient({ initialFlags }: { initialFlags: FeatureFlag[
                   <button 
                     onClick={() => handleToggle(flag.id, flag.enabled)}
                     disabled={isPending}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${flag.enabled ? 'bg-nova-emerald' : 'bg-white/20'} ${isPending ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${flag.enabled ? 'bg-emerald-500' : 'bg-white/20'} ${isPending ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                   >
                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${flag.enabled ? 'translate-x-6' : 'translate-x-1'}`} />
                   </button>
                 </td>
                 <td className="p-4 text-right">
-                  <button className="text-nova-silver hover:text-white transition-colors p-2">
+                  <button className="text-slate-300 hover:text-white transition-colors p-2">
                     <MoreVertical className="w-5 h-5" />
                   </button>
                 </td>
@@ -130,7 +130,7 @@ export function FeatureFlagClient({ initialFlags }: { initialFlags: FeatureFlag[
             ))}
             {filteredFlags.length === 0 && (
               <tr>
-                <td colSpan={6} className="p-8 text-center text-nova-silver">
+                <td colSpan={6} className="p-8 text-center text-slate-300">
                   No feature flags found matching "{search}"
                 </td>
               </tr>

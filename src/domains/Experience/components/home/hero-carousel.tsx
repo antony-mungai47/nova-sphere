@@ -14,7 +14,7 @@ const SLIDES = [
     description: "Discover precision-crafted devices designed to elevate your daily workflow.",
     image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=1600&q=80",
     link: "/store?category=Electronics",
-    color: "from-blue-900/80"
+    color: "from-orange-/80"
   },
   {
     id: 2,
@@ -67,7 +67,7 @@ export function HeroCarousel() {
             className="object-cover opacity-60"
             priority
           />
-          <div className={`absolute inset-0 bg-gradient-to-r ${SLIDES[current].color} to-transparent mix-blend-multiply`} />
+          <div className={`absolute inset-0 bg-gradient-to-r ${SLIDES[current].color} to-transparent`} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-transparent to-transparent" />
         </motion.div>
       </AnimatePresence>
@@ -82,17 +82,17 @@ export function HeroCarousel() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <span className="inline-block text-nova-silver tracking-[0.2em] text-sm font-semibold uppercase mb-4 border-l-2 border-[var(--color-primary)] pl-3">
+              <span className="inline-block text-slate-300 tracking-[0.2em] text-sm font-semibold uppercase mb-4 border-l-2 border-[var(--color-primary)] pl-3">
                 {SLIDES[current].title}
               </span>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
                 {SLIDES[current].subtitle}
               </h1>
-              <p className="text-lg md:text-xl text-nova-silver mb-8 max-w-lg font-light leading-relaxed">
+              <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-lg font-light leading-relaxed">
                 {SLIDES[current].description}
               </p>
               
-              <Link href={SLIDES[current].link} className="group inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-[var(--radius-button)] font-semibold hover:bg-nova-silver transition-colors">
+              <Link href={SLIDES[current].link} className="group inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-[var(--radius-button)] font-semibold hover:bg-slate-300 transition-colors">
                 Explore Collection
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>

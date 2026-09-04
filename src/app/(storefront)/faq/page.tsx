@@ -40,17 +40,17 @@ export default function FAQPage() {
       <Navbar />
       
       <div className="flex-1 pt-32 pb-24 relative overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-nova-blue/10 blur-[150px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cta-primary/10 blur-[150px] rounded-full pointer-events-none -z-10" />
         
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="text-center mb-16">
-            <div className="w-16 h-16 bg-nova-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <HelpCircle className="w-8 h-8 text-nova-blue" />
+            <div className="w-16 h-16 bg-cta-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <HelpCircle className="w-8 h-8 text-cta-primary" />
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-              Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-nova-blue to-nova-emerald">Questions</span>
+              Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-cta-primary to-emerald-500">Questions</span>
             </h1>
-            <p className="text-nova-silver text-lg">Find answers to common questions about Nova Sphere.</p>
+            <p className="text-slate-300 text-lg">Find answers to common questions about Nova Sphere.</p>
           </div>
 
           <div className="space-y-12">
@@ -61,7 +61,7 @@ export default function FAQPage() {
                   {section.questions.map((faq, fidx) => (
                     <div key={fidx}>
                       <h3 className="text-lg font-bold text-white mb-2">{faq.q}</h3>
-                      <p className="text-nova-silver leading-relaxed">{faq.a}</p>
+                      <p className="text-slate-300 leading-relaxed">{faq.a}</p>
                     </div>
                   ))}
                 </div>

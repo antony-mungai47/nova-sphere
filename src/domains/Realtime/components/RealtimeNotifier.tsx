@@ -25,8 +25,8 @@ export function RealtimeNotifier() {
 
   return (
     <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-right fade-in">
-      <div className="bg-nova-obsidian text-white border border-nova-sapphire/50 px-6 py-4 rounded-xl shadow-lg flex items-center gap-3">
-        <div className="w-2 h-2 bg-nova-sapphire rounded-full animate-pulse" />
+      <div className="bg-slate-950 text-white border border-orange-/50 px-6 py-4 rounded-xl shadow-lg flex items-center gap-3">
+        <div className="w-2 h-2 bg-orange- rounded-full animate-pulse" />
         <p className="text-sm font-medium">{toast}</p>
       </div>
     </div>

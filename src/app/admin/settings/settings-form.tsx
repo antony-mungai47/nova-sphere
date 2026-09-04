@@ -44,7 +44,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Logo Upload */}
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Store Logo (Master Concept 1)</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Store Logo (Master Concept 1)</label>
             {logoUrl ? (
               <div className="relative w-48 h-24 mb-4 rounded-xl overflow-hidden border border-white/10 bg-black/40">
                 <Image src={logoUrl} alt="Logo" fill className="object-contain p-2" />
@@ -67,7 +67,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
                 <button
                   type="button"
                   onClick={() => open()}
-                  className="px-4 py-2 bg-nova-blue/20 text-nova-blue border border-nova-blue/30 rounded-xl font-medium hover:bg-nova-blue/30 transition-colors"
+                  className="px-4 py-2 bg-cta-primary/20 text-cta-primary border border-cta-primary/30 rounded-xl font-medium hover:bg-cta-primary/30 transition-colors"
                 >
                   {logoUrl ? "Change Logo" : "Upload Logo"}
                 </button>
@@ -77,7 +77,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
 
           {/* Favicon Upload */}
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Favicon (180x180)</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Favicon (180x180)</label>
             {faviconUrl ? (
               <div className="relative w-16 h-16 mb-4 rounded-xl overflow-hidden border border-white/10 bg-black/40">
                 <Image src={faviconUrl} alt="Favicon" fill className="object-contain p-2" />
@@ -100,7 +100,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
                 <button
                   type="button"
                   onClick={() => open()}
-                  className="px-4 py-2 bg-nova-blue/20 text-nova-blue border border-nova-blue/30 rounded-xl font-medium hover:bg-nova-blue/30 transition-colors"
+                  className="px-4 py-2 bg-cta-primary/20 text-cta-primary border border-cta-primary/30 rounded-xl font-medium hover:bg-cta-primary/30 transition-colors"
                 >
                   {faviconUrl ? "Change Favicon" : "Upload Favicon"}
                 </button>
@@ -111,7 +111,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Primary Color (CTA)</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Primary Color (CTA)</label>
             <div className="flex items-center gap-3">
               <input 
                 type="color" 
@@ -123,7 +123,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Secondary Color (Success)</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Secondary Color (Success)</label>
             <div className="flex items-center gap-3">
               <input 
                 type="color" 
@@ -135,7 +135,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Accent Color (Premium)</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Accent Color (Premium)</label>
             <div className="flex items-center gap-3">
               <input 
                 type="color" 
@@ -151,7 +151,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
         <div className="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between gap-6">
           <div className="flex-1">
             <h3 className="text-white font-medium mb-1">Global Watermark</h3>
-            <p className="text-sm text-nova-silver">Display the store logo as a subtle background watermark across the platform.</p>
+            <p className="text-sm text-slate-300">Display the store logo as a subtle background watermark across the platform.</p>
           </div>
           <div className="flex items-center gap-4">
             <label className="flex items-center gap-2 text-white text-sm">
@@ -163,7 +163,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
                 min="0" 
                 max="1"
                 defaultValue={initialData.watermarkOpacity}
-                className="w-20 bg-black/50 border border-white/10 rounded-lg px-2 py-1 text-white text-center focus:border-nova-blue" 
+                className="w-20 bg-black/50 border border-white/10 rounded-lg px-2 py-1 text-white text-center focus:border-cta-primary" 
               />
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
@@ -172,7 +172,7 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
                 name="watermarkEnabled"
                 value="true"
                 defaultChecked={initialData.watermarkEnabled}
-                className="w-5 h-5 rounded border-white/10 bg-black/40 text-nova-blue focus:ring-nova-blue focus:ring-offset-0"
+                className="w-5 h-5 rounded border-white/10 bg-black/40 text-cta-primary focus:ring-cta-primary focus:ring-offset-0"
               />
               <span className="text-sm font-medium text-white">Enable</span>
             </label>
@@ -185,20 +185,20 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
         <h2 className="text-xl font-bold text-white mb-6">General Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Store Name</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Store Name</label>
             <input 
               name="storeName" 
               defaultValue={initialData.storeName} 
               required
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Store Description</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Store Description</label>
             <input 
               name="storeDescription" 
               defaultValue={initialData.storeDescription || ""} 
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
         </div>
@@ -209,21 +209,21 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
         <h2 className="text-xl font-bold text-white mb-6">SEO Configuration</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Meta Title</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Meta Title</label>
             <input 
               name="seoTitle" 
               defaultValue={initialData.seoTitle || ""} 
               placeholder="Nova Sphere - Premium Marketplace"
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Meta Description</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Meta Description</label>
             <input 
               name="seoDescription" 
               defaultValue={initialData.seoDescription || ""} 
               placeholder="Discover the future of premium tech..."
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
         </div>
@@ -234,24 +234,24 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
         <h2 className="text-xl font-bold text-white mb-6">Social Media Profiles</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Instagram URL</label>
-            <input name="instagramUrl" defaultValue={initialData.instagramUrl || ""} placeholder="https://instagram.com/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" />
+            <label className="block text-sm font-medium text-slate-300 mb-2">Instagram URL</label>
+            <input name="instagramUrl" defaultValue={initialData.instagramUrl || ""} placeholder="https://instagram.com/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">X (Twitter) URL</label>
-            <input name="twitterUrl" defaultValue={initialData.twitterUrl || ""} placeholder="https://x.com/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" />
+            <label className="block text-sm font-medium text-slate-300 mb-2">X (Twitter) URL</label>
+            <input name="twitterUrl" defaultValue={initialData.twitterUrl || ""} placeholder="https://x.com/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Facebook URL</label>
-            <input name="facebookUrl" defaultValue={initialData.facebookUrl || ""} placeholder="https://facebook.com/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" />
+            <label className="block text-sm font-medium text-slate-300 mb-2">Facebook URL</label>
+            <input name="facebookUrl" defaultValue={initialData.facebookUrl || ""} placeholder="https://facebook.com/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">LinkedIn URL</label>
-            <input name="linkedinUrl" defaultValue={initialData.linkedinUrl || ""} placeholder="https://linkedin.com/company/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" />
+            <label className="block text-sm font-medium text-slate-300 mb-2">LinkedIn URL</label>
+            <input name="linkedinUrl" defaultValue={initialData.linkedinUrl || ""} placeholder="https://linkedin.com/company/novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-nova-silver mb-2">TikTok URL</label>
-            <input name="tiktokUrl" defaultValue={initialData.tiktokUrl || ""} placeholder="https://tiktok.com/@novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" />
+            <label className="block text-sm font-medium text-slate-300 mb-2">TikTok URL</label>
+            <input name="tiktokUrl" defaultValue={initialData.tiktokUrl || ""} placeholder="https://tiktok.com/@novasphere" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" />
           </div>
         </div>
       </div>
@@ -261,20 +261,20 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
         <h2 className="text-xl font-bold text-white mb-6">Contact & Support</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Support Email</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Support Email</label>
             <input 
               name="supportEmail" 
               type="email"
               defaultValue={initialData.supportEmail || ""} 
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Business Phone</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Business Phone</label>
             <input 
               name="businessPhone" 
               defaultValue={initialData.businessPhone || ""} 
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
         </div>
@@ -285,33 +285,33 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
         <h2 className="text-xl font-bold text-white mb-6">Business Operations</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Currency Code</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Currency Code</label>
             <input 
               name="currency" 
               defaultValue={initialData.currency} 
               maxLength={3}
               required
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors uppercase" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors uppercase" 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Tax Rate (%)</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Tax Rate (%)</label>
             <input 
               name="taxRate" 
               type="number"
               step="0.01"
               defaultValue={initialData.taxRate.toNumber()} 
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Flat Shipping Rate</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Flat Shipping Rate</label>
             <input 
               name="shippingRate" 
               type="number"
               step="0.01"
               defaultValue={initialData.shippingRate.toNumber()} 
-              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" 
+              className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" 
             />
           </div>
         </div>
@@ -319,14 +319,14 @@ export function SettingsForm({ initialData }: { initialData: StoreSettings }) {
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-black/80 backdrop-blur-xl border-t border-white/10 flex justify-end items-center gap-4 z-40 lg:ml-64">
         {success && (
-          <span className="flex items-center gap-2 text-nova-emerald">
+          <span className="flex items-center gap-2 text-emerald-500">
             <CheckCircle2 className="w-5 h-5" /> Settings Saved
           </span>
         )}
         <button 
           type="submit" 
           disabled={isPending}
-          className="bg-nova-blue hover:bg-nova-blue/80 text-white px-8 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 disabled:opacity-50 shadow-glow-primary"
+          className="bg-cta-primary hover:bg-cta-primary/80 text-white px-8 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 disabled:opacity-50 shadow-glow-primary"
         >
           {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
           Save Configuration

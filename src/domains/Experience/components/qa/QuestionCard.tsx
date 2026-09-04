@@ -28,7 +28,7 @@ export function QuestionCard({ question }: { question: QuestionDTO }) {
          <button 
            onClick={() => setHasMeToo(!hasMeToo)}
            className={`flex flex-col items-center justify-center p-2 rounded-xl min-w-[60px] border transition-colors ${
-             hasMeToo ? "bg-cta-primary text-cta-primary-foreground border-cta-primary shadow-[0_0_15px_rgba(59,130,246,0.2)]" : "bg-surface text-muted-foreground border-border hover:bg-surface-hover"
+             hasMeToo ? "bg-cta-primary text-cta-primary-foreground border-cta-primary shadow-[0_0_15px_rgba(249,115,22,0.2)]" : "bg-surface text-muted-foreground border-border hover:bg-surface-hover"
            }`}
          >
            <ThumbsUp className={`w-5 h-5 mb-1 ${hasMeToo ? "fill-cta-primary-foreground" : ""}`} />

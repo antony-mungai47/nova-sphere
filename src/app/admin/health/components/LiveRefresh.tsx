@@ -20,8 +20,8 @@ export default function LiveRefresh() {
 
   return (
     <div className="flex items-center gap-4 bg-white/5 border border-white/10 px-4 py-2 rounded-lg">
-      <div className="flex items-center gap-2 text-sm text-nova-silver border-r border-white/10 pr-4">
-        <RefreshCw className={`w-4 h-4 ${interval > 0 ? "animate-spin text-nova-emerald" : ""}`} />
+      <div className="flex items-center gap-2 text-sm text-slate-300 border-r border-white/10 pr-4">
+        <RefreshCw className={`w-4 h-4 ${interval > 0 ? "animate-spin text-emerald-500" : ""}`} />
         Auto Refresh
       </div>
       <div className="flex gap-2">
@@ -31,8 +31,8 @@ export default function LiveRefresh() {
             onClick={() => setRefreshInterval(sec)}
             className={`text-xs font-bold px-2 py-1 rounded ${
               interval === sec 
-                ? "bg-nova-emerald/20 text-nova-emerald border border-nova-emerald/30" 
-                : "bg-black/30 text-nova-silver border border-transparent hover:text-white"
+                ? "bg-emerald-500/20 text-emerald-500 border border-emerald-500/30" 
+                : "bg-black/30 text-slate-300 border border-transparent hover:text-white"
             }`}
           >
             {sec}s
@@ -43,7 +43,7 @@ export default function LiveRefresh() {
             className={`text-xs font-bold px-2 py-1 rounded ${
               interval === 0 
                 ? "bg-white/20 text-white border border-white/30" 
-                : "bg-black/30 text-nova-silver border border-transparent hover:text-white"
+                : "bg-black/30 text-slate-300 border border-transparent hover:text-white"
             }`}
           >
             Manual

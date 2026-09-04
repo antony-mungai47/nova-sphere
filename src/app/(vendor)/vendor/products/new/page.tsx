@@ -20,19 +20,19 @@ export default function NewProductPage() {
       <div className="bg-[#1a1f2e] border border-white/10 rounded-xl shadow-lg p-6 max-w-2xl">
         <form className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Product Image</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Product Image</label>
             <div className="flex items-center gap-4">
               {imageUrl ? (
                 <img src={imageUrl} alt="Product" className="w-24 h-24 object-cover rounded-lg border border-white/10" />
               ) : (
-                <div className="w-24 h-24 bg-black/30 rounded-lg border border-white/10 flex items-center justify-center text-xs text-nova-silver">
+                <div className="w-24 h-24 bg-black/30 rounded-lg border border-white/10 flex items-center justify-center text-xs text-slate-300">
                   No Image
                 </div>
               )}
               <CldUploadWidget uploadPreset="nova_sphere_products" onSuccess={handleUploadSuccess}>
                 {({ open }) => {
                   return (
-                    <button type="button" onClick={() => open()} className="bg-nova-blue text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
+                    <button type="button" onClick={() => open()} className="bg-cta-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange- transition-colors">
                       Upload to Cloudinary
                     </button>
                   );
@@ -43,12 +43,12 @@ export default function NewProductPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Product Name</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Product Name</label>
             <input type="text" className="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white" placeholder="e.g. Nova Pro Wireless" />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-nova-silver mb-2">Price</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Price</label>
             <input type="number" step="0.01" className="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-2 text-white" placeholder="99.99" />
           </div>
 

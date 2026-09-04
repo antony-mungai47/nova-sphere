@@ -56,7 +56,7 @@ export function SmartBundle() {
             <React.Fragment key={item.id}>
               <div className="flex flex-col items-center gap-2 group cursor-pointer">
                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-background border border-border group-hover:border-cta-primary transition-colors">
-                   <Image src={item.image} alt={item.name} fill className="object-cover mix-blend-multiply group-hover:scale-110 transition-transform" />
+                   <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-110 transition-transform" />
                 </div>
                 <span className="text-xs font-bold text-muted-foreground group-hover:text-foreground text-center max-w-[80px] truncate">
                   {item.name}

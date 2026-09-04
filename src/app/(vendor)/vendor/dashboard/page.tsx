@@ -37,19 +37,19 @@ export default async function VendorDashboard() {
       <h1 className="text-3xl font-bold mb-6 text-white">Vendor Center</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div className="bg-[#1a1f2e] border border-white/10 p-6 rounded-xl shadow-lg">
-          <h2 className="text-nova-silver text-sm uppercase tracking-wide">Total Revenue</h2>
+          <h2 className="text-slate-300 text-sm uppercase tracking-wide">Total Revenue</h2>
           <p className="text-4xl font-semibold mt-2 text-white">${totalRevenue.toFixed(2)}</p>
         </div>
         <div className="bg-[#1a1f2e] border border-white/10 p-6 rounded-xl shadow-lg">
-          <h2 className="text-nova-silver text-sm uppercase tracking-wide">My Products</h2>
+          <h2 className="text-slate-300 text-sm uppercase tracking-wide">My Products</h2>
           <p className="text-4xl font-semibold mt-2 text-white">{products.length}</p>
         </div>
         <div className="bg-[#1a1f2e] border border-white/10 p-6 rounded-xl shadow-lg">
-          <h2 className="text-nova-silver text-sm uppercase tracking-wide">Open Orders</h2>
+          <h2 className="text-slate-300 text-sm uppercase tracking-wide">Open Orders</h2>
           <p className="text-3xl font-bold text-white">{pendingOrdersCount}</p>
         </div>
         <div className="bg-[#1a1f2e] border border-white/10 p-6 rounded-xl shadow-lg">
-          <h2 className="text-nova-silver text-sm uppercase tracking-wide">Health Score</h2>
+          <h2 className="text-slate-300 text-sm uppercase tracking-wide">Health Score</h2>
           <p className="text-4xl font-semibold mt-2 text-green-500">100/100</p>
         </div>
       </div>
@@ -57,9 +57,9 @@ export default async function VendorDashboard() {
       <div className="bg-[#1a1f2e] border border-white/10 rounded-xl shadow-lg p-6">
         <h2 className="text-xl font-bold text-white mb-4">Recent Order Items</h2>
         {orderItems.length === 0 ? (
-          <p className="text-nova-silver">No orders yet.</p>
+          <p className="text-slate-300">No orders yet.</p>
         ) : (
-          <table className="w-full text-left text-sm text-nova-silver">
+          <table className="w-full text-left text-sm text-slate-300">
             <thead className="bg-black/30 text-white uppercase font-bold text-xs">
               <tr>
                 <th className="px-4 py-3">Order ID</th>
@@ -78,7 +78,7 @@ export default async function VendorDashboard() {
                     <td className="px-4 py-3">{item.quantity}</td>
                     <td className="px-4 py-3">${Number(item.price).toFixed(2)}</td>
                     <td className="px-4 py-3">
-                      <span className="bg-nova-blue/20 text-nova-blue px-2 py-1 rounded-full text-xs font-bold border border-nova-blue/30 uppercase">
+                      <span className="bg-cta-primary/20 text-cta-primary px-2 py-1 rounded-full text-xs font-bold border border-cta-primary/30 uppercase">
                         {item.orderStatus}
                       </span>
                     </td>

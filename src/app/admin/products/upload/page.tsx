@@ -54,7 +54,7 @@ export default function ProductUploadPage() {
     <div className="p-8 max-w-4xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">Upload New Product</h1>
-        <p className="text-nova-silver">Add a new item to the store catalog.</p>
+        <p className="text-slate-300">Add a new item to the store catalog.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -66,8 +66,8 @@ export default function ProductUploadPage() {
                 <img src={imageUrl} alt="Uploaded" className="object-cover w-full h-full" />
               </div>
             ) : (
-              <div className="w-16 h-16 rounded-full bg-nova-blue/20 flex items-center justify-center mb-4">
-                <ImageIcon className="w-8 h-8 text-nova-blue" />
+              <div className="w-16 h-16 rounded-full bg-cta-primary/20 flex items-center justify-center mb-4">
+                <ImageIcon className="w-8 h-8 text-cta-primary" />
               </div>
             )}
             
@@ -96,23 +96,23 @@ export default function ProductUploadPage() {
           <h2 className="text-xl font-bold text-white mb-6">Product Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-nova-silver text-sm font-medium">Product Name</label>
-              <input required name="name" value={formData.name} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" placeholder="e.g. Sony WH-1000XM5" />
+              <label className="text-slate-300 text-sm font-medium">Product Name</label>
+              <input required name="name" value={formData.name} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" placeholder="e.g. Sony WH-1000XM5" />
             </div>
             
             <div className="space-y-2">
-              <label className="text-nova-silver text-sm font-medium">SKU</label>
-              <input required name="sku" value={formData.sku} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" placeholder="e.g. SNY-WH-1000" />
+              <label className="text-slate-300 text-sm font-medium">SKU</label>
+              <input required name="sku" value={formData.sku} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" placeholder="e.g. SNY-WH-1000" />
             </div>
 
             <div className="space-y-2">
-              <label className="text-nova-silver text-sm font-medium">Brand</label>
-              <input required name="brand" value={formData.brand} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" placeholder="e.g. Sony" />
+              <label className="text-slate-300 text-sm font-medium">Brand</label>
+              <input required name="brand" value={formData.brand} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" placeholder="e.g. Sony" />
             </div>
 
             <div className="space-y-2">
-              <label className="text-nova-silver text-sm font-medium">Category</label>
-              <select name="category" value={formData.category} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors">
+              <label className="text-slate-300 text-sm font-medium">Category</label>
+              <select name="category" value={formData.category} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors">
                 <option value="Electronics">Electronics</option>
                 <option value="Fashion">Fashion</option>
                 <option value="Home & Kitchen">Home & Kitchen</option>
@@ -124,18 +124,18 @@ export default function ProductUploadPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-nova-silver text-sm font-medium">Price ($)</label>
-              <input required type="number" step="0.01" name="price" value={formData.price} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" placeholder="299.99" />
+              <label className="text-slate-300 text-sm font-medium">Price ($)</label>
+              <input required type="number" step="0.01" name="price" value={formData.price} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" placeholder="299.99" />
             </div>
 
             <div className="space-y-2">
-              <label className="text-nova-silver text-sm font-medium">Initial Stock</label>
-              <input required type="number" name="stock" value={formData.stock} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" placeholder="10" />
+              <label className="text-slate-300 text-sm font-medium">Initial Stock</label>
+              <input required type="number" name="stock" value={formData.stock} onChange={handleChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" placeholder="10" />
             </div>
 
             <div className="col-span-1 md:col-span-2 space-y-2">
-              <label className="text-nova-silver text-sm font-medium">Description</label>
-              <textarea required name="description" value={formData.description} onChange={handleChange} rows={4} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-nova-blue transition-colors" placeholder="Product description..." />
+              <label className="text-slate-300 text-sm font-medium">Description</label>
+              <textarea required name="description" value={formData.description} onChange={handleChange} rows={4} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cta-primary transition-colors" placeholder="Product description..." />
             </div>
           </div>
         </div>

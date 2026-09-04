@@ -23,9 +23,9 @@ export default async function VendorOrdersPage() {
 
       <div className="bg-[#1a1f2e] border border-white/10 rounded-xl shadow-lg p-6">
         {orderItems.length === 0 ? (
-          <p className="text-nova-silver">No orders have been placed for your products yet.</p>
+          <p className="text-slate-300">No orders have been placed for your products yet.</p>
         ) : (
-          <table className="w-full text-left text-sm text-nova-silver">
+          <table className="w-full text-left text-sm text-slate-300">
             <thead className="bg-black/30 text-white uppercase font-bold text-xs">
               <tr>
                 <th className="px-4 py-3">Order ID</th>
@@ -53,7 +53,7 @@ export default async function VendorOrdersPage() {
                       <span className={`px-2 py-1 rounded-full text-xs font-bold uppercase border ${
                         item.orderStatus === 'DELIVERED' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
                         item.orderStatus === 'PENDING' ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' :
-                        'bg-nova-blue/20 text-nova-blue border-nova-blue/30'
+                        'bg-cta-primary/20 text-cta-primary border-cta-primary/30'
                       }`}>
                         {item.orderStatus}
                       </span>

@@ -241,7 +241,7 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
                 <Link key={rp.id} href={`/product/${rp.id}`} className="group block">
                   <div className="bg-surface p-4 rounded-2xl border border-border h-full transition-all hover:border-cta-primary/50 hover:-translate-y-1 hover:shadow-soft">
                     <div className="relative aspect-square w-full rounded-xl overflow-hidden mb-4 bg-muted/20">
-                      <Image src={rp.image} alt={rp.name} fill className="object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-motion-standard" />
+                      <Image src={rp.image} alt={rp.name} fill className="object-cover group-hover:scale-105 transition-transform duration-motion-standard" />
                     </div>
                     <div className="flex flex-col gap-1">
                       <p className="text-muted text-xs uppercase tracking-wider">{rp.category}</p>

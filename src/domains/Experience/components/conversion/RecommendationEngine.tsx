@@ -37,7 +37,7 @@ export function RecommendationEngine({ strategy, title, items }: RecommendationE
           <>
             <div className="flex items-center gap-3">
               <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-muted/20 border border-border flex-shrink-0">
-                <Image src={item.image} alt={item.name} fill className="object-cover mix-blend-multiply" />
+                <Image src={item.image} alt={item.name} fill className="object-cover" />
               </div>
               <div className="flex flex-col flex-1 min-w-0">
                 <span className="text-xs font-bold text-foreground truncate">{item.name}</span>

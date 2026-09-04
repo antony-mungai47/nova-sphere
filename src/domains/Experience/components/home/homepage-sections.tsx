@@ -206,7 +206,7 @@ export function CustomerReviews() {
 export function DownloadAppBanner() {
   return (
     <section className="py-24 bg-cta-primary text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-cta-primary to-cta-secondary opacity-50 mix-blend-multiply" />
+      <div className="absolute inset-0 bg-gradient-to-r from-cta-primary to-cta-secondary opacity-50" />
       <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between">
         <div className="mb-8 md:mb-0 max-w-xl">
           <h2 className="text-4xl font-heading font-bold mb-4">Shop Faster on the Nova App</h2>

@@ -82,11 +82,11 @@ export function AuctionLiveView({
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <span className="bg-nova-blue/20 text-nova-blue px-3 py-1 rounded-full text-xs font-bold border border-nova-blue/30 uppercase tracking-wider">
+            <span className="bg-cta-primary/20 text-cta-primary px-3 py-1 rounded-full text-xs font-bold border border-cta-primary/30 uppercase tracking-wider">
               Live Auction
             </span>
             {isEndingSoon && !hasEnded && (
-              <span className="bg-nova-amber/20 text-nova-amber px-3 py-1 rounded-full text-xs font-bold border border-nova-amber/30 flex items-center gap-1 uppercase tracking-wider animate-pulse">
+              <span className="bg-amber-500/20 text-amber-500 px-3 py-1 rounded-full text-xs font-bold border border-amber-500/30 flex items-center gap-1 uppercase tracking-wider animate-pulse">
                 <Clock className="w-3 h-3" /> Ending Soon
               </span>
             )}
@@ -96,7 +96,7 @@ export function AuctionLiveView({
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2 text-nova-silver text-sm bg-white/5 px-3 py-1 rounded-full">
+          <div className="flex items-center gap-2 text-slate-300 text-sm bg-white/5 px-3 py-1 rounded-full">
             <Eye className="w-4 h-4" />
             <span className="font-medium">{presence.count} watching</span>
           </div>
@@ -108,11 +108,11 @@ export function AuctionLiveView({
 
         <div className={`glass-panel p-8 rounded-2xl relative overflow-hidden transition-all duration-500 ${isWinning ? 'border-green-500/50 shadow-[0_0_30px_rgba(34,197,94,0.2)]' : isOutbid ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)]' : ''}`}>
           {/* Decorative gradient */}
-          <div className={`absolute top-0 right-0 w-64 h-64 blur-[100px] rounded-full pointer-events-none transition-colors duration-500 ${isWinning ? 'bg-green-500/10' : isOutbid ? 'bg-red-500/10' : 'bg-nova-blue/10'}`} />
+          <div className={`absolute top-0 right-0 w-64 h-64 blur-[100px] rounded-full pointer-events-none transition-colors duration-500 ${isWinning ? 'bg-green-500/10' : isOutbid ? 'bg-red-500/10' : 'bg-cta-primary/10'}`} />
           
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 relative z-10">
             <div>
-              <p className="text-nova-silver mb-2 font-medium flex items-center gap-2">
+              <p className="text-slate-300 mb-2 font-medium flex items-center gap-2">
                 <Gavel className="w-4 h-4" /> Current Highest Bid
               </p>
               <div className="flex items-center gap-3">
@@ -130,15 +130,15 @@ export function AuctionLiveView({
                   </span>
                 )}
               </div>
-              <p className="text-sm text-nova-slate mt-2">
+              <p className="text-sm text-slate-500 mt-2">
                 {combinedHistory.length} total bids
               </p>
             </div>
 
-            <div className={`bg-black/40 border rounded-xl p-4 min-w-[200px] ${isEndingSoon && !hasEnded ? 'border-nova-amber/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'border-white/5'}`}>
-              <p className="text-nova-silver text-xs mb-1 uppercase tracking-wider font-semibold">Time Remaining</p>
+            <div className={`bg-black/40 border rounded-xl p-4 min-w-[200px] ${isEndingSoon && !hasEnded ? 'border-amber-500/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'border-white/5'}`}>
+              <p className="text-slate-300 text-xs mb-1 uppercase tracking-wider font-semibold">Time Remaining</p>
               <p className="text-2xl font-bold text-white flex items-center gap-2 tabular-nums">
-                <Clock className={`w-5 h-5 ${isEndingSoon && !hasEnded ? 'text-nova-amber animate-pulse' : 'text-nova-blue'}`} />
+                <Clock className={`w-5 h-5 ${isEndingSoon && !hasEnded ? 'text-amber-500 animate-pulse' : 'text-cta-primary'}`} />
                 {formattedCountdown}
               </p>
             </div>
@@ -156,16 +156,16 @@ export function AuctionLiveView({
             ) : (
               <div data-testid="login-to-bid-prompt" className="mt-8 p-4 bg-white/5 border border-white/10 rounded-xl text-center relative z-10">
                 <p className="text-white mb-2">You must be signed in to place a bid.</p>
-                <Link href="/sign-in" className="text-nova-blue hover:underline font-medium">Sign in to bid &rarr;</Link>
+                <Link href="/sign-in" className="text-cta-primary hover:underline font-medium">Sign in to bid &rarr;</Link>
               </div>
             )
           ) : (
-            <div className="mt-8 p-6 bg-nova-blue/10 border border-nova-blue/20 rounded-xl text-center relative z-10">
+            <div className="mt-8 p-6 bg-cta-primary/10 border border-cta-primary/20 rounded-xl text-center relative z-10">
               <h3 className="text-xl font-bold text-white mb-2">Auction Ended</h3>
               {combinedHistory.length > 0 ? (
-                <p className="text-nova-silver">Winning bid: <span className="font-bold text-white">${combinedHistory[0].amount.toFixed(2)}</span></p>
+                <p className="text-slate-300">Winning bid: <span className="font-bold text-white">${combinedHistory[0].amount.toFixed(2)}</span></p>
               ) : (
-                <p className="text-nova-silver">No bids were placed on this item.</p>
+                <p className="text-slate-300">No bids were placed on this item.</p>
               )}
             </div>
           )}
@@ -174,7 +174,7 @@ export function AuctionLiveView({
 
       <div className="glass-panel p-6">
         <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-          <History className="w-5 h-5 text-nova-blue" />
+          <History className="w-5 h-5 text-cta-primary" />
           Live Bid History
         </h3>
         
@@ -185,22 +185,22 @@ export function AuctionLiveView({
                 key={bid.id || `bid-${index}`} 
                 className={`flex items-center justify-between p-4 rounded-xl border animate-in slide-in-from-top-2 fade-in ${
                   index === 0 
-                    ? 'bg-nova-blue/10 border-nova-blue/30' 
+                    ? 'bg-cta-primary/10 border-cta-primary/30' 
                     : 'bg-black/30 border-white/5'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                    index === 0 ? 'bg-nova-blue/20 text-nova-blue' : 'bg-white/5 text-nova-silver'
+                    index === 0 ? 'bg-cta-primary/20 text-cta-primary' : 'bg-white/5 text-slate-300'
                   }`}>
                     <UserIcon className="w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-white font-medium flex items-center gap-2">
                       {bid.bidderName}
-                      {index === 0 && <span className="text-[10px] uppercase bg-nova-blue text-white px-2 py-0.5 rounded-full font-bold">Highest</span>}
+                      {index === 0 && <span className="text-[10px] uppercase bg-cta-primary text-white px-2 py-0.5 rounded-full font-bold">Highest</span>}
                     </p>
-                    <p className="text-xs text-nova-slate">
+                    <p className="text-xs text-slate-500">
                       {new Date(bid.timestamp).toLocaleTimeString()}
                     </p>
                   </div>
@@ -213,8 +213,8 @@ export function AuctionLiveView({
           </div>
         ) : (
           <div className="text-center py-8">
-            <History className="w-8 h-8 text-nova-slate mx-auto mb-3 opacity-50" />
-            <p className="text-nova-silver">No bids yet. Be the first to bid!</p>
+            <History className="w-8 h-8 text-slate-500 mx-auto mb-3 opacity-50" />
+            <p className="text-slate-300">No bids yet. Be the first to bid!</p>
           </div>
         )}
       </div>

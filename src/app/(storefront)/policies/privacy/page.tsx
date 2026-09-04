@@ -2,7 +2,7 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="container mx-auto max-w-4xl px-6 py-24">
       <h1 className="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
-      <div className="prose prose-invert prose-blue max-w-none text-nova-silver">
+      <div className="prose prose-invert prose-blue max-w-none text-slate-300">
         <p className="lead">Last updated: June 2026</p>
         
         <h2>1. Introduction</h2>

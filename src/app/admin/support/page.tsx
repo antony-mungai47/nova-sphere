@@ -26,7 +26,7 @@ export default async function AdminSupportPage() {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">Support Dashboard</h1>
-        <p className="text-nova-silver">Manage customer support tickets and live chats.</p>
+        <p className="text-slate-300">Manage customer support tickets and live chats.</p>
       </div>
 
       <SupportClient initialConversations={conversations} />

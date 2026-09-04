@@ -58,7 +58,7 @@ export function SupportWidget() {
     <>
       {/* Floating Action Button */}
       <motion.button
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-nova-blue text-white shadow-[0_0_20px_rgba(59,130,246,0.5)] flex items-center justify-center z-50 hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-cta-primary text-white shadow-[0_0_20px_rgba(249,115,22,0.5)] flex items-center justify-center z-50 hover:scale-110 transition-transform"
         onClick={() => setIsOpen(true)}
         whileHover={{ rotate: 15 }}
         whileTap={{ scale: 0.9 }}
@@ -76,14 +76,14 @@ export function SupportWidget() {
             className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] glass-panel border border-white/10 rounded-2xl overflow-hidden shadow-2xl z-50 flex flex-col bg-black/80 backdrop-blur-xl"
           >
             {/* Header */}
-            <div className="p-4 bg-nova-blue/20 border-b border-nova-blue/30 flex items-center justify-between">
+            <div className="p-4 bg-cta-primary/20 border-b border-cta-primary/30 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-nova-blue flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-cta-primary flex items-center justify-center">
                   <span className="text-white font-bold text-sm">NS</span>
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-sm">Nova Sphere Support</h3>
-                  <p className="text-nova-silver text-[10px] uppercase">We typically reply in 2 hours</p>
+                  <p className="text-slate-300 text-[10px] uppercase">We typically reply in 2 hours</p>
                 </div>
               </div>
               <button onClick={() => setIsOpen(false)} className="text-white/50 hover:text-white transition-colors">
@@ -99,41 +99,41 @@ export function SupportWidget() {
                     <MessageSquare className="w-8 h-8 text-green-400" />
                   </div>
                   <h4 className="text-white font-bold mb-2">Message Sent</h4>
-                  <p className="text-nova-silver text-sm">Our premium support team will get back to you shortly.</p>
+                  <p className="text-slate-300 text-sm">Our premium support team will get back to you shortly.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   {!user && (
                     <div>
-                      <label className="text-xs text-nova-silver uppercase tracking-wider mb-1 block">Your Email</label>
+                      <label className="text-xs text-slate-300 uppercase tracking-wider mb-1 block">Your Email</label>
                       <input 
                         type="email" 
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-nova-blue" 
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cta-primary" 
                         placeholder="john@example.com"
                       />
                     </div>
                   )}
                   <div>
-                    <label className="text-xs text-nova-silver uppercase tracking-wider mb-1 block">Subject</label>
+                    <label className="text-xs text-slate-300 uppercase tracking-wider mb-1 block">Subject</label>
                     <input 
                       type="text" 
                       required
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-nova-blue" 
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cta-primary" 
                       placeholder="How can we help?"
                     />
                   </div>
                   <div>
-                    <label className="text-xs text-nova-silver uppercase tracking-wider mb-1 block">Message</label>
+                    <label className="text-xs text-slate-300 uppercase tracking-wider mb-1 block">Message</label>
                     <textarea 
                       required
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-nova-blue min-h-[100px] resize-none" 
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-cta-primary min-h-[100px] resize-none" 
                       placeholder="Describe your issue or question in detail..."
                     />
                   </div>
@@ -141,7 +141,7 @@ export function SupportWidget() {
                   <button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="w-full bg-nova-blue text-white font-bold py-3 rounded-lg hover:bg-nova-blue/80 transition-colors flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
+                    className="w-full bg-cta-primary text-white font-bold py-3 rounded-lg hover:bg-cta-primary/80 transition-colors flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
                   >
                     {isSubmitting ? "Sending..." : "Send Message"} <Send className="w-4 h-4" />
                   </button>

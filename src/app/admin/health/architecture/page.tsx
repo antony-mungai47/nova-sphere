@@ -32,16 +32,16 @@ export default async function ArchitectureHealthDashboard() {
       {/* Header */}
       <div className="flex justify-between items-center border-b border-white/10 pb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-nova-silver bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
             Architecture & Runtime Health
           </h1>
-          <p className="text-sm text-nova-silver mt-1">
+          <p className="text-sm text-slate-300 mt-1">
             W3C Tracing • Gate 11 Orphan Protection • StrictMode Aware • Dev Adapter
           </p>
         </div>
         <div className="flex gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-center">
-            <div className="text-xs text-nova-silver">Events Buffered</div>
+            <div className="text-xs text-slate-300">Events Buffered</div>
             <div className="text-xl font-mono font-semibold text-white">{events.length}</div>
           </div>
           <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-center">
@@ -56,13 +56,13 @@ export default async function ArchitectureHealthDashboard() {
       </div>
 
       {/* Operator Question 1: Architecture & Boundary Breaches */}
-      <div className="bg-nova-charcoal border border-white/10 rounded-2xl p-6">
+      <div className="bg-slate-800 border border-white/10 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-nova-blue"></span>
+          <span className="w-2 h-2 rounded-full bg-cta-primary"></span>
           1. Are there any active Architecture or Boundary Breaches?
         </h2>
         {violations.length === 0 && orphanTraces.length === 0 ? (
-          <div className="bg-nova-emerald/10 border border-nova-emerald/20 text-nova-emerald p-4 rounded-xl text-sm">
+          <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 p-4 rounded-xl text-sm">
             ✓ All architectural invariants pass cleanly. No duplicate provider instances or orphan traces detected.
           </div>
         ) : (
@@ -91,23 +91,23 @@ export default async function ArchitectureHealthDashboard() {
 
       {/* Operator Question 2: Performance Seams */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-nova-charcoal border border-white/10 rounded-2xl p-6">
+        <div className="bg-slate-800 border border-white/10 rounded-2xl p-6">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-nova-emerald"></span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
             2. Slowest Application Service
           </h2>
           {slowestService ? (
             <div className="bg-white/5 p-4 rounded-xl text-sm space-y-2">
-              <div className="text-nova-emerald font-mono font-semibold">{slowestService.source}</div>
-              <div className="text-nova-silver text-xs">Duration: {slowestService.durationMs}ms</div>
+              <div className="text-emerald-500 font-mono font-semibold">{slowestService.source}</div>
+              <div className="text-slate-300 text-xs">Duration: {slowestService.durationMs}ms</div>
               <div className="text-xs font-mono opacity-60">Trace: {slowestService.traceId}</div>
             </div>
           ) : (
-            <div className="text-nova-silver text-sm italic">No timed service calls recorded yet.</div>
+            <div className="text-slate-300 text-sm italic">No timed service calls recorded yet.</div>
           )}
         </div>
 
-        <div className="bg-nova-charcoal border border-white/10 rounded-2xl p-6">
+        <div className="bg-slate-800 border border-white/10 rounded-2xl p-6">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-purple-500"></span>
             3. Slowest Repository Call
@@ -115,36 +115,36 @@ export default async function ArchitectureHealthDashboard() {
           {slowestRepo ? (
             <div className="bg-white/5 p-4 rounded-xl text-sm space-y-2">
               <div className="text-purple-400 font-mono font-semibold">{slowestRepo.source}</div>
-              <div className="text-nova-silver text-xs">Duration: {slowestRepo.durationMs}ms</div>
+              <div className="text-slate-300 text-xs">Duration: {slowestRepo.durationMs}ms</div>
               <div className="text-xs font-mono opacity-60">Trace: {slowestRepo.traceId}</div>
             </div>
           ) : (
-            <div className="text-nova-silver text-sm italic">No timed repository calls recorded yet.</div>
+            <div className="text-slate-300 text-sm italic">No timed repository calls recorded yet.</div>
           )}
         </div>
       </div>
 
       {/* Operator Question 3: Trace Timeline & Waterfall Replay */}
-      <div className="bg-nova-charcoal border border-white/10 rounded-2xl p-6">
+      <div className="bg-slate-800 border border-white/10 rounded-2xl p-6">
         <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-nova-blue"></span>
+          <span className="w-2 h-2 rounded-full bg-cta-primary"></span>
           4. Trace Waterfall Timeline Replay (Causal Execution Flow)
         </h2>
         <div className="space-y-6">
           {recentTraces.map(([traceId, traceEvents]) => (
             <div key={traceId} className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
               <div className="flex justify-between items-center text-xs font-mono border-b border-white/10 pb-2">
-                <span className="text-nova-blue font-bold">W3C Trace: {traceId}</span>
-                <span className="text-nova-silver">{traceEvents.length} spans recorded</span>
+                <span className="text-cta-primary font-bold">W3C Trace: {traceId}</span>
+                <span className="text-slate-300">{traceEvents.length} spans recorded</span>
               </div>
               <div className="space-y-2">
                 {traceEvents.map((e, idx) => (
                   <div key={idx} className="flex items-center gap-4 text-xs">
-                    <span className="w-24 text-nova-silver font-mono">{e.layer}</span>
+                    <span className="w-24 text-slate-300 font-mono">{e.layer}</span>
                     <span className="w-48 font-medium text-white">{e.source}</span>
-                    <span className="px-2 py-0.5 rounded bg-white/10 text-nova-silver">{e.type}</span>
+                    <span className="px-2 py-0.5 rounded bg-white/10 text-slate-300">{e.type}</span>
                     {e.durationMs !== undefined && (
-                      <span className="text-nova-emerald font-mono">{e.durationMs}ms</span>
+                      <span className="text-emerald-500 font-mono">{e.durationMs}ms</span>
                     )}
                   </div>
                 ))}

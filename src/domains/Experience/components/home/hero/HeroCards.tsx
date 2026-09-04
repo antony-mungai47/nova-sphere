@@ -73,7 +73,7 @@ export function HeroCards() {
               className="absolute w-48 bg-surface/80 backdrop-blur-md border border-white/40 rounded-card p-4 shadow-hover flex flex-col items-center"
             >
               <div className="relative w-32 h-32 mb-4 bg-muted/5 rounded-xl flex items-center justify-center">
-                 <Image src={card.image} alt={card.title} fill className="object-contain p-2 mix-blend-multiply" />
+                 <Image src={card.image} alt={card.title} fill className="object-contain p-2" />
               </div>
               <h4 className="font-heading font-semibold text-foreground text-sm text-center">{card.title}</h4>
               <p className="text-cta-primary font-bold mt-1">{card.price}</p>

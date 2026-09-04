@@ -11,22 +11,22 @@ export default function ServiceCard({ title, provider }: ServiceCardProps) {
   const isUnavailable = provider.status === "Unavailable";
   const isNotConfigured = provider.status === "Degraded";
 
-  let statusColor = "text-nova-silver";
-  let dotColor = "bg-nova-silver shadow-[0_0_8px_rgba(156,163,175,0.4)]";
+  let statusColor = "text-slate-300";
+  let dotColor = "bg-slate-300 shadow-[0_0_8px_rgba(156,163,175,0.4)]";
   let borderColor = "border-white/10";
 
   if (isConnected) {
-    statusColor = "text-nova-emerald";
-    dotColor = "bg-nova-emerald shadow-[0_0_8px_rgba(16,185,129,0.8)]";
-    borderColor = "border-nova-emerald/30";
+    statusColor = "text-emerald-500";
+    dotColor = "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]";
+    borderColor = "border-emerald-500/30";
   } else if (isUnavailable) {
     statusColor = "text-red-500 animate-pulse";
     dotColor = "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)] animate-pulse";
     borderColor = "border-red-500/50";
   } else if (isNotConfigured) {
-    statusColor = "text-nova-amber";
-    dotColor = "bg-nova-amber/50";
-    borderColor = "border-nova-amber/30";
+    statusColor = "text-amber-500";
+    dotColor = "bg-amber-500/50";
+    borderColor = "border-amber-500/30";
   }
 
   const formatDate = (d: Date | null) => {
@@ -42,20 +42,20 @@ export default function ServiceCard({ title, provider }: ServiceCardProps) {
       </div>
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
-          <span className="text-nova-silver">Status</span>
+          <span className="text-slate-300">Status</span>
           <span className={`font-bold uppercase text-[10px] sm:text-xs ${statusColor}`}>
             {provider.status}
           </span>
         </div>
         <div className="flex justify-between">
-          <span className="text-nova-silver">Last Checked</span>
-          <span className={isConnected ? "text-white" : "text-nova-silver"}>
+          <span className="text-slate-300">Last Checked</span>
+          <span className={isConnected ? "text-white" : "text-slate-300"}>
             {formatDate(new Date())}
           </span>
         </div>
         <div className="flex justify-between">
-          <span className="text-nova-silver">Latency</span>
-          <span className={isConnected ? "text-white" : "text-nova-silver"}>
+          <span className="text-slate-300">Latency</span>
+          <span className={isConnected ? "text-white" : "text-slate-300"}>
             {provider.latencyMs !== undefined ? `${provider.latencyMs} ms` : "—"}
           </span>
         </div>

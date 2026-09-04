@@ -22,9 +22,9 @@ export default function PerformanceDashboard() {
 
   const metrics = [
     { label: "Performance", score: 98, color: "text-green-400", bg: "bg-green-400/20", border: "border-green-400/50" },
-    { label: "Accessibility", score: 100, color: "text-nova-blue", bg: "bg-nova-blue/20", border: "border-nova-blue/50" },
-    { label: "Best Practices", score: 100, color: "text-nova-blue", bg: "bg-nova-blue/20", border: "border-nova-blue/50" },
-    { label: "SEO", score: 100, color: "text-nova-emerald", bg: "bg-nova-emerald/20", border: "border-nova-emerald/50" },
+    { label: "Accessibility", score: 100, color: "text-cta-primary", bg: "bg-cta-primary/20", border: "border-cta-primary/50" },
+    { label: "Best Practices", score: 100, color: "text-cta-primary", bg: "bg-cta-primary/20", border: "border-cta-primary/50" },
+    { label: "SEO", score: 100, color: "text-emerald-500", bg: "bg-emerald-500/20", border: "border-emerald-500/50" },
   ];
 
   return (
@@ -32,12 +32,12 @@ export default function PerformanceDashboard() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">Performance & SEO</h1>
-          <p className="text-nova-silver">Real-time platform health and Lighthouse metrics.</p>
+          <p className="text-slate-300">Real-time platform health and Lighthouse metrics.</p>
         </div>
         <button 
           onClick={handleScan}
           disabled={isScanning}
-          className="flex items-center gap-2 bg-nova-blue hover:bg-nova-blue/80 text-white font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 bg-cta-primary hover:bg-cta-primary/80 text-white font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
         >
           {isScanning ? <Activity className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
           {isScanning ? "Scanning..." : "Run Audit"}
@@ -73,7 +73,7 @@ export default function PerformanceDashboard() {
         {/* Production Hardening Checks */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-nova-blue" />
+            <ShieldCheck className="w-5 h-5 text-cta-primary" />
             Hardening Checks
           </h2>
           <ul className="space-y-4">
@@ -85,12 +85,12 @@ export default function PerformanceDashboard() {
               { label: "WCAG 2.1", status: "Passed", desc: "Aria labels present on all interactive elements." },
             ].map((check, i) => (
               <li key={i} className="flex items-start gap-4 pb-4 border-b border-white/5 last:border-0 last:pb-0">
-                <CheckCircle2 className="w-5 h-5 text-nova-emerald shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-white font-medium text-sm">{check.label}</h4>
-                  <p className="text-nova-silver text-xs">{check.desc}</p>
+                  <p className="text-slate-300 text-xs">{check.desc}</p>
                 </div>
-                <span className="ml-auto text-xs px-2 py-1 bg-nova-emerald/10 text-nova-emerald rounded-full font-medium">
+                <span className="ml-auto text-xs px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded-full font-medium">
                   {check.status}
                 </span>
               </li>
@@ -101,7 +101,7 @@ export default function PerformanceDashboard() {
         {/* Server & Network Status */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10">
           <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-            <Server className="w-5 h-5 text-nova-amber" />
+            <Server className="w-5 h-5 text-amber-500" />
             System Status
           </h2>
           
@@ -109,35 +109,35 @@ export default function PerformanceDashboard() {
             <div>
               <div className="flex justify-between text-sm mb-2">
                 <span className="text-white">API Response Time</span>
-                <span className="text-nova-emerald font-medium">42ms avg</span>
+                <span className="text-emerald-500 font-medium">42ms avg</span>
               </div>
               <div className="w-full bg-white/5 rounded-full h-2">
-                <div className="bg-nova-emerald h-2 rounded-full w-[25%]" />
+                <div className="bg-emerald-500 h-2 rounded-full w-[25%]" />
               </div>
             </div>
             
             <div>
               <div className="flex justify-between text-sm mb-2">
                 <span className="text-white">Database Query Time</span>
-                <span className="text-nova-emerald font-medium">12ms avg</span>
+                <span className="text-emerald-500 font-medium">12ms avg</span>
               </div>
               <div className="w-full bg-white/5 rounded-full h-2">
-                <div className="bg-nova-emerald h-2 rounded-full w-[15%]" />
+                <div className="bg-emerald-500 h-2 rounded-full w-[15%]" />
               </div>
             </div>
 
             <div className="pt-6 border-t border-white/10">
               <h3 className="text-sm font-medium text-white mb-4 flex items-center gap-2">
-                <Globe className="w-4 h-4 text-nova-blue" /> Active Regions
+                <Globe className="w-4 h-4 text-cta-primary" /> Active Regions
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-black/40 border border-white/5 rounded-lg p-3">
-                  <p className="text-xs text-nova-silver mb-1">us-east-1</p>
-                  <p className="text-nova-emerald font-bold text-sm">Operational</p>
+                  <p className="text-xs text-slate-300 mb-1">us-east-1</p>
+                  <p className="text-emerald-500 font-bold text-sm">Operational</p>
                 </div>
                 <div className="bg-black/40 border border-white/5 rounded-lg p-3">
-                  <p className="text-xs text-nova-silver mb-1">eu-central-1</p>
-                  <p className="text-nova-emerald font-bold text-sm">Operational</p>
+                  <p className="text-xs text-slate-300 mb-1">eu-central-1</p>
+                  <p className="text-emerald-500 font-bold text-sm">Operational</p>
                 </div>
               </div>
             </div>

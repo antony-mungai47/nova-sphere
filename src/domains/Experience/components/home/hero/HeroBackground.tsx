@@ -16,7 +16,7 @@ export function HeroBackground({ theme = "default" }: { theme?: CampaignTheme })
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      <AnimatedGradient colors={colors} speed={15} className="opacity-40 mix-blend-multiply" />
+      <AnimatedGradient colors={colors} speed={15} className="opacity-40" />
       {/* Soft glass overlay to mute the gradients slightly */}
       <div className="absolute inset-0 bg-background/30 backdrop-blur-[60px]" />
     </div>

@@ -7,7 +7,7 @@ export default function Page() {
       <div className="z-10 w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Create an Account</h1>
-          <p className="text-nova-silver">Join Nova Sphere to start shopping.</p>
+          <p className="text-slate-300">Join Nova Sphere to start shopping.</p>
         </div>
         <SignUp 
           appearance={{
@@ -18,14 +18,14 @@ export default function Page() {
               socialButtonsBlockButton: "bg-white/5 border border-white/10 hover:bg-white/10 text-white transition-colors",
               socialButtonsBlockButtonText: "text-white font-medium",
               dividerLine: "bg-white/10",
-              dividerText: "text-nova-silver bg-transparent",
-              formFieldLabel: "text-nova-silver font-medium",
-              formFieldInput: "bg-black/50 border border-white/10 text-white focus:border-nova-blue rounded-xl px-4 py-3",
-              formButtonPrimary: "bg-nova-blue hover:bg-nova-blue/80 text-white py-3 rounded-xl font-bold shadow-glow-primary transition-all",
-              footerActionText: "text-nova-silver",
-              footerActionLink: "text-nova-blue hover:text-nova-blue/80 font-medium",
+              dividerText: "text-slate-300 bg-transparent",
+              formFieldLabel: "text-slate-300 font-medium",
+              formFieldInput: "bg-black/50 border border-white/10 text-white focus:border-cta-primary rounded-xl px-4 py-3",
+              formButtonPrimary: "bg-cta-primary hover:bg-cta-primary/80 text-white py-3 rounded-xl font-bold shadow-glow-primary transition-all",
+              footerActionText: "text-slate-300",
+              footerActionLink: "text-cta-primary hover:text-cta-primary/80 font-medium",
               identityPreviewText: "text-white",
-              identityPreviewEditButtonIcon: "text-nova-blue",
+              identityPreviewEditButtonIcon: "text-cta-primary",
             }
           }}
         />

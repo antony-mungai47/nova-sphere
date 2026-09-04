@@ -124,7 +124,7 @@ export function ProductCard({
                 src={displayImages[currentImageIndex]}
                 alt={name}
                 fill
-                className="object-contain p-4 mix-blend-multiply"
+                className="object-contain p-4"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </motion.div>

@@ -46,7 +46,7 @@ export function SuccessClient() {
   return (
     <main className="min-h-screen pt-32 pb-24 relative overflow-hidden flex flex-col items-center justify-center">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-nova-blue/20 rounded-full blur-[150px] -z-10 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cta-primary/20 rounded-full blur-[150px] -z-10 pointer-events-none" />
 
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
@@ -54,16 +54,16 @@ export function SuccessClient() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="glass-panel p-10 md:p-16 max-w-xl w-full mx-6 text-center rounded-3xl border border-white/10 relative overflow-hidden"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-nova-blue via-nova-silver to-nova-amber" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cta-primary via-slate-300 to-amber-500" />
         
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.3 }}
-          className="w-24 h-24 bg-nova-blue/20 rounded-full flex items-center justify-center mx-auto mb-8 relative"
+          className="w-24 h-24 bg-cta-primary/20 rounded-full flex items-center justify-center mx-auto mb-8 relative"
         >
-          <div className="absolute inset-0 rounded-full animate-ping bg-nova-blue/30 opacity-75" />
-          <CheckCircle className="w-12 h-12 text-nova-blue z-10" />
+          <div className="absolute inset-0 rounded-full animate-ping bg-cta-primary/30 opacity-75" />
+          <CheckCircle className="w-12 h-12 text-cta-primary z-10" />
         </motion.div>
 
         <motion.h1 
@@ -79,7 +79,7 @@ export function SuccessClient() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="text-nova-silver text-lg mb-10"
+          className="text-slate-300 text-lg mb-10"
         >
           Your high-tech gear is being prepared for dispatch. You will receive an email confirmation shortly.
         </motion.p>
@@ -92,11 +92,11 @@ export function SuccessClient() {
         >
           <div className="flex items-center gap-4 text-left">
             <div className="p-3 bg-white/5 rounded-xl">
-              <Package className="w-6 h-6 text-nova-amber" />
+              <Package className="w-6 h-6 text-amber-500" />
             </div>
             <div>
               <p className="text-white font-medium">Order Status</p>
-              <p className="text-nova-silver text-sm">Processing in Neural Core</p>
+              <p className="text-slate-300 text-sm">Processing in Neural Core</p>
             </div>
           </div>
         </motion.div>
@@ -107,7 +107,7 @@ export function SuccessClient() {
           transition={{ delay: 0.9 }}
         >
           <Link href="/">
-            <Button className="w-full flex items-center justify-center gap-2 py-4 text-lg font-medium shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+            <Button className="w-full flex items-center justify-center gap-2 py-4 text-lg font-medium shadow-[0_0_20px_rgba(249,115,22,0.3)]">
               Return to Store <ArrowRight className="w-5 h-5" />
             </Button>
           </Link>

@@ -136,14 +136,14 @@ export function LiveSupportWidget() {
       {isOpen && (
         <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl w-80 sm:w-96 h-[500px] max-h-[80vh] flex flex-col mb-4 shadow-2xl overflow-hidden animate-in slide-in-from-bottom-5 fade-in duration-200">
           {/* Header */}
-          <div className="p-4 bg-gradient-to-r from-nova-blue/20 to-nova-amber/20 border-b border-white/10 flex items-center justify-between">
+          <div className="p-4 bg-gradient-to-r from-cta-primary/20 to-amber-500/20 border-b border-white/10 flex items-center justify-between">
             <div>
               <h3 className="text-white font-bold flex items-center gap-2">
-                Nova Support <Sparkles className="w-4 h-4 text-nova-amber" />
+                Nova Support <Sparkles className="w-4 h-4 text-amber-500" />
               </h3>
-              <p className="text-xs text-nova-silver">We typically reply in minutes</p>
+              <p className="text-xs text-slate-300">We typically reply in minutes</p>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-nova-silver hover:text-white transition-colors">
+            <button onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -151,17 +151,17 @@ export function LiveSupportWidget() {
           {/* Chat Area */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin flex flex-col bg-white/5">
             {isLoading && messages.length === 0 && (
-              <div className="flex-1 flex items-center justify-center text-nova-silver">
-                <div className="w-5 h-5 border-2 border-nova-blue border-t-transparent rounded-full animate-spin" />
+              <div className="flex-1 flex items-center justify-center text-slate-300">
+                <div className="w-5 h-5 border-2 border-cta-primary border-t-transparent rounded-full animate-spin" />
               </div>
             )}
             
             {!isLoading && messages.length === 0 && (
               <div className="flex-1 flex flex-col items-center justify-center text-center space-y-3 opacity-70">
-                <div className="w-12 h-12 rounded-full bg-nova-blue/20 flex items-center justify-center text-nova-blue">
+                <div className="w-12 h-12 rounded-full bg-cta-primary/20 flex items-center justify-center text-cta-primary">
                   <MessageSquare className="w-6 h-6" />
                 </div>
-                <p className="text-sm text-nova-silver max-w-[200px]">Send a message to start a conversation with our support team.</p>
+                <p className="text-sm text-slate-300 max-w-[200px]">Send a message to start a conversation with our support team.</p>
               </div>
             )}
 
@@ -173,7 +173,7 @@ export function LiveSupportWidget() {
               if (isSystem) {
                 return (
                   <div key={msg.id} className="flex justify-center">
-                    <span className="px-3 py-1 bg-white/10 rounded-full text-[10px] text-nova-silver">
+                    <span className="px-3 py-1 bg-white/10 rounded-full text-[10px] text-slate-300">
                       {msg.content}
                     </span>
                   </div>
@@ -184,9 +184,9 @@ export function LiveSupportWidget() {
                 <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
                   <div className={`max-w-[85%] p-3 rounded-2xl ${
                     isMe 
-                      ? "bg-nova-blue text-white rounded-tr-none" 
+                      ? "bg-cta-primary text-white rounded-tr-none" 
                       : isAi
-                        ? "bg-nova-amber/80 text-white rounded-tl-none border border-nova-amber"
+                        ? "bg-amber-500/80 text-white rounded-tl-none border border-amber-500"
                         : "bg-white/10 text-white rounded-tl-none border border-white/5"
                   }`}>
                     {!isMe && (
@@ -196,7 +196,7 @@ export function LiveSupportWidget() {
                       </div>
                     )}
                     <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
-                    <div className={`text-[9px] mt-1 text-right ${isMe ? "text-blue-200" : "text-nova-silver"}`}>
+                    <div className={`text-[9px] mt-1 text-right ${isMe ? "text-orange-" : "text-slate-300"}`}>
                       {format(new Date(msg.createdAt), "h:mm a")}
                     </div>
                   </div>
@@ -208,9 +208,9 @@ export function LiveSupportWidget() {
               <div className="flex justify-start">
                 <div className="max-w-[85%] p-3 rounded-2xl bg-white/10 rounded-tl-none border border-white/5 flex items-center gap-2">
                   <div className="flex gap-1">
-                    <div className="w-1 h-1 rounded-full bg-nova-silver animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                    <div className="w-1 h-1 rounded-full bg-nova-silver animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                    <div className="w-1 h-1 rounded-full bg-nova-silver animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                    <div className="w-1 h-1 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                    <div className="w-1 h-1 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                    <div className="w-1 h-1 rounded-full bg-slate-300 animate-bounce" style={{ animationDelay: "300ms" }}></div>
                   </div>
                 </div>
               </div>
@@ -223,24 +223,24 @@ export function LiveSupportWidget() {
             <form onSubmit={handleSend} className="flex items-end gap-2">
               <button 
                 type="button" 
-                className="p-2 text-nova-silver hover:text-white hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
+                className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-full transition-colors flex-shrink-0"
                 title="Attach a file"
               >
                 <Paperclip className="w-5 h-5" />
               </button>
-              <div className="flex-1 bg-white/5 border border-white/10 rounded-xl flex items-center pr-1 focus-within:border-nova-blue/50 transition-colors">
+              <div className="flex-1 bg-white/5 border border-white/10 rounded-xl flex items-center pr-1 focus-within:border-cta-primary/50 transition-colors">
                 <input
                   type="text"
                   value={inputValue}
                   onChange={handleTyping}
                   placeholder="Type a message..."
-                  className="flex-1 bg-transparent px-3 py-2.5 text-sm text-white focus:outline-none placeholder:text-nova-silver/50"
+                  className="flex-1 bg-transparent px-3 py-2.5 text-sm text-white focus:outline-none placeholder:text-slate-300/50"
                   disabled={isLoading && !conversationId}
                 />
                 <button
                   type="submit"
                   disabled={!inputValue.trim() || (isLoading && !conversationId)}
-                  className="p-1.5 m-1 bg-nova-blue text-white rounded-lg hover:bg-nova-blue/80 transition-colors disabled:opacity-50 disabled:hover:bg-nova-blue flex-shrink-0"
+                  className="p-1.5 m-1 bg-cta-primary text-white rounded-lg hover:bg-cta-primary/80 transition-colors disabled:opacity-50 disabled:hover:bg-cta-primary flex-shrink-0"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -256,7 +256,7 @@ export function LiveSupportWidget() {
           if (!isOpen) setUnreadCount(0);
           setIsOpen(!isOpen);
         }}
-        className="w-14 h-14 bg-gradient-to-tr from-nova-blue to-nova-amber rounded-full shadow-lg shadow-nova-blue/20 flex items-center justify-center text-white hover:scale-105 transition-transform relative"
+        className="w-14 h-14 bg-gradient-to-tr from-cta-primary to-amber-500 rounded-full shadow-lg shadow-cta-primary/20 flex items-center justify-center text-white hover:scale-105 transition-transform relative"
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
         {!isOpen && unreadCount > 0 && (

@@ -11,7 +11,7 @@ export function AuctionClientActions({ products }: { products: any[] }) {
     <>
       <button 
         onClick={() => setShowModal(true)}
-        className="flex items-center gap-2 bg-nova-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+        className="flex items-center gap-2 bg-cta-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-orange- transition-colors"
       >
         <Plus className="w-4 h-4" /> Create Auction
       </button>

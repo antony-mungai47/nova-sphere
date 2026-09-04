@@ -21,7 +21,7 @@ export default async function SettingsPage() {
   return (
     <div className="p-8 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold text-white mb-2">Store Settings</h1>
-      <p className="text-nova-silver mb-8">Manage your global store configuration, branding, and preferences.</p>
+      <p className="text-slate-300 mb-8">Manage your global store configuration, branding, and preferences.</p>
       
       <SettingsForm initialData={settings} />
     </div>

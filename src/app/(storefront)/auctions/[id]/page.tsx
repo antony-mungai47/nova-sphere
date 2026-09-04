@@ -50,8 +50,8 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
                 priority
               />
             ) : (
-              <div className="w-full h-full bg-nova-slate/20 flex items-center justify-center">
-                <span className="text-nova-silver">No image available</span>
+              <div className="w-full h-full bg-slate-500/20 flex items-center justify-center">
+                <span className="text-slate-300">No image available</span>
               </div>
             )}
             {hasEnded && (
@@ -65,20 +65,20 @@ export default async function AuctionDetailPage({ params }: { params: Promise<{ 
           
           <div className="glass-panel p-6">
             <h3 className="text-lg font-bold text-white mb-4">Product Details</h3>
-            <p className="text-nova-silver leading-relaxed whitespace-pre-line mb-6">
+            <p className="text-slate-300 leading-relaxed whitespace-pre-line mb-6">
               {auction.product.description}
             </p>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-nova-slate">Brand</p>
+                <p className="text-slate-500">Brand</p>
                 <p className="font-medium text-white">{auction.product.brand}</p>
               </div>
               <div>
-                <p className="text-nova-slate">Category</p>
+                <p className="text-slate-500">Category</p>
                 <p className="font-medium text-white">{auction.product.category}</p>
               </div>
               <div>
-                <p className="text-nova-slate">SKU</p>
+                <p className="text-slate-500">SKU</p>
                 <p className="font-medium text-white font-mono">{auction.product.sku}</p>
               </div>
             </div>
