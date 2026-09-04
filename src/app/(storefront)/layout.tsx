@@ -2,8 +2,6 @@ import React from "react";
 import { PulseProvider } from "@/domains/Experience/components/pulse/PulseEngine";
 import { FlyToCartProvider } from "@/components/motion/FlyToCartEngine";
 import { SessionTracker } from "@/domains/Experience/components/conversion/SessionTracker";
-import { SignalsProvider } from "@/domains/signals/sdk/hooks";
-import { ExperienceProvider } from "@/domains/personalization/sdk/hooks";
 import { ConnectionStatus } from '@/domains/Realtime/components/ConnectionStatus';
 import { RealtimeNotifier } from '@/domains/Realtime/components/RealtimeNotifier';
 import { RealtimeToaster } from "@/domains/Engagement/Notifications/components/RealtimeToaster";
@@ -34,8 +32,8 @@ export default async function StorefrontLayout({
   });
 
   return (
-    <SignalsProvider>
-      <ExperienceProvider>
+    
+      
         <PulseProvider>
           <SessionTracker>
             <FlyToCartProvider>
@@ -50,7 +48,7 @@ export default async function StorefrontLayout({
             </FlyToCartProvider>
           </SessionTracker>
         </PulseProvider>
-      </ExperienceProvider>
-    </SignalsProvider>
+      
+    
   );
 }

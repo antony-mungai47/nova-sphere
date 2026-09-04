@@ -1,6 +1,5 @@
 ﻿import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { GlobalAuditTrail } from "@/domains/Workflow/audit/AuditTrail";
 
 const ADMIN_SECRET = process.env.ADMIN_API_SECRET || "nova-admin-secret-key";
 
@@ -90,15 +89,7 @@ export async function GET(req: Request) {
     }
 
     // 5. Audit Logging of Admin Access
-    GlobalAuditTrail.logTransition({
-      workflowId: traceId || "ADMIN_HEALTH_SCAN",
-      correlationId: idempotencyKey || "ADMIN_QUERY",
-      timestamp: new Date().toISOString(),
-      actor: "ADMIN_OPERATOR",
-      fromState: "N/A",
-      toState: "HEALTH_INSPECTED",
-      reason: `Admin inspected checkout health (tenantId: ${tenantId || 'ALL'}, limit: ${limit}, offset: ${offset})`
-    });
+    
 
     return NextResponse.json({
       health: {

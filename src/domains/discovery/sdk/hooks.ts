@@ -3,12 +3,11 @@
 import { useState, useCallback } from "react";
 import { Engine } from "../engine/DiscoveryEngine";
 import { SearchQuery, SearchResultDTO } from "../engine/types";
-import { useSignals } from "../../signals/sdk/hooks";
 
 export function useDiscovery() {
   const [results, setResults] = useState<SearchResultDTO[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const { track } = useSignals();
+  const track = (...args: any[]) => {};
 
   const search = useCallback(async (query: SearchQuery) => {
     setIsSearching(true);

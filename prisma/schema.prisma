@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -1128,131 +1128,6 @@ model OutboxEvent {
   @@index([eventType])
 }
 
-model ShoppingMemory {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  contextVectors  Json?
-  recentItems     Json?
-  lastInteraction DateTime @default(now())
-  expiresAt       DateTime
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  @@index([expiresAt])
-}
-
-model SignalsLedger {
-  id        String   @id @default(cuid())
-  userId    String?
-  sessionId String
-  eventType String
-  payload   Json
-  createdAt DateTime @default(now())
-
-  @@index([userId, createdAt])
-  @@index([sessionId])
-}
-
-model PersonalizationProfile {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  brandAffinities Json?
-  categoryScores  Json?
-  priceTier       String   @default("STANDARD")
-  updatedAt       DateTime @updatedAt
-
-  @@index([priceTier])
-}
-
-model AIBudget {
-  id             String   @id @default(cuid())
-  tenantId       String   @unique
-  monthlyLimit   Int
-  currentUsage   Int      @default(0)
-  alertThreshold Int
-  status         String   @default("ACTIVE")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  @@index([tenantId])
-}
-
-model PromptLog {
-  id               String         @id @default(cuid())
-  provider         String
-  model            String
-  promptTokens     Int
-  completionTokens Int
-  latencyMs        Int
-  createdAt        DateTime       @default(now())
-  evaluations      AIEvaluation[]
-
-  @@index([provider, model])
-}
-
-model AIEvaluation {
-  id             String    @id @default(cuid())
-  promptLogId    String
-  score          Float
-  reasoning      String?
-  evaluatorModel String
-  createdAt      DateTime  @default(now())
-  promptLog      PromptLog @relation(fields: [promptLogId], references: [id], onDelete: Cascade)
-
-  @@index([promptLogId])
-}
-
-model WorkflowState {
-  id            String   @id @default(cuid())
-  workflowType  String
-  correlationId String   @unique
-  currentState  String
-  payload       Json?
-  status        String   @default("PENDING")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  @@index([correlationId])
-  @@index([status])
-}
-
-model AuditTrail {
-  id         String   @id @default(cuid())
-  workflowId String
-  fromState  String
-  toState    String
-  actorId    String?
-  reason     String?
-  createdAt  DateTime @default(now())
-
-  @@index([workflowId])
-}
-
-model KnowledgeQuestion {
-  id        String            @id @default(cuid())
-  productId String
-  authorId  String
-  content   String
-  status    String            @default("PUBLISHED")
-  createdAt DateTime          @default(now())
-  answers   KnowledgeAnswer[]
-
-  @@index([productId])
-}
-
-model KnowledgeAnswer {
-  id         String            @id @default(cuid())
-  questionId String
-  authorId   String
-  content    String
-  isOfficial Boolean           @default(false)
-  upvotes    Int               @default(0)
-  createdAt  DateTime          @default(now())
-  question   KnowledgeQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
-
-  @@index([questionId])
-}
-
 model Cart {
   id        String      @id @default(cuid())
   userId    String
@@ -1414,8 +1289,8 @@ model CheckoutSagaState {
   updatedAt            DateTime                 @updatedAt
   transitions          CheckoutSagaTransition[]
 
-  @@index([tenantId])
   @@unique([tenantId, idempotencyKey], name: "checkout_saga_tenant_idempotency_key")
+  @@index([tenantId])
 }
 
 model CheckoutSagaTransition {

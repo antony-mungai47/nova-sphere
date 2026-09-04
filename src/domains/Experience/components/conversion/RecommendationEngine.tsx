@@ -4,8 +4,6 @@ import React from "react";
 import Image from "next/image";
 import { RecommendationDTO } from "./types";
 import { Plus } from "lucide-react";
-import { useSignals } from "../../../signals/sdk/hooks";
-import { ImpressionTracker } from "../../../signals/observers/ImpressionTracker";
 import { useCartStore } from "@/store/useCartStore";
 
 interface RecommendationEngineProps {
@@ -16,7 +14,7 @@ interface RecommendationEngineProps {
 
 export function RecommendationEngine({ strategy, title, items }: RecommendationEngineProps) {
   const { addItem } = useCartStore();
-  const { track } = useSignals();
+  const track = (...args: any[]) => {};
 
   const handleAdd = (item: RecommendationDTO) => {
     addItem({
@@ -36,7 +34,7 @@ export function RecommendationEngine({ strategy, title, items }: RecommendationE
       <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">{title}</h4>
       <div className="flex flex-col gap-4">
         {items.map((item) => (
-          <ImpressionTracker key={item.id} entityId={item.id} entityName={item.name} category="recommendation">
+          <>
             <div className="flex items-center gap-3">
               <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-muted/20 border border-border flex-shrink-0">
                 <Image src={item.image} alt={item.name} fill className="object-cover mix-blend-multiply" />
@@ -55,7 +53,7 @@ export function RecommendationEngine({ strategy, title, items }: RecommendationE
                 <Plus className="w-4 h-4" />
               </button>
             </div>
-          </ImpressionTracker>
+          </>
         ))}
       </div>
     </div>

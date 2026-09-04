@@ -4,7 +4,6 @@ import { PrismaCheckoutSagaStateStore } from "@/modules/commerce/application/sag
 import { CheckoutOrchestratorService } from "@/modules/commerce/application/sagas/CheckoutOrchestratorService";
 import { StripeGateway } from "@/modules/commerce/infrastructure/gateways/StripeGateway";
 import { CheckoutEvent, CheckoutState } from "@/modules/commerce/application/sagas/CheckoutSaga.types";
-import { GlobalAuditTrail } from "@/domains/Workflow/audit/AuditTrail";
 import { CheckoutMetrics } from "@/modules/commerce/application/sagas/CheckoutMetrics";
 
 const ADMIN_SECRET = process.env.ADMIN_API_SECRET || "nova-admin-secret-key";
@@ -76,15 +75,7 @@ export async function POST(req: Request) {
     resultingState = updated?.currentState || resultingState;
 
     // 3. Audit Trail Logging
-    GlobalAuditTrail.logTransition({
-      workflowId: checkoutId,
-      correlationId: saga.identity.traceId,
-      timestamp: new Date().toISOString(),
-      actor: operatorId,
-      fromState: previousState,
-      toState: resultingState,
-      reason: `Manual reconciliation [${action}]: ${reason}`
-    });
+    
 
     CheckoutMetrics.increment("admin_manual_reconcile_total", 1, { action, tenantId });
 

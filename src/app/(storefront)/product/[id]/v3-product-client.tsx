@@ -17,8 +17,6 @@ import { CommunityQA } from "@/domains/Experience/components/qa/CommunityQA";
 import { UpsellDrawer } from "@/domains/Experience/components/conversion/UpsellDrawer";
 import { SmartBundle } from "@/domains/Experience/components/conversion/SmartBundle";
 import { ProductIntelligenceDashboard } from "@/domains/Commerce/ui/ProductIntelligenceDashboard";
-import { ScrollDepthTracker } from "@/domains/signals/observers/ScrollDepthTracker";
-import { useSignals } from "@/domains/signals/sdk/hooks";
 
 type ProductProps = {
   id: string;
@@ -66,7 +64,7 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(product.variants?.[0]?.id || null);
-  const { track } = useSignals();
+  const track = (...args: any[]) => {};
 
   const currentVariant = product.variants?.find(v => v.id === selectedVariant);
   const currentPrice = currentVariant?.price || product.salePrice || product.price;
@@ -108,7 +106,7 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
 
   return (
     <main className="min-h-screen pt-28 pb-32 relative bg-background selection:bg-accent selection:text-primary">
-      <ScrollDepthTracker pageType="pdp" productId={product.id} />
+      
       
       {/* HEADER / NAVIGATION */}
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">

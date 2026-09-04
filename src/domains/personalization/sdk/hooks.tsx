@@ -4,7 +4,6 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { Experience } from "../engine/ExperienceResolver";
 import { PersonalizationContext, RankedProduct } from "../engine/types";
 import { ProductRankingData } from "../engine/RankingEngine";
-import { useSignals } from "../../signals/sdk/hooks";
 import { useAuth } from "@clerk/nextjs";
 
 interface ExperienceContextType {
@@ -17,7 +16,7 @@ export const ExperienceContext = createContext<ExperienceContextType | undefined
 
 export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [context, setContext] = useState<PersonalizationContext | null>(null);
-  const { track } = useSignals();
+  const track = (...args: any[]) => {};
   const { userId, sessionId } = useAuth();
   
   const randomId = React.useMemo(() => "anon_" + "temp_", []);

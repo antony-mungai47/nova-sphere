@@ -1,4 +1,3 @@
-import { useSignals } from "../../signals/sdk/hooks"; // In real usage, this would be imported or injected
 
 export interface AIEvaluationMetric {
   provider: string;
