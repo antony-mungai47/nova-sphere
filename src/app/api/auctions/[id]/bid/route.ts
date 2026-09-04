@@ -4,8 +4,6 @@ import { auth } from '@clerk/nextjs/server';
 import { Prisma } from '@prisma/client';
 import { BidEngine } from '@/domains/Auction/BidEngine';
 
-// In-memory rate limiting and idempotency (Mock for Sprint 7)
-// In production, use Redis (e.g. @upstash/ratelimit)
 const rateLimitMap = new Map<string, { count: number, resetAt: number }>();
 const idempotencyMap = new Map<string, any>();
 
@@ -18,13 +16,6 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Rate Limiting (20 bids / 30 seconds per user) using V3 SignalsLedger
-    const recentBids = 0;
-
-    if (recentBids >= 20) {
-      return NextResponse.json({ error: 'Too Many Requests' }, { status: 429 });
-    }
-
     const body = await req.json();
     const { amount, currency, isProxyBid, maximumBid } = body;
     idempotencyKey = req.headers.get('Idempotency-Key');
@@ -33,20 +24,12 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       return NextResponse.json({ error: 'Idempotency-Key header required' }, { status: 400 });
     }
 
-    // Idempotency using V3 WorkflowState
-    const existingWorkflow = null;
-
-    if (existingWorkflow) {
-      if (existingWorkflow.status === 'PENDING') {
-        return NextResponse.json({ error: 'Concurrent request processing' }, { status: 409 });
-      }
-      return NextResponse.json(existingWorkflow.payload as any, { status: 200 });
+    if (idempotencyMap.has(idempotencyKey)) {
+      return NextResponse.json(idempotencyMap.get(idempotencyKey), { status: 200 });
     }
-    
-    // Mark as processing
-    
 
-    // Convert amounts to Decimal
+    idempotencyMap.set(idempotencyKey, { pending: true });
+
     const decimalAmount = new Prisma.Decimal(amount);
     const decimalMax = maximumBid ? new Prisma.Decimal(maximumBid) : null;
 
@@ -59,20 +42,13 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       maximumBid: decimalMax
     });
 
-    // Record the signal for rate limiting
-    
-
     const responsePayload = { success: true, bid: result.newBid };
-    
-    
+    idempotencyMap.set(idempotencyKey, responsePayload);
 
     return NextResponse.json(responsePayload, { status: 201 });
-
   } catch (error: any) {
     console.error('[Bid API Error]', error);
-    if (idempotencyKey) {
-      
-    }
+    if (idempotencyKey) idempotencyMap.delete(idempotencyKey);
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 400 });
   }
 }
