@@ -1,7 +1,4 @@
 import { SearchQuery, SearchResultDTO } from "../types";
-import { GlobalAIOrchestrator } from "../../../AI/orchestrator/AIOrchestrator";
-import { GlobalEmbedding } from "../../../AI/embeddings/EmbeddingProvider";
-import { DiscoveryPrompts } from "../../../AI/prompts";
 
 export interface DiscoveryAdapter {
   name: string;
