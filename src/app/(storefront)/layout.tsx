@@ -13,8 +13,6 @@ import { auth } from "@clerk/nextjs/server";
 import { Telemetry, EventType } from "@/lib/observability/Telemetry";
 import { getTraceContext } from "@/lib/observability/TraceContext";
 
-import { ExperienceProvider } from "@/domains/personalization/sdk/hooks";
-
 export default async function StorefrontLayout({
   children,
 }: {
@@ -34,21 +32,19 @@ export default async function StorefrontLayout({
   });
 
   return (
-    <ExperienceProvider>
-      <PulseProvider>
-        <SessionTracker>
-          <FlyToCartProvider>
-            {children}
-            
-            {/* Storefront Overlays */}
-            <ConnectionStatus />
-            <RealtimeNotifier />
-            <RealtimeToaster userId={userId} enabled={liveNotificationsEnabled} />
-            <LiveSupportWidget />
-            <MobileFAB />
-          </FlyToCartProvider>
-        </SessionTracker>
-      </PulseProvider>
-    </ExperienceProvider>
+    <PulseProvider>
+      <SessionTracker>
+        <FlyToCartProvider>
+          {children}
+          
+          {/* Storefront Overlays */}
+          <ConnectionStatus />
+          <RealtimeNotifier />
+          <RealtimeToaster userId={userId} enabled={liveNotificationsEnabled} />
+          <LiveSupportWidget />
+          <MobileFAB />
+        </FlyToCartProvider>
+      </SessionTracker>
+    </PulseProvider>
   );
 }

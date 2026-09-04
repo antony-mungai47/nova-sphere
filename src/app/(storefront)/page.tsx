@@ -1,11 +1,7 @@
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
-import { DynamicHero } from "@/domains/personalization/components/DynamicHero";
-import { ContextualOffer } from "@/domains/personalization/components/ContextualOffer";
-import { RankedProductRow } from "@/domains/personalization/components/RankedProductRow";
 import { 
   TrendingCategories, 
   FlashDealsCarousel, 
-  RecommendedProducts, 
   BestSellers, 
   NewArrivals, 
   FeaturedVendors, 
@@ -14,25 +10,34 @@ import {
   DownloadAppBanner 
 } from "@/domains/Experience/components/home/homepage-sections";
 import { Footer } from "@/shared/components/layout/footer";
-import { prisma } from "@/lib/prisma";
-import { getFeatureFlag } from "@/domains/Foundation/feature-flags/actions";
-import { FeatureFlags } from "@/domains/Foundation/feature-flags/flags";
-import { ProductImageService } from "@/modules/commerce/services/ProductImageService";
 import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
 
 export default async function Home() {
   const products = await StorefrontProductQueryService.getTrendingProducts([], 4);
 
-  const liveActivityEnabled = await getFeatureFlag(FeatureFlags.LIVE_ACTIVITY);
-
   return (
     <main className="min-h-screen flex flex-col bg-background">
       {/* 1. Sticky Glass Nav */}
       <Navbar />
-      
-      {/* Experience Engine: Contextual Offer & Dynamic Hero */}
-      <ContextualOffer />
-      <DynamicHero />
+
+      {/* 2. Hero Section */}
+      <section className="relative w-full h-[600px] overflow-hidden bg-background">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-10">
+          <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter text-white">
+            Smart Shopping Delivered
+          </h1>
+          <p className="text-lg md:text-xl font-medium mb-8 max-w-2xl text-white/80">
+            The marketplace that understands you.
+          </p>
+          <a 
+            href="/store"
+            className="px-8 py-4 rounded-full font-bold transition-all shadow-hover bg-white text-black hover:bg-gray-100"
+          >
+            Start Browsing
+          </a>
+        </div>
+      </section>
 
       {/* 3. Trending Categories */}
       <TrendingCategories />
@@ -40,39 +45,25 @@ export default async function Home() {
       {/* 4. Flash Deals Carousel */}
       <FlashDealsCarousel />
 
-      {/* 5. Recommended For You (Experience Engine) */}
-      <RankedProductRow 
-        title="Recommended For You" 
-        rawProducts={products.map(p => ({
-          id: p.id,
-          category: p.category,
-          price: p.price,
-          popularity: p.rating / 5, // mock popularity
-          margin: 0.2, // mock margin
-          isNew: false
-        }))} 
-      />
-
-      {/* 6. Best Sellers (re-using trending query for now) */}
+      {/* 5. Best Sellers */}
       <BestSellers />
 
-      {/* 7. New Arrivals */}
+      {/* 6. New Arrivals */}
       <NewArrivals />
 
-      {/* 8. Featured Vendors */}
+      {/* 7. Featured Vendors */}
       <FeaturedVendors />
 
-      {/* 9. Why Shop Nova Sphere */}
+      {/* 8. Why Shop Nova Sphere */}
       <WhyShopNova />
 
-      {/* 10. Customer Reviews */}
+      {/* 9. Customer Reviews */}
       <CustomerReviews />
 
-      {/* 11. Download App Banner */}
+      {/* 10. Download App Banner */}
       <DownloadAppBanner />
 
-
-      {/* 13. Corporate Footer */}
+      {/* 11. Corporate Footer */}
       <Footer />
     </main>
   );
