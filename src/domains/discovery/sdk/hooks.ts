@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { Engine } from "../engine/DiscoveryEngine";
-import { SearchQuery, SearchResultDTO } from "../engine/types";
+import React, { useState, useCallback } from "react";
+import React, { Engine } from "../engine/DiscoveryEngine";
+import React, { SearchQuery, SearchResultDTO } from "../engine/types";
 
 export function useDiscovery() {
   const [results, setResults] = useState<SearchResultDTO[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const track = (...args: any[]) => {};
+  const track = useCallback((...args: any[]) => {}, []);
 
   const search = useCallback(async (query: SearchQuery) => {
     setIsSearching(true);
@@ -47,7 +47,7 @@ export function useSuggestions() {
 }
 
 // Global UI state for the full-screen overlay
-import { create } from "zustand";
+import React, { create } from "zustand";
 
 interface DiscoveryUIState {
   isOpen: boolean;

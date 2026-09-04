@@ -16,7 +16,7 @@ export const ExperienceContext = createContext<ExperienceContextType | undefined
 
 export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [context, setContext] = useState<PersonalizationContext | null>(null);
-  const track = (...args: any[]) => {};
+  const track = React.useCallback((...args: any[]) => {}, []);
   const { userId, sessionId } = useAuth();
   
   const randomId = React.useMemo(() => "anon_" + "temp_", []);

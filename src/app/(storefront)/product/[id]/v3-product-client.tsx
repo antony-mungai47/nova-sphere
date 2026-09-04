@@ -64,7 +64,7 @@ export function ProductClientV3({ product, relatedProducts, liveInventoryEnabled
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(product.variants?.[0]?.id || null);
-  const track = (...args: any[]) => {};
+  const track = React.useCallback((...args: any[]) => {}, []);
 
   const currentVariant = product.variants?.find(v => v.id === selectedVariant);
   const currentPrice = currentVariant?.price || product.salePrice || product.price;

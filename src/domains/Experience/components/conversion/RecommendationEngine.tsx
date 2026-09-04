@@ -14,7 +14,7 @@ interface RecommendationEngineProps {
 
 export function RecommendationEngine({ strategy, title, items }: RecommendationEngineProps) {
   const { addItem } = useCartStore();
-  const track = (...args: any[]) => {};
+  const track = React.useCallback((...args: any[]) => {}, []);
 
   const handleAdd = (item: RecommendationDTO) => {
     addItem({
