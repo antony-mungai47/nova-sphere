@@ -13,29 +13,70 @@ import { Footer } from "@/shared/components/layout/footer";
 import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
 
 export default async function Home() {
-  const products = await StorefrontProductQueryService.getTrendingProducts([], 4);
+  const [trending, allProducts] = await Promise.all([
+    StorefrontProductQueryService.getTrendingProducts([], 8),
+    StorefrontProductQueryService.searchCatalog({})
+  ]);
+
+  const newArrivals = [...allProducts].sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()).slice(0, 8);
+  const flashDeals = allProducts.filter(p => p.salePrice).slice(0, 8);
 
   return (
-    <main className="min-h-screen flex flex-col bg-background">
+    <main className="min-h-screen flex flex-col bg-background relative overflow-hidden">
+      {/* Dynamic Background Gradients */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cta-primary/20 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[40%] h-[40%] bg-amber-500/10 blur-[150px] rounded-full pointer-events-none" />
+
       {/* 1. Sticky Glass Nav */}
       <Navbar />
 
-      {/* 2. Hero Section */}
-      <section className="relative w-full h-[600px] overflow-hidden bg-background">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-10">
-          <h1 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter text-white">
-            Smart Shopping Delivered
+      {/* 2. Glassmorphism Hero Section */}
+      <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
+        {/* Nova Sphere Watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.03] z-0">
+          <h1 className="text-[15vw] font-black tracking-tighter whitespace-nowrap">
+            NOVA SPHERE
           </h1>
-          <p className="text-lg md:text-xl font-medium mb-8 max-w-2xl text-white/80">
-            The marketplace that understands you.
-          </p>
-          <a 
-            href="/store"
-            className="px-8 py-4 rounded-full font-bold transition-all shadow-hover bg-white text-black hover:bg-gray-100"
-          >
-            Start Browsing
-          </a>
+        </div>
+
+        <div className="container relative z-10 px-6 mx-auto flex flex-col items-center justify-center text-center mt-16">
+          <div className="glass-panel border border-white/10 bg-white/5 backdrop-blur-2xl rounded-3xl p-10 md:p-16 max-w-4xl shadow-2xl relative overflow-hidden">
+            {/* Inner glow effect */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-cta-primary to-transparent opacity-50" />
+            
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-cta-primary animate-pulse" />
+              <span className="text-sm font-medium text-slate-300">Nova Sphere Market 3.0</span>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-slate-500">
+              Smart Shopping <br className="hidden md:block"/>
+              <span className="text-cta-primary drop-shadow-sm">Delivered.</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl font-medium mb-10 max-w-2xl mx-auto text-slate-300 leading-relaxed">
+              Experience the future of commerce. Curated collections, AI-driven recommendations, and unparalleled aesthetics in one seamless marketplace.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a 
+                href="/store"
+                className="group relative px-8 py-4 rounded-xl font-bold transition-all bg-cta-primary text-white overflow-hidden shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_0_60px_-15px_rgba(249,115,22,0.7)] hover:-translate-y-1"
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+                <span className="relative flex items-center gap-2">
+                  Start Browsing
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </span>
+              </a>
+              <a 
+                href="/recommended"
+                className="px-8 py-4 rounded-xl font-bold transition-all bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20 backdrop-blur-md"
+              >
+                View Curated Deals
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -43,13 +84,13 @@ export default async function Home() {
       <TrendingCategories />
 
       {/* 4. Flash Deals Carousel */}
-      <FlashDealsCarousel />
+      <FlashDealsCarousel products={flashDeals.length ? flashDeals : trending} />
 
       {/* 5. Best Sellers */}
-      <BestSellers />
+      <BestSellers products={trending} />
 
       {/* 6. New Arrivals */}
-      <NewArrivals />
+      <NewArrivals products={newArrivals} />
 
       {/* 7. Featured Vendors */}
       <FeaturedVendors />
