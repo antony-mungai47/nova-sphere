@@ -268,7 +268,10 @@ export const ProductGridV3 = ({
                         <h3 className="text-sm font-bold text-white mb-1 line-clamp-2 group-hover:text-white transition-colors">
                           {product.name}
                         </h3>
-                        <p className="text-xs text-slate-300 mb-4">{product.brand}</p>
+                        <div className="flex items-center gap-2 mb-4">
+                          <span className="text-xs text-cta-primary bg-cta-primary/10 px-2 py-0.5 rounded border border-cta-primary/20">{product.category}</span>
+                          <span className="text-xs text-slate-300">{product.brand}</span>
+                        </div>
                         
                         <div className="mt-auto flex items-end justify-between">
                           <div>

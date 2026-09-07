@@ -5,7 +5,7 @@ export type ProductWithImages = {
 };
 
 export class ProductImageService {
-  private static readonly DEFAULT_PLACEHOLDER = "/placeholder.png";
+  private static readonly DEFAULT_PLACEHOLDER = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80";
 
   /**
    * Retrieves the primary image URL for a product, or a guaranteed placeholder.

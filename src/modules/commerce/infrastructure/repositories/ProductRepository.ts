@@ -78,7 +78,7 @@ export class ProductRepository {
   }
 
   static async searchCatalog(filters: { query?: string, category?: string, brand?: string, minPrice?: number, maxPrice?: number, sort?: string }) {
-    const where: any = {};
+    const where: any = { status: 'ACTIVE' };
     if (filters.query) {
       where.OR = [
         { name: { contains: filters.query, mode: 'insensitive' } },
@@ -107,8 +107,8 @@ export class ProductRepository {
 
   static async getFilterOptions() {
     const [categories, brands] = await Promise.all([
-      prisma.product.findMany({ select: { category: true }, distinct: ['category'] }),
-      prisma.product.findMany({ select: { brand: true }, distinct: ['brand'] }),
+      prisma.product.findMany({ where: { status: 'ACTIVE' }, select: { category: true }, distinct: ['category'] }),
+      prisma.product.findMany({ where: { status: 'ACTIVE' }, select: { brand: true }, distinct: ['brand'] }),
     ]);
     return {
       categories: ['All', ...categories.map(c => c.category)],
