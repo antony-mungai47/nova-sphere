@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { ServerNavbar as Navbar } from "@/shared/components/layout/ServerNavbar";
 import { 
   TrendingCategories, 
@@ -9,13 +10,20 @@ import {
   CustomerReviews, 
   DownloadAppBanner 
 } from "@/domains/Experience/components/home/homepage-sections";
+import { AuctionHighlights } from "@/domains/Experience/components/home/auction-highlights";
 import { Footer } from "@/shared/components/layout/footer";
 import { StorefrontProductQueryService } from "@/modules/commerce/application/queries/StorefrontProductQueryService";
 
 export default async function Home() {
-  const [trending, allProducts] = await Promise.all([
+  const [trending, allProducts, liveAuctions] = await Promise.all([
     StorefrontProductQueryService.getTrendingProducts([], 8),
-    StorefrontProductQueryService.searchCatalog({})
+    StorefrontProductQueryService.searchCatalog({}),
+    prisma.auction.findMany({
+      where: { status: 'LIVE' },
+      include: { product: { include: { images: true } }, _count: { select: { bids: true } } },
+      take: 4,
+      orderBy: { endTime: 'asc' }
+    })
   ]);
 
   const newArrivals = [...allProducts].reverse().slice(0, 8);
@@ -82,6 +90,9 @@ export default async function Home() {
 
       {/* 3. Trending Categories */}
       <TrendingCategories />
+
+      {/* Premium Live Auctions */}
+      <AuctionHighlights auctions={liveAuctions} />
 
       {/* 4. Flash Deals Carousel */}
       <FlashDealsCarousel products={flashDeals.length ? flashDeals : trending} />

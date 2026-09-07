@@ -134,19 +134,6 @@ export const ProductGridV3 = ({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl py-2 px-4 text-sm text-white focus:outline-none focus:border-white transition-colors appearance-none"
-              >
-                {uniqueCategories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">Brand</label>
               <select
                 value={selectedBrand}
