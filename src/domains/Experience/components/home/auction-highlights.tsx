@@ -64,7 +64,7 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
                       <div>
                         <p className="text-[10px] text-[var(--color-muted)] uppercase font-semibold">Current Bid</p>
                         <p className="text-lg font-black text-foreground">
-                          ${auction.currentBid > 0 ? auction.currentBid.toFixed(2) : auction.startingBid.toFixed(2)}
+                          ${Number(auction.currentBid) > 0 ? Number(auction.currentBid).toFixed(2) : Number(auction.baseAmount || 0).toFixed(2)}
                         </p>
                       </div>
                       <div className="text-right">
