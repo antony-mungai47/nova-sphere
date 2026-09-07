@@ -115,6 +115,8 @@ async function main() {
       const created = await prisma.product.create({
         data: {
           ...data,
+          status: data.status as any,
+          approvalStatus: data.approvalStatus as any,
           images: {
             create: images
           }
