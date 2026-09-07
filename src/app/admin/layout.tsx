@@ -8,6 +8,8 @@ import { redirect } from "next/navigation";
 import { Telemetry, EventType } from "@/lib/observability/Telemetry";
 import { getTraceContext } from "@/lib/observability/TraceContext";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const authorized = await IdentityFacade.isAdmin();
   

@@ -33,21 +33,24 @@ export function TrendingCategories() {
   );
 }
 
-export function FlashDealsCarousel() {
-  const items = Array.from({ length: 8 }).map((_, i) => (
+export function FlashDealsCarousel({ products = [] }: { products?: any[] }) {
+  const items = products.map((p, i) => (
     <ProductCard 
-      key={i}
-      id={`flash-${i}`}
-      name={`Premium Smart Watch Series ${i + 1}`}
-      price={299.99}
-      salePrice={149.99}
-      image="/hero-product.png"
-      category="Electronics"
-      brand="NovaTech"
-      rating={4.8}
-      reviewCount={124}
+      key={p.id || i}
+      id={p.id}
+      name={p.name}
+      price={p.price}
+      salePrice={p.salePrice}
+      image={p.images?.[0] || p.image || "/placeholder.png"}
+      images={p.images || [p.image || "/placeholder.png"]}
+      category={p.category}
+      brand={p.brand}
+      rating={p.rating}
+      reviewCount={p.reviewCount}
     />
   ));
+
+  if (!items.length) return null;
 
   return (
     <section className="py-24 bg-background">
@@ -58,69 +61,80 @@ export function FlashDealsCarousel() {
   );
 }
 
-export function RecommendedProducts() {
-  const items = Array.from({ length: 8 }).map((_, i) => (
+export function RecommendedProducts({ products = [] }: { products?: any[] }) {
+  const items = products.map((p, i) => (
     <ProductCard 
-      key={i}
-      id={`rec-${i}`}
-      name={`Wireless Noise-Cancelling Headphones ${i + 1}`}
-      price={199.99}
-      image="/hero-product.png"
-      category="Audio"
-      brand="SoundMax"
-      rating={4.5}
-      reviewCount={89}
+      key={p.id || i}
+      id={p.id}
+      name={p.name}
+      price={p.price}
+      salePrice={p.salePrice}
+      image={p.images?.[0] || p.image || "/placeholder.png"}
+      images={p.images || [p.image || "/placeholder.png"]}
+      category={p.category}
+      brand={p.brand}
+      rating={p.rating}
+      reviewCount={p.reviewCount}
     />
   ));
+
+  if (!items.length) return null;
 
   return (
     <section className="py-24 bg-surface border-y border-border">
       <div className="container mx-auto px-6">
-        <ProductCarousel title="Recommended For You" items={items} animationMode="pause-on-hover" />
+        <ProductCarousel title="⭐ Recommended For You" items={items} animationMode="pause-on-hover" />
       </div>
     </section>
   );
 }
 
-export function BestSellers() {
-  const items = Array.from({ length: 8 }).map((_, i) => (
+export function BestSellers({ products = [] }: { products?: any[] }) {
+  const items = products.map((p, i) => (
     <ProductCard 
-      key={i}
-      id={`best-${i}`}
-      name={`Ergonomic Office Chair Model ${i + 1}`}
-      price={349.99}
-      salePrice={299.99}
-      image="/hero-product.png"
-      category="Furniture"
-      brand="ErgoFit"
-      rating={4.9}
-      reviewCount={312}
+      key={p.id || i}
+      id={p.id}
+      name={p.name}
+      price={p.price}
+      salePrice={p.salePrice}
+      image={p.images?.[0] || p.image || "/placeholder.png"}
+      images={p.images || [p.image || "/placeholder.png"]}
+      category={p.category}
+      brand={p.brand}
+      rating={p.rating}
+      reviewCount={p.reviewCount}
     />
   ));
+
+  if (!items.length) return null;
 
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-6">
-        <ProductCarousel title="🔥 Best Sellers" items={items} animationMode="marquee" />
+        <ProductCarousel title="💎 Best Sellers" items={items} animationMode="marquee" />
       </div>
     </section>
   );
 }
 
-export function NewArrivals() {
-  const items = Array.from({ length: 8 }).map((_, i) => (
+export function NewArrivals({ products = [] }: { products?: any[] }) {
+  const items = products.map((p, i) => (
     <ProductCard 
-      key={i}
-      id={`new-${i}`}
-      name={`Next-Gen Gaming Console ${i + 1}`}
-      price={499.99}
-      image="/hero-product.png"
-      category="Gaming"
-      brand="PlayTech"
-      rating={5.0}
-      reviewCount={12}
+      key={p.id || i}
+      id={p.id}
+      name={p.name}
+      price={p.price}
+      salePrice={p.salePrice}
+      image={p.images?.[0] || p.image || "/placeholder.png"}
+      images={p.images || [p.image || "/placeholder.png"]}
+      category={p.category}
+      brand={p.brand}
+      rating={p.rating}
+      reviewCount={p.reviewCount}
     />
   ));
+
+  if (!items.length) return null;
 
   return (
     <section className="py-24 bg-surface border-y border-border">

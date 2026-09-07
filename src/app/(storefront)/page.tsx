@@ -18,7 +18,7 @@ export default async function Home() {
     StorefrontProductQueryService.searchCatalog({})
   ]);
 
-  const newArrivals = [...allProducts].sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()).slice(0, 8);
+  const newArrivals = [...allProducts].reverse().slice(0, 8);
   const flashDeals = allProducts.filter(p => p.salePrice).slice(0, 8);
 
   return (

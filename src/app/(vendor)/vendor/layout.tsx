@@ -4,6 +4,8 @@ import { Store, Package, ShoppingCart, Settings } from 'lucide-react';
 import { Telemetry, EventType } from "@/lib/observability/Telemetry";
 import { getTraceContext } from "@/lib/observability/TraceContext";
 
+export const dynamic = 'force-dynamic';
+
 export default async function VendorLayout({ children }: { children: React.ReactNode }) {
   const { traceId, spanId } = await getTraceContext();
   Telemetry.record({
