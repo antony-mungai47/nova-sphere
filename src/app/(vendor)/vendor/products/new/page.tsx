@@ -1,8 +1,13 @@
 "use client";
 
 import React, { useState } from 'react';
-import { CldUploadWidget } from 'next-cloudinary';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
+
+const CldUploadWidget = dynamic(
+  () => import('next-cloudinary').then((mod) => mod.CldUploadWidget),
+  { ssr: false }
+);
 
 export default function NewProductPage() {
   const [imageUrl, setImageUrl] = useState('');
@@ -29,15 +34,21 @@ export default function NewProductPage() {
                   No Image
                 </div>
               )}
-              <CldUploadWidget uploadPreset="nova_sphere_products" onSuccess={handleUploadSuccess}>
-                {({ open }) => {
-                  return (
-                    <button type="button" onClick={() => open()} className="bg-cta-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange- transition-colors">
-                      Upload to Cloudinary
-                    </button>
-                  );
-                }}
-              </CldUploadWidget>
+              {process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ? (
+                <CldUploadWidget uploadPreset="nova_sphere_products" onSuccess={handleUploadSuccess}>
+                  {({ open }) => {
+                    return (
+                      <button type="button" onClick={() => open()} className="bg-cta-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors">
+                        Upload to Cloudinary
+                      </button>
+                    );
+                  }}
+                </CldUploadWidget>
+              ) : (
+                <button type="button" disabled className="bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-medium opacity-50 cursor-not-allowed">
+                  Cloudinary Not Configured
+                </button>
+              )}
             </div>
             {imageUrl && <input type="hidden" name="imageUrl" value={imageUrl} />}
           </div>
