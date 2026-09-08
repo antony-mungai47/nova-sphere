@@ -1,0 +1,1 @@
+const fs = require('fs'); const file = 'src/domains/Experience/components/home/homepage-sections.tsx'; let content = fs.readFileSync(file, 'utf8'); content = content.replace(/\(img\) =>/g, '(img: any) =>'); fs.writeFileSync(file, content); console.log('Fixed implicit any!');

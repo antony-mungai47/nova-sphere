@@ -39,7 +39,7 @@ export default async function Home() {
       <Navbar />
 
       {/* 2. Glassmorphism Hero Section */}
-      <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full py-16 flex items-center justify-center overflow-hidden">
         {/* Nova Sphere Watermark */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.03] z-0">
           <h1 className="text-[15vw] font-black tracking-tighter whitespace-nowrap">
@@ -47,7 +47,7 @@ export default async function Home() {
           </h1>
         </div>
 
-        <div className="container relative z-10 px-6 mx-auto flex flex-col items-center justify-center text-center mt-16">
+        <div className="container relative z-10 px-6 mx-auto flex flex-col items-center justify-center text-center mt-8">
           <div className="glass-panel border border-white/10 bg-white/5 backdrop-blur-2xl rounded-3xl p-10 md:p-16 max-w-4xl shadow-2xl relative overflow-hidden">
             {/* Inner glow effect */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-cta-primary to-transparent opacity-50" />
@@ -92,7 +92,7 @@ export default async function Home() {
       <TrendingCategories />
 
       {/* Premium Live Auctions */}
-      <AuctionHighlights auctions={liveAuctions} />
+      <AuctionHighlights auctions={JSON.parse(JSON.stringify(liveAuctions))} />
 
       {/* 4. Flash Deals Carousel */}
       <FlashDealsCarousel products={flashDeals.length ? flashDeals : trending} />

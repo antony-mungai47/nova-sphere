@@ -15,12 +15,12 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
   if (!auctions || auctions.length === 0) return null;
 
   return (
-    <section className="py-24 bg-black/20 border-y border-white/5 relative overflow-hidden">
+    <section className="py-12 bg-black/20 border-y border-white/5 relative overflow-hidden">
       {/* Decorative gradient */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-[var(--color-primary)] opacity-5 blur-[200px] pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 text-xs font-bold text-[var(--color-primary)] uppercase tracking-wider mb-4">
               <Gavel className="w-3 h-3" /> Live Bidding

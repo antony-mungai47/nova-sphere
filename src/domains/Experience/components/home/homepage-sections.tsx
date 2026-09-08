@@ -14,9 +14,9 @@ export function TrendingCategories() {
   ];
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="py-12 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex items-center justify-between mb-12">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Trending Categories</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -65,7 +65,7 @@ export function FlashDealsCarousel({ products = [] }: { products?: any[] }) {
   if (!items.length) return null;
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-12 bg-background">
       <div className="container mx-auto px-6">
         <ProductCarousel title="⚡ Flash Deals" items={items} animationMode="slide-right" />
       </div>
@@ -93,7 +93,7 @@ export function RecommendedProducts({ products = [] }: { products?: any[] }) {
   if (!items.length) return null;
 
   return (
-    <section className="py-24 bg-surface border-y border-border">
+    <section className="py-12 bg-surface border-y border-border">
       <div className="container mx-auto px-6">
         <ProductCarousel title="⭐ Recommended For You" items={items} animationMode="pause-on-hover" />
       </div>
@@ -121,7 +121,7 @@ export function BestSellers({ products = [] }: { products?: any[] }) {
   if (!items.length) return null;
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-12 bg-background">
       <div className="container mx-auto px-6">
         <ProductCarousel title="💎 Best Sellers" items={items} animationMode="marquee" />
       </div>
@@ -149,7 +149,7 @@ export function NewArrivals({ products = [] }: { products?: any[] }) {
   if (!items.length) return null;
 
   return (
-    <section className="py-24 bg-surface border-y border-border">
+    <section className="py-12 bg-surface border-y border-border">
       <div className="container mx-auto px-6">
         <ProductCarousel title="✨ New Arrivals" items={items} animationMode="slide-left" />
       </div>
@@ -166,10 +166,10 @@ export function FeaturedVendors() {
   ];
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="py-12 bg-background relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 blur-[150px] rounded-full pointer-events-none" />
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex items-center justify-between mb-12">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Featured Brands</h2>
           <a href="/store" className="text-cta-primary hover:text-cta-primary/80 font-bold transition-colors">View All</a>
         </div>
@@ -191,9 +191,9 @@ export function FeaturedVendors() {
 
 export function WhyShopNova() {
   return (
-    <section className="py-24 bg-surface border-y border-border">
+    <section className="py-12 bg-surface border-y border-border">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-heading font-bold text-foreground mb-12 text-center">Why Shop Nova Sphere?</h2>
+        <h2 className="text-3xl font-heading font-bold text-foreground mb-6 text-center">Why Shop Nova Sphere?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
            <div className="text-center p-6">
              <div className="text-4xl mb-4">🚀</div>
@@ -224,9 +224,9 @@ export function CustomerReviews() {
   ];
 
   return (
-    <section className="py-24 bg-surface border-y border-border relative overflow-hidden">
+    <section className="py-12 bg-surface border-y border-border relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
-        <h2 className="text-3xl md:text-5xl font-black text-foreground mb-12 text-center tracking-tight">Community <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Feedback</span></h2>
+        <h2 className="text-3xl md:text-5xl font-black text-foreground mb-6 text-center tracking-tight">Community <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Feedback</span></h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {reviews.map((review, i) => (
             <div key={i} className="glass-panel p-8 relative group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(251,191,36,0.15)]">
@@ -256,7 +256,7 @@ export function CustomerReviews() {
 
 export function DownloadAppBanner() {
   return (
-    <section className="py-24 bg-cta-primary text-white relative overflow-hidden">
+    <section className="py-12 bg-cta-primary text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-cta-primary to-cta-secondary opacity-50" />
       <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between">
         <div className="mb-8 md:mb-0 max-w-xl">
