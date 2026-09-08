@@ -53,8 +53,8 @@ export function FlashDealsCarousel({ products = [] }: { products?: any[] }) {
       name={p.name}
       price={p.price}
       salePrice={p.salePrice}
-      image={p.images?.[0] || p.image || "/placeholder.png"}
-      images={p.images || [p.image || "/placeholder.png"]}
+      image={p.images?.[0]?.url || p.image || "/placeholder.png"}
+      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
@@ -81,8 +81,8 @@ export function RecommendedProducts({ products = [] }: { products?: any[] }) {
       name={p.name}
       price={p.price}
       salePrice={p.salePrice}
-      image={p.images?.[0] || p.image || "/placeholder.png"}
-      images={p.images || [p.image || "/placeholder.png"]}
+      image={p.images?.[0]?.url || p.image || "/placeholder.png"}
+      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
@@ -109,8 +109,8 @@ export function BestSellers({ products = [] }: { products?: any[] }) {
       name={p.name}
       price={p.price}
       salePrice={p.salePrice}
-      image={p.images?.[0] || p.image || "/placeholder.png"}
-      images={p.images || [p.image || "/placeholder.png"]}
+      image={p.images?.[0]?.url || p.image || "/placeholder.png"}
+      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
@@ -137,8 +137,8 @@ export function NewArrivals({ products = [] }: { products?: any[] }) {
       name={p.name}
       price={p.price}
       salePrice={p.salePrice}
-      image={p.images?.[0] || p.image || "/placeholder.png"}
-      images={p.images || [p.image || "/placeholder.png"]}
+      image={p.images?.[0]?.url || p.image || "/placeholder.png"}
+      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
@@ -158,18 +158,30 @@ export function NewArrivals({ products = [] }: { products?: any[] }) {
 }
 
 export function FeaturedVendors() {
+  const vendors = [
+    { name: "NovaTech", category: "Electronics", image: "https://images.unsplash.com/photo-1550009158-9effb64fda70?w=100&q=80" },
+    { name: "SoundMax", category: "Audio", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&q=80" },
+    { name: "ErgoFit", category: "Furniture", image: "https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?w=100&q=80" },
+    { name: "PlayTech", category: "Gaming", image: "https://images.unsplash.com/photo-1605901309584-818e25960b8f?w=100&q=80" }
+  ];
+
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-heading font-bold text-foreground mb-12">Featured Vendors</h2>
+    <section className="py-24 bg-background relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 blur-[150px] rounded-full pointer-events-none" />
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex items-center justify-between mb-12">
+          <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">Featured Brands</h2>
+          <a href="/store" className="text-cta-primary hover:text-cta-primary/80 font-bold transition-colors">View All</a>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Card key={i} hoverable className="h-48 flex items-center justify-center p-6 text-center">
-              <div>
-                <div className="w-16 h-16 bg-muted/10 rounded-full mx-auto mb-4" />
-                <h4 className="font-heading font-semibold text-foreground">Vendor {i+1}</h4>
+          {vendors.map((vendor, i) => (
+            <a href={`/store?brand=${vendor.name}`} key={i} className="group glass-panel p-8 text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] border border-white/5">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-purple-500/50 transition-colors">
+                <img src={vendor.image} alt={vendor.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
-            </Card>
+              <h4 className="font-bold text-xl text-foreground mb-1 group-hover:text-purple-400 transition-colors">{vendor.name}</h4>
+              <p className="text-sm text-slate-400">{vendor.category}</p>
+            </a>
           ))}
         </div>
       </div>
@@ -205,23 +217,36 @@ export function WhyShopNova() {
 }
 
 export function CustomerReviews() {
+  const reviews = [
+    { name: "Sarah Jenkins", role: "Verified Buyer", text: "The fastest and most reliable marketplace I have ever used. The glassmorphism UI is absolutely stunning and the auctions are thrilling!", rating: 5, avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" },
+    { name: "Michael Chen", role: "Tech Enthusiast", text: "I managed to win an incredible auction here. The real-time bidding system and instantaneous updates make Nova Sphere the best out there.", rating: 5, avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" },
+    { name: "Elena Rodriguez", role: "Verified Buyer", text: "Next-day delivery on my new workstation. The seamless integration of premium brands in one place saves me hours of searching.", rating: 5, avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" }
+  ];
+
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-heading font-bold text-foreground mb-12">Customer Reviews</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <Card key={i} className="p-6">
-              <div className="flex text-warning mb-4">{"⭐".repeat(5)}</div>
-              <p className="text-muted mb-4">"The fastest and most reliable marketplace I have ever used. Highly recommend!"</p>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-muted/20 rounded-full" />
+    <section className="py-24 bg-surface border-y border-border relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
+        <h2 className="text-3xl md:text-5xl font-black text-foreground mb-12 text-center tracking-tight">Community <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Feedback</span></h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {reviews.map((review, i) => (
+            <div key={i} className="glass-panel p-8 relative group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(251,191,36,0.15)]">
+              <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                <svg className="w-16 h-16 text-amber-500" fill="currentColor" viewBox="0 0 32 32"><path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h4V8h-4zm18 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h4V8h-4z"/></svg>
+              </div>
+              <div className="flex text-amber-400 mb-6 gap-1">
+                {Array.from({ length: review.rating }).map((_, i) => (
+                  <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                ))}
+              </div>
+              <p className="text-slate-300 mb-8 italic relative z-10">"{review.text}"</p>
+              <div className="flex items-center gap-4 border-t border-white/10 pt-6">
+                <img src={review.avatar} alt={review.name} className="w-12 h-12 rounded-full object-cover border-2 border-white/10" />
                 <div>
-                  <p className="font-medium text-foreground text-sm">Customer {i+1}</p>
-                  <p className="text-xs text-muted">Verified Buyer</p>
+                  <p className="font-bold text-foreground">{review.name}</p>
+                  <p className="text-xs text-cta-primary font-medium">{review.role}</p>
                 </div>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </div>

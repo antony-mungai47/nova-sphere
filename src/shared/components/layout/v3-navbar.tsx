@@ -45,7 +45,7 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
       <motion.header
         layout
         className={cn(
-          "fixed top-0 left-0 right-0 z-z-sticky transition-all duration-motion-standard",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-motion-standard",
           isScrolled ? "bg-surface/80 backdrop-blur-md border-b border-border shadow-soft py-3" : "bg-transparent py-5"
         )}
         initial={{ y: -100 }}
@@ -99,10 +99,10 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
 
             <div className="flex items-center space-x-4 border-l border-border pl-6">
               <Show when="signed-out">
-                <Link href="/login" className="text-sm font-medium text-muted hover:text-foreground transition-colors">
+                <Link href="/sign-in" className="text-sm font-medium text-muted hover:text-foreground transition-colors">
                   Sign In
                 </Link>
-                <Link href="/register">
+                <Link href="/sign-up">
                   <Button variant="primary" size="sm">Sign Up</Button>
                 </Link>
               </Show>
@@ -172,10 +172,10 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
                 <div className="flex items-center justify-between pt-4 border-t border-border">
                   <div className="flex items-center space-x-4">
                     <Show when="signed-out">
-                      <Link href="/login" className="text-muted hover:text-foreground transition-colors font-medium">
+                      <Link href="/sign-in" className="text-muted hover:text-foreground transition-colors font-medium">
                         Sign In
                       </Link>
-                      <Link href="/register">
+                      <Link href="/sign-up">
                          <Button variant="primary" size="sm">Sign Up</Button>
                       </Link>
                     </Show>

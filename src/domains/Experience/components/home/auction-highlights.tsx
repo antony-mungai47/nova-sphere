@@ -1,8 +1,17 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Gavel, Clock, ArrowRight } from "lucide-react";
 
 export function AuctionHighlights({ auctions }: { auctions: any[] }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   if (!auctions || auctions.length === 0) return null;
 
   return (
@@ -29,7 +38,7 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {auctions.map((auction) => {
             const primaryImage = auction.product.images?.find((img: any) => img.isPrimary) || auction.product.images?.[0];
-            const isEndingSoon = new Date(auction.endTime).getTime() - new Date().getTime() < 86400000;
+            const isEndingSoon = mounted ? new Date(auction.endTime).getTime() - new Date().getTime() < 86400000 : false;
 
             return (
               <Link key={auction.id} href={`/auctions/${auction.id}`} className="group h-full">
@@ -70,7 +79,7 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
                       <div className="text-right">
                         <p className="text-xs font-medium text-[var(--color-muted)] flex items-center gap-1 justify-end">
                           <Clock className="w-3 h-3" />
-                          {new Date(auction.endTime).toLocaleDateString()}
+                          {mounted ? new Date(auction.endTime).toLocaleDateString() : ""}
                         </p>
                       </div>
                     </div>
