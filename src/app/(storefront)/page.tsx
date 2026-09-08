@@ -48,21 +48,21 @@ export default async function Home() {
         </div>
 
         <div className="container relative z-10 px-6 mx-auto flex flex-col items-center justify-center text-center mt-8">
-          <div className="glass-panel border border-white/10 bg-white/5 backdrop-blur-2xl rounded-3xl p-10 md:p-16 max-w-4xl shadow-2xl relative overflow-hidden">
+          <div className="glass-panel rounded-3xl p-10 md:p-16 max-w-4xl shadow-2xl relative overflow-hidden">
             {/* Inner glow effect */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-cta-primary to-transparent opacity-50" />
             
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel mb-8">
               <span className="w-2 h-2 rounded-full bg-cta-primary animate-pulse" />
-              <span className="text-sm font-medium text-slate-300">Nova Sphere Market 3.0</span>
+              <span className="text-sm font-bold text-muted">Nova Sphere Market 3.0</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-slate-500">
+            <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground to-muted">
               Smart Shopping <br className="hidden md:block"/>
               <span className="text-cta-primary drop-shadow-sm">Delivered.</span>
             </h1>
             
-            <p className="text-lg md:text-xl font-medium mb-10 max-w-2xl mx-auto text-slate-300 leading-relaxed">
+            <p className="text-lg md:text-xl font-medium mb-10 max-w-2xl mx-auto text-muted leading-relaxed font-bold">
               Experience the future of commerce. Curated collections, AI-driven recommendations, and unparalleled aesthetics in one seamless marketplace.
             </p>
             
@@ -79,7 +79,7 @@ export default async function Home() {
               </a>
               <a 
                 href="/recommended"
-                className="px-8 py-4 rounded-xl font-bold transition-all bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20 backdrop-blur-md"
+                className="px-8 py-4 rounded-xl font-bold transition-all glass-panel text-foreground font-bold hover:bg-white/80 transition-all"
               >
                 View Curated Deals
               </a>

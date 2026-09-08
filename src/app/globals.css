@@ -187,21 +187,23 @@ body {
   overflow-x: hidden;
 }
 
-/* Premium Glassmorphism Utilities */
+/* Premium Glassmorphism Utilities (Light Theme Optimized) */
 .glass-panel {
-  background: rgba(31, 41, 55, 0.4); /* Charcoal Translucent */
+  background: rgba(255, 255, 255, 0.7); /* White Translucent */
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-soft);
 }
 
 .glass-panel-glow {
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: box-shadow 0.3s ease;
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .glass-panel-glow:hover {
-  box-shadow: var(--shadow-glow-primary), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-hover), 0 0 20px rgba(249, 115, 22, 0.15);
+  transform: translateY(-2px);
 }
 
 /* Smooth Scrolling */

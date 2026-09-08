@@ -45,7 +45,7 @@ export function V3Navbar({ liveNotificationsEnabled = false, isAdmin = false, is
       <motion.header
         layout
         className={cn(
-          "sticky top-0 z-[100] w-full transition-all duration-motion-standard",
+          "sticky top-0 z-sticky w-full transition-all duration-motion-standard",
           isScrolled ? "bg-surface/80 backdrop-blur-md border-b border-border shadow-soft py-3" : "bg-transparent py-5"
         )}
         initial={{ y: -100 }}

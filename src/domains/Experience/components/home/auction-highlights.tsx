@@ -15,7 +15,7 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
   if (!auctions || auctions.length === 0) return null;
 
   return (
-    <section className="py-12 bg-black/20 border-y border-white/5 relative overflow-hidden">
+    <section className="py-12 bg-surface border-y border-border relative overflow-hidden">
       {/* Decorative gradient */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-[var(--color-primary)] opacity-5 blur-[200px] pointer-events-none" />
       
@@ -43,7 +43,7 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
             return (
               <Link key={auction.id} href={`/auctions/${auction.id}`} className="group h-full">
                 <div className="glass-panel h-full flex flex-col overflow-hidden transition-all duration-300 transform group-hover:-translate-y-1 hover:shadow-[var(--shadow-glow-primary)]">
-                  <div className="relative aspect-square bg-black/40 p-6 flex items-center justify-center">
+                  <div className="relative aspect-square bg-surface p-6 flex items-center justify-center">
                     {primaryImage ? (
                       <Image 
                         src={primaryImage.url} 
@@ -52,7 +52,7 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
                         className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" 
                       />
                     ) : (
-                      <div className="w-full h-full bg-white/5 rounded-xl" />
+                      <div className="w-full h-full bg-muted/10 rounded-xl" />
                     )}
                     
                     <div className="absolute top-4 left-4 flex flex-col gap-2">
