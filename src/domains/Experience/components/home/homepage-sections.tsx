@@ -54,7 +54,7 @@ export function FlashDealsCarousel({ products = [] }: { products?: any[] }) {
       price={p.price}
       salePrice={p.salePrice}
       image={p.images?.[0]?.url || p.image || "/placeholder.png"}
-      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
+      images={p.images?.length > 0 ? p.images.map((img: any) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
@@ -82,7 +82,7 @@ export function RecommendedProducts({ products = [] }: { products?: any[] }) {
       price={p.price}
       salePrice={p.salePrice}
       image={p.images?.[0]?.url || p.image || "/placeholder.png"}
-      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
+      images={p.images?.length > 0 ? p.images.map((img: any) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
@@ -110,7 +110,7 @@ export function BestSellers({ products = [] }: { products?: any[] }) {
       price={p.price}
       salePrice={p.salePrice}
       image={p.images?.[0]?.url || p.image || "/placeholder.png"}
-      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
+      images={p.images?.length > 0 ? p.images.map((img: any) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
@@ -138,7 +138,7 @@ export function NewArrivals({ products = [] }: { products?: any[] }) {
       price={p.price}
       salePrice={p.salePrice}
       image={p.images?.[0]?.url || p.image || "/placeholder.png"}
-      images={p.images?.length > 0 ? p.images.map((img) => img.url || img) : [p.image || "/placeholder.png"]}
+      images={p.images?.length > 0 ? p.images.map((img: any) => img.url || img) : [p.image || "/placeholder.png"]}
       category={p.category}
       brand={p.brand}
       rating={p.rating}
