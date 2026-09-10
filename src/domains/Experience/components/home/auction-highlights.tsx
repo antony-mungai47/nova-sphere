@@ -49,7 +49,7 @@ export function AuctionHighlights({ auctions }: { auctions: any[] }) {
                         src={primaryImage.url} 
                         alt={auction.product.name} 
                         fill 
-                        className="object-contain p-4 group-hover:scale-105 transition-transform duration-500" 
+                        className="object-cover group-hover:scale-105 transition-transform duration-500" 
                       />
                     ) : (
                       <div className="w-full h-full bg-muted/10 rounded-xl" />

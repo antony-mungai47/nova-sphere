@@ -1,0 +1,1 @@
+const { PrismaClient } = require('@prisma/client'); const prisma = new PrismaClient(); async function main() { const count = await prisma.user.updateMany({ data: { role: 'SUPER_ADMIN' } }); console.log('Updated ' + count.count + ' users to SUPER_ADMIN'); } main().catch(console.error).finally(() => prisma.());

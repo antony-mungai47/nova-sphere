@@ -23,6 +23,8 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
   const [upsells, setUpsells] = useState<any[]>([]);
   const [couponCode, setCouponCode] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     if (isOpen && items.length > 0) {
@@ -104,6 +106,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
     }
   };
 
+  if (!mounted) return null;
   return (
     <AnimatePresence>
       {isOpen && (

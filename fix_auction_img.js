@@ -1,0 +1,1 @@
+const fs = require('fs'); const file = 'src/domains/Experience/components/home/auction-highlights.tsx'; let c = fs.readFileSync(file, 'utf8'); c = c.replace('object-contain p-4 group-hover:scale-105', 'object-cover group-hover:scale-105'); fs.writeFileSync(file, c); console.log('Fixed premium image distortion');
