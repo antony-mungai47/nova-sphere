@@ -3,20 +3,17 @@ import { NextResponse, NextRequest, NextFetchEvent } from 'next/server';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || 'https://mock.upstash.io',
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || 'mock-token',
-});
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-const generalLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(100, '10 s'),
-});
+let generalLimiter: Ratelimit | null = null;
+let mutationLimiter: Ratelimit | null = null;
 
-const mutationLimiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(5, '1 m'),
-});
+if (redisUrl && redisToken) {
+  const redis = new Redis({ url: redisUrl, token: redisToken });
+  generalLimiter = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(100, '10 s') });
+  mutationLimiter = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, '1 m') });
+}
 
 const isMutationRoute = createRouteMatcher(['/api/checkout(.*)', '/api/vendor(.*)']);
 const isProtectedRoute = createRouteMatcher(['/admin(.*)', '/vendor(.*)', '/account(.*)', '/orders(.*)', '/checkout(.*)']);
@@ -57,19 +54,30 @@ const clerk = clerkMiddleware(async (auth, req) => {
 
   const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
   const limiter = isMutationRoute(req) ? mutationLimiter : generalLimiter;
-  const rateLimitResult = await limiter.limit(isMutationRoute(req) ? `mutation_${ip}` : `general_${ip}`);
-
-  if (!rateLimitResult.success) {
-    return new NextResponse('Too Many Requests', { 
-      status: 429,
-      headers: {
-        'x-request-id': traceId,
-        'Retry-After': Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString(),
-        'X-RateLimit-Limit': rateLimitResult.limit.toString(),
-        'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
-        'X-RateLimit-Reset': rateLimitResult.reset.toString()
+  
+  if (limiter) {
+    try {
+      const rateLimitResult = await limiter.limit(isMutationRoute(req) ? `mutation_${ip}` : `general_${ip}`);
+      if (!rateLimitResult.success) {
+        return new NextResponse('Too Many Requests', { 
+          status: 429,
+          headers: {
+            'x-request-id': traceId,
+            'Retry-After': Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString(),
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString()
+          }
+        });
       }
-    });
+      
+      // We'll set the headers later down
+      requestHeaders.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+      requestHeaders.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+      requestHeaders.set('X-RateLimit-Reset', rateLimitResult.reset.toString());
+    } catch (err) {
+      console.warn("Upstash Rate Limiter failed to execute, bypassing:", err);
+    }
   }
 
   const response = NextResponse.next({
@@ -82,9 +90,13 @@ const clerk = clerkMiddleware(async (auth, req) => {
   if (incomingTraceState) {
     response.headers.set('tracestate', incomingTraceState);
   }
-  response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
-  response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
-  response.headers.set('X-RateLimit-Reset', rateLimitResult.reset.toString());
+  
+  // Forward rate limit headers if they exist
+  if (requestHeaders.has('X-RateLimit-Limit')) {
+    response.headers.set('X-RateLimit-Limit', requestHeaders.get('X-RateLimit-Limit')!);
+    response.headers.set('X-RateLimit-Remaining', requestHeaders.get('X-RateLimit-Remaining')!);
+    response.headers.set('X-RateLimit-Reset', requestHeaders.get('X-RateLimit-Reset')!);
+  }
 
   return response;
 });
