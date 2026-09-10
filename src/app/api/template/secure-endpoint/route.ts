@@ -28,8 +28,8 @@ export async function POST(req: Request) {
 
     // 3. Rate Limiting Logic
     const ip = req.headers.get('x-forwarded-for') || 'unknown';
-    const isAllowed = await rateLimiter.checkLimit("api_template_", 10, 60);
-    if (!isAllowed) {
+    const rateLimitResult = await rateLimiter.limit(`api_template_${userId || ip}`);
+    if (!rateLimitResult.success) {
       return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
     }
 

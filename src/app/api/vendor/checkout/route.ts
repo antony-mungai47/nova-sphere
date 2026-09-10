@@ -16,8 +16,8 @@ export async function POST(req: Request) {
     if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const ip = req.headers.get('x-forwarded-for') || 'unknown';
-    const isAllowed = await rateLimiter.checkLimit(`vendor_checkout_${userId || ip}`, 10, 60);
-    if (!isAllowed) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    const rateLimitResult = await rateLimiter.limit(`vendor_checkout_${userId || ip}`);
+    if (!rateLimitResult.success) return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
 
     const body = await req.json();
     const { products, subscriptionTier } = body;
