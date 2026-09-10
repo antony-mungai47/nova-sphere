@@ -19,7 +19,6 @@ const mutationLimiter = new Ratelimit({
 });
 
 const isMutationRoute = createRouteMatcher(['/api/checkout(.*)', '/api/vendor(.*)']);
-
 const isProtectedRoute = createRouteMatcher(['/admin(.*)', '/vendor(.*)', '/account(.*)', '/orders(.*)', '/checkout(.*)']);
 
 const clerk = clerkMiddleware(async (auth, req) => {
@@ -32,7 +31,6 @@ const clerk = clerkMiddleware(async (auth, req) => {
     }
   }
 
-  // Inject W3C Trace Context (traceparent / tracestate)
   const requestHeaders = new Headers(req.headers);
   const incomingTraceParent = req.headers.get('traceparent');
   const incomingTraceState = req.headers.get('tracestate') || '';
@@ -57,10 +55,9 @@ const clerk = clerkMiddleware(async (auth, req) => {
     requestHeaders.set('tracestate', incomingTraceState);
   }
 
-  // Rate Limiting
   const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
   const limiter = isMutationRoute(req) ? mutationLimiter : generalLimiter;
-  const rateLimitResult = await limiter.limit(isMutationRoute(req) ? mutation_\ : general_\);
+  const rateLimitResult = await limiter.limit(isMutationRoute(req) ? `mutation_${ip}` : `general_${ip}`);
 
   if (!rateLimitResult.success) {
     return new NextResponse('Too Many Requests', { 
@@ -110,11 +107,8 @@ export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
     '/(api|trpc)(.*)',
-    // Always run for Clerk-specific frontend API routes
     '/__clerk/(.*)',
   ],
 }

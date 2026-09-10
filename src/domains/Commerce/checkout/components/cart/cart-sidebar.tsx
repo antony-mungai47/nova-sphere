@@ -28,8 +28,6 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
   const [paymentMethod, setPaymentMethod] = useState<"CARD" | "POD">("CARD");
 
   React.useEffect(() => setMounted(true), []);
-  const [mounted, setMounted] = useState(false);
-  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     if (isOpen && items.length > 0) {
