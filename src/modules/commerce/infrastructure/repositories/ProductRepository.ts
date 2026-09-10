@@ -78,12 +78,26 @@ export class ProductRepository {
   }
 
   static async searchCatalog(filters: { query?: string, category?: string, brand?: string, minPrice?: number, maxPrice?: number, sort?: string }) {
-    const where: any = { status: 'ACTIVE' };
+    const where: any = { 
+      status: 'ACTIVE',
+      // Explicitly pull from the main store AND vendors for the unified search engine
+      AND: [
+        {
+          OR: [
+            { ownerTenantId: null },
+            { ownerTenantId: { not: null } }
+          ]
+        }
+      ]
+    };
+
     if (filters.query) {
-      where.OR = [
-        { name: { contains: filters.query, mode: 'insensitive' } },
-        { description: { contains: filters.query, mode: 'insensitive' } },
-      ];
+      where.AND.push({
+        OR: [
+          { name: { contains: filters.query, mode: 'insensitive' } },
+          { description: { contains: filters.query, mode: 'insensitive' } },
+        ]
+      });
     }
     if (filters.category && filters.category !== 'All') where.category = filters.category;
     if (filters.brand && filters.brand !== 'All') where.brand = filters.brand;
