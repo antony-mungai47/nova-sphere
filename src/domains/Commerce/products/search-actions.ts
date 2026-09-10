@@ -19,8 +19,8 @@ export async function getUpsellProducts(excludeIds: string[] = []) {
   return products.map(p => ({
     id: p.id,
     name: p.name,
-    price: p.price,
-    salePrice: p.salePrice,
+    price: Number(p.price),
+    salePrice: p.salePrice ? Number(p.salePrice) : null,
     image: ProductImageService.getThumbnailUrl(p),
     brand: p.brand
   }));

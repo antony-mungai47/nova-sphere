@@ -24,6 +24,11 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
   const [couponCode, setCouponCode] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [deliveryRequested, setDeliveryRequested] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<"CARD" | "POD">("CARD");
+
+  React.useEffect(() => setMounted(true), []);
+  const [mounted, setMounted] = useState(false);
   React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
@@ -84,6 +89,8 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
         body: JSON.stringify({
           items: items,
           total: getDiscountedTotal(),
+          deliveryRequested,
+          paymentMethod
         })
       });
 
