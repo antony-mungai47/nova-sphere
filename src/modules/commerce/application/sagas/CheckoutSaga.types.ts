@@ -19,6 +19,8 @@ export interface CheckoutSagaPayload {
   items: CheckoutItemInput[];
   userId: string;
   clientTotal?: number;
+  deliveryRequested?: boolean;
+  paymentMethod?: "CARD" | "POD";
   pricingSnapshot?: PricingCalculationDTO;
   reservationReference?: string;
   orderReference?: string;
