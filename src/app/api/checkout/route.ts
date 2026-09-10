@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { items, total } = body;
+    const { items, total, deliveryRequested, paymentMethod } = body;
 
     if (!items || items.length === 0) {
       return new NextResponse("Items are required", { status: 400 });
@@ -61,17 +61,19 @@ export async function POST(req: Request) {
       CheckoutMetrics.increment("checkout_requests_total", 1, { checkoutPath: "legacy", tenantCohort: routingDecision.tenantCohort });
       CheckoutMetrics.recordDuration("checkout_request_duration_ms", durationMs, { checkoutPath: "legacy", tenantCohort: routingDecision.tenantCohort });
 
+      // Simulate legacy handling
       return NextResponse.json({
-        engine: "legacy",
-        status: "REDIRECT_LEGACY",
-        checkoutUrl: `https://checkout.novasphere.io/legacy?tenant=${tenantId}&key=${idempotencyKey}`
+        url: `/checkout/legacy?session=${randomUUID()}&delivery=${deliveryRequested}&pm=${paymentMethod}`,
+        checkoutId: randomUUID(),
+        status: "PENDING_LEGACY",
+        path: "legacy"
       }, {
         headers: {
           "x-checkout-path": "legacy",
           "x-deployment-revision": routingDecision.deploymentRevision,
           "x-canary-stage": routingDecision.canaryStage,
           "x-tenant-cohort": routingDecision.tenantCohort,
-          "traceparent": traceId
+          "traceparent": rawTraceparent || ''
         }
       });
     }
@@ -91,7 +93,9 @@ export async function POST(req: Request) {
     }, {
       items,
       userId: user.id,
-      clientTotal: total
+      clientTotal: total,
+      deliveryRequested,
+      paymentMethod
     });
 
     const durationMs = Date.now() - startTime;
