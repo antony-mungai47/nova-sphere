@@ -1,6 +1,24 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse, NextRequest, NextFetchEvent } from 'next/server';
-import { getRateLimiter } from '@/lib/security/RateLimiterFactory';
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || 'https://mock.upstash.io',
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || 'mock-token',
+});
+
+const generalLimiter = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(100, '10 s'),
+});
+
+const mutationLimiter = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(5, '1 m'),
+});
+
+const isMutationRoute = createRouteMatcher(['/api/checkout(.*)', '/api/vendor(.*)']);
 
 const isProtectedRoute = createRouteMatcher(['/admin(.*)', '/vendor(.*)', '/account(.*)', '/orders(.*)', '/checkout(.*)']);
 
@@ -41,8 +59,8 @@ const clerk = clerkMiddleware(async (auth, req) => {
 
   // Rate Limiting
   const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
-  const limiter = getRateLimiter();
-  const rateLimitResult = await limiter.limit(ip);
+  const limiter = isMutationRoute(req) ? mutationLimiter : generalLimiter;
+  const rateLimitResult = await limiter.limit(isMutationRoute(req) ? mutation_\ : general_\);
 
   if (!rateLimitResult.success) {
     return new NextResponse('Too Many Requests', { 
